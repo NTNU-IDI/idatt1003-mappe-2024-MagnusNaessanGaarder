@@ -5,8 +5,8 @@ This file uses Mark Down syntax. For more information see [here]([x]https://www.
 
 [//]: # (TODO: Fill inn your name and student ID)
 
-STUDENT NAME = "Your name"  
-STUDENT ID = "Your ID"
+STUDENT NAME = "Magnus Næssan Gaarder"  
+STUDENT ID = ""
 
 ## Project description
 
