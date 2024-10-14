@@ -34,8 +34,8 @@ En vare/ingrediens kan bestå av følgende informasjon:
     • Pris/kostnad i norske kroner pr enhet.
 */
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hei verden!");
+public class Grocery {
+    public Grocery () {
+
     }
 }
