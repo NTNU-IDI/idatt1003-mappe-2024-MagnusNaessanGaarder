@@ -34,8 +34,25 @@ En vare/ingrediens kan bestå av følgende informasjon:
     • Pris/kostnad i norske kroner pr enhet.
 */
 
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hei verden!");
+        StringBuilder str = new StringBuilder();
+        str. append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str. append("                                                     VELG ET ALTERNATIV UNDER\n");
+        str. append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str. append("           Velg et alternativ under ved å skrive et tall. Gyldige tall er a, .... , n:\n\n");
+        
+        str. append("                   [1] Alternativ 1\n");
+        str. append("                   [2] Alternativ 2\n");
+        str. append("                   [3] Alternativ 3\n");
+        str. append("                   [4] Alternativ 4\n");
+        str. append("                   [5] Alternativ 5\n");
+        
+        str. append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str. append("                                                  LEGG TIL EN VARE I KJØLESKAPET\n");
+        str. append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str. append("           Skriv navnet på varen du ønsker å legge til:\n");
     }
 }
