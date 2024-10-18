@@ -41,7 +41,7 @@ public class Main {
         StringBuilder str = new StringBuilder();
         str.append("-----------------------------------------------------------------------------------------------------------------------------------\n\n");
 
-        str.append("                                                  HOVEDMENY - MATSVINNPREVENSJON\n\n");
+        str.append("                                                       HOVEDMENY - MATLAGER\n\n");
 
         str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
         str.append("           Bruk en kommando for å navigere. For å få en overikt over tilgjengelige kommandoer skriv \"-help\".\n");
