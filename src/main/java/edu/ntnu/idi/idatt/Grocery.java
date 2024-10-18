@@ -34,6 +34,7 @@ package src.main.java.edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -54,6 +55,15 @@ public class Grocery {
         this.fridge = fridge;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy");
+        return formatter.format(bestBefore);
+    }
+
     public double addAmount(final double amount) {
         this.quantity += amount;
         return quantity;
@@ -62,7 +72,7 @@ public class Grocery {
     public double removeAmount(final double amount) {
         this.quantity -= amount;
         if (this.quantity <= 0) {
-            this.fridge.remove(this);
+            this.fridge.removeGrocery(this);
             return 0.0;
         }
         return quantity;
