@@ -27,7 +27,7 @@ public class Fridge {
     public void removeGrocery(Grocery grocery) {
         if (this.groceryList.contains(grocery)) {
             int index = this.groceryList.indexOf(this.groceryList.stream()
-                    .filter(groceryObj -> groceryObj.getName() == grocery.getName() && groceryObj.getDate() == grocery.getDate()));
+                    .filter(groceryObj -> groceryObj.getName().equals(grocery.getName()) && groceryObj.getDate().equals(grocery.getDate())));
 
             this.groceryList.remove(index);
         }

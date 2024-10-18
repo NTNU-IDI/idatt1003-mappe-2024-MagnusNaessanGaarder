@@ -34,7 +34,7 @@ package src.main.java.edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
-public class Main {
+public class Client {
     public static void main(final String[] args) {
 
         // Menyvalg i konsollen
