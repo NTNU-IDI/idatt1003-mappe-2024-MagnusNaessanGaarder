@@ -54,13 +54,17 @@ public class Grocery {
         this.fridge = fridge;
     }
 
-    public double addAmount(double amount) {
+    public double addAmount(final double amount) {
         this.quantity += amount;
         return quantity;
     }
 
-    public double removeAmount(double amount) {
+    public double removeAmount(final double amount) {
         this.quantity -= amount;
+        if (this.quantity <= 0) {
+            this.fridge.remove(this);
+            return 0.0;
+        }
         return quantity;
     }
 
