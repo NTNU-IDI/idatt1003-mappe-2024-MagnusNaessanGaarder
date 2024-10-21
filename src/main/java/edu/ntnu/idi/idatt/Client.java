@@ -39,11 +39,9 @@ public class Client {
 
         // Menyvalg i konsollen
         StringBuilder str = new StringBuilder();
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n\n");
+        final String topBar = "-----------------------------------------------------------------------------------------------------------------------------------\n";
 
-        str.append("                                                       HOVEDMENY - MATLAGER\n\n");
-
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str.append(topBar + "\n                                                         HOVEDMENY - MATLAGER\n\n" + topBar);
         str.append("           Bruk en kommando for å navigere. For å få en overikt over tilgjengelige kommandoer skriv \"-help\".\n");
         str.append("           Velg et alternativ under ved å skrive et tall:\n\n");
 
@@ -54,17 +52,13 @@ public class Client {
         str.append("                   [5] Samlet verdi av varer.\n");
 
         // Legg til vare
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("                                                  LEGG TIL EN VARE I KJØLESKAPET\n");
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str.append(topBar + "                                                  LEGG TIL EN VARE I KJØLESKAPET\n" + topBar);
         str.append("           Skriv navnet på varen du ønsker å legge til:\n");
         str.append("           Varenavn: ");
         str.append("\n");
 
         // Legg til en måleenhet til varen
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("                                                         VELG ET MÅLEENHET\n");
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str.append(topBar + "                                                         VELG ET MÅLEENHET\n" + topBar);
         str.append("           Velg menden av  under ved å skrive et tall:\n\n");
 
         str.append("                   [1] Stykker (stk)\n");
@@ -75,27 +69,18 @@ public class Client {
         str.append("                   [6] Legg til måleenhet\n");
 
         // Legg til mengde
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("                                                   LEGG TIL EN MENGDE TIL VAREN\n");
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str.append(topBar + "                                                   LEGG TIL EN MENGDE TIL VAREN\n" + topBar);
         str.append("           Skriv antallet {måleenhet} du øsnker å legge til av varen i kjøleskapet:\n");
         str.append("           Varenavn: ");
-        str.append("\n");
 
         // Best før dato
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("                                                           BEST FØR DATO\n");
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str.append(topBar + "                                                           BEST FØR DATO\n" + topBar);
         str.append("           Skriv \"Best Før\"-datoen til varen. Skriv datoen på formen: DD.MM.ÅÅÅÅ\n");
         str.append("           Best-før dato: ");
-        str.append("\n");
 
         // Pris på vare
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("                                                           PRIS PÅ VARE\n");
-        str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
+        str.append(topBar + "                                                           PRIS PÅ VARE\n" + topBar);
         str.append("           Skriv prisen på varen som et tall under. Prisen oppgis som pris per kg eller l.\n");
         str.append("           Pris: ");
-        str.append("\n");
     }
 }
