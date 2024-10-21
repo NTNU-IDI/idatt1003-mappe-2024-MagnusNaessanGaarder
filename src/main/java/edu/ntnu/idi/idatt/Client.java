@@ -65,7 +65,7 @@ public class Client {
         str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
         str.append("                                                         VELG ET MÅLEENHET\n");
         str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("           Velg en av måleenhetene under ved å skrive et tall:\n\n");
+        str.append("           Velg menden av  under ved å skrive et tall:\n\n");
 
         str.append("                   [1] Stykker (stk)\n");
         str.append("                   [2] Gram (g)\n");
@@ -94,7 +94,7 @@ public class Client {
         str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
         str.append("                                                           PRIS PÅ VARE\n");
         str.append("-----------------------------------------------------------------------------------------------------------------------------------\n");
-        str.append("           Skriv prisen på varen som et tall under. Prisen oppgis som pris per {måleenhet}.\n");
+        str.append("           Skriv prisen på varen som et tall under. Prisen oppgis som pris per kg eller l.\n");
         str.append("           Pris: ");
         str.append("\n");
     }

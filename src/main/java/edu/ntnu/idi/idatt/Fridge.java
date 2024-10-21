@@ -24,7 +24,7 @@ public class Fridge {
 
     }
 
-    public void removeGrocery(Grocery grocery) {
+    public void removeGrocery(final Grocery grocery) {
         if (this.groceryList.contains(grocery)) {
             int index = this.groceryList.indexOf(this.groceryList.stream()
                     .filter(groceryObj -> groceryObj.getName().equals(grocery.getName()) && groceryObj.getDate().equals(grocery.getDate())));
@@ -32,7 +32,10 @@ public class Fridge {
             this.groceryList.remove(index);
         }
         else {
-            throw new IllegalArgumentException("Cannot remove grocery \"" + grocery.getName() + "\" from Fridge. Grocery does not currently exist in Fridge.");
+            throw new IllegalArgumentException("Cannot remove grocery \"" +
+                    grocery.getName() + "\" from Fridge. Grocery does not currently exist in Fridge.");
         }
     }
+
+
 }

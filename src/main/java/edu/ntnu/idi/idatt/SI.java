@@ -3,22 +3,59 @@ package src.main.java.edu.ntnu.idi.idatt;
 import java.util.HashMap;
 
 public class SI {
-    private HashMap<String, String> messureList;
 
-    public SI() {
-        messureList = new HashMap<String, String>();
-        messureList.put("Stykker", "stk");
-        messureList.put("Gram", "g");
-        messureList.put("Kilo", "kg");
-        messureList.put("Desiliter", "dl");
-        messureList.put("Liter", "l");
+    //Datafelt med globale variabler innenfor SI-enhet-scopet.
+    private String unit;
+    private String prefix;
+    private String unitAbrev;
+    private String unitForPrice;
+    private double convertionFactor;
+
+    /*Hjelp av ChatGPT - lager et HashMap med en static block som initialiserer
+    * ulike verdier til HashMap-et. I dette tilfellet er verdiene i HashMap-et
+    * ment å brukes til konvertering mellom ulike målinger ved hjelp av prefiksen.
+    */
+    private static final HashMap<String, Double> SI_PREFIXES = new HashMap<>();
+    static {
+        SI_PREFIXES.put("", 1.0);         // No prefix = base unit
+        SI_PREFIXES.put("Milli", 0.001);  // 1 base unit = 1000 millibases
+        SI_PREFIXES.put("Centi", 0.01);   // 1 base unit = 100 centibases
+        SI_PREFIXES.put("Desi", 0.1);     // 1 base unit = 10 decibases
+        SI_PREFIXES.put("Kilo", 1000.0);  // 1 kilobase = 1000 base units
     }
 
-    public String getMessurement(final String str) {
-        return messureList.get(str);
+    //konstruktør for klassen SI
+    public SI(String m, String mShort, String mForPrice, String prefix) {
+        this.unit = m;
+        this.unitAbrev = mShort;
+        this.unitForPrice = mForPrice;
+        this.prefix = prefix;
+
+        this.convertionFactor = SI_PREFIXES.getOrDefault(prefix,1.0);
     }
 
-    public void addSImessure(final String name, final String abbrev) {
-        messureList.put(name, abbrev);
+    //get metode for å få SI-enheten
+    public String getUnit() {
+        return this.unit;
+    }
+
+    //get metode for å få forkortelsen av SI-enheten
+    public String getAbrev() {
+        return this.unitAbrev;
+    }
+
+    //get metode for å få måleenheten til prisen per måleenhet.
+    public String getUnitForPrice() {
+        return this.unitForPrice;
+    }
+
+    //get metode for å få prefiksen til SI-enheten
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    //
+    public double getConvertionFactor() {
+        return this.convertionFactor;
     }
 }

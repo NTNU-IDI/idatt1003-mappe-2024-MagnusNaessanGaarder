@@ -36,20 +36,19 @@ package src.main.java.edu.ntnu.idi.idatt;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Grocery {
     private final String name;
-    private final SI messure;
+    private SI measure;
     private double quantity;
     private final LocalDate bestBefore;
     private final double price;
     private final Fridge fridge;
 
-    public Grocery (String name, SI messure, double quantity, LocalDate date, double price, Fridge fridge) {
+    public Grocery (String name, SI measure, double quantity, LocalDate date, double price, Fridge fridge) {
         this.name = name;
-        this.messure = messure;
-        this.quantity = quantity;
+        this.measure = measure;
+        this.quantity = quantity * measure.getConvertionFactor();
         this.bestBefore = date;
         this.price = price;
         this.fridge = fridge;
@@ -64,24 +63,60 @@ public class Grocery {
         return formatter.format(bestBefore);
     }
 
-    public double addAmount(final double amount) {
-        this.quantity += amount;
+    public String getPrice() {
+        return String.format("%.2f kr/%s", this.price, this.measure.getAbrev());
+    }
+
+    public double getQuantity() {
         return quantity;
+    }
+
+    private void convertUnit () {
+        if (this.quantity < 1.0 && this.measure.getUnit().contains("Liter")) {
+            this.measure = new SI("Desiliter", "dL","L", "Desi");
+            this.quantity *= 10;
+        }
+        else if (this.quantity < 1.0 && this.measure.getUnit().contains("Kilo")) {
+            this.measure = new SI("Gram", "g", "kg", "");
+            this.quantity *= 1000;
+        }
+        else if (this.quantity >= 1000 && this.measure.getUnit().contains("Gram")) {
+            this.measure = new SI("Kilogram", "kg", "kg", "Kilo");
+            this.quantity /= 1000;
+        }
+        else if (this.quantity >= 1.0 && this.measure.getUnit().contains("Desi")) {
+            this.measure = new SI("Liter", "L", "L","Desi");
+            this.quantity /= 10;
+        }
+    }
+
+    public double addAmount(final double amount) {
+        if (amount > 0) {
+            this.quantity += amount*measure.getConvertionFactor();
+            convertUnit();
+            return quantity;
+        }
+        else {
+            throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
+        }
     }
 
     public double removeAmount(final double amount) {
-        this.quantity -= amount;
-        if (this.quantity <= 0) {
-            this.fridge.removeGrocery(this);
-            return 0.0;
+        if (amount > 0) {
+            this.quantity -= amount;
+            if (this.quantity <= 0) {
+                this.fridge.removeGrocery(this);
+                return 0;
+            }
+            convertUnit();
+            return quantity;
         }
-        return quantity;
+        else {
+            throw new IllegalArgumentException("Illegal argument error: Cannot remove a negative amount.");
+        }
     }
 
     public boolean hasExpired() {
-        if (this.bestBefore.compareTo(LocalDate.now()) <= 0) {
-            return true;
-        }
-        return false;
+        return this.bestBefore.compareTo(LocalDate.now()) <= 0;
     }
 }
