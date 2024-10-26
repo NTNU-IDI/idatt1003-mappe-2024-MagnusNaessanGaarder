@@ -25,10 +25,10 @@ public class SI {
     }
 
     //konstruktør for klassen SI
-    public SI(String m, String mShort, String mForPrice, String prefix) {
-        this.unit = m;
-        this.unitAbrev = mShort;
-        this.unitForPrice = mForPrice;
+    public SI(String unit, String unitShort, String unitForPrice, String prefix) {
+        this.unit = unit;
+        this.unitAbrev = unitShort;
+        this.unitForPrice = unitForPrice;
         this.prefix = prefix;
 
         this.convertionFactor = SI_PREFIXES.getOrDefault(prefix,1.0);

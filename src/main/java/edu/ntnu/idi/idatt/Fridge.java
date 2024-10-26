@@ -14,6 +14,14 @@ public class Fridge {
         this.groceryList = new ArrayList<>(0);
     }
 
+    public ArrayList<Grocery> getGroceryList() {
+        return this.groceryList;
+    }
+
+    public Grocery getGrocery(int index) {
+        return groceryList.get(index);
+    }
+
     public void addGrocery(final Grocery grocery) {
         if (this.groceryList.contains(grocery)) {
             throw new IllegalArgumentException("Argument not valid! Cannot add two groceries with same values (name and date).");
@@ -26,10 +34,13 @@ public class Fridge {
 
     public void removeGrocery(final Grocery grocery) {
         if (this.groceryList.contains(grocery)) {
-            int index = this.groceryList.indexOf(this.groceryList.stream()
-                    .filter(groceryObj -> groceryObj.getName().equals(grocery.getName()) && groceryObj.getDate().equals(grocery.getDate())));
-
-            this.groceryList.remove(index);
+            int index = this.groceryList.indexOf(grocery);
+            if (index != -1) {
+                this.groceryList.remove(index);
+            }
+            else {
+                throw new IllegalArgumentException("Argument not valid! Cannot remove grocery from grocery list.");
+            }
         }
         else {
             throw new IllegalArgumentException("Cannot remove grocery \"" +

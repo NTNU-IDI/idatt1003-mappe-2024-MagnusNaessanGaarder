@@ -36,10 +36,11 @@ package edu.ntnu.idi.idatt;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Grocery {
     private final String name;
-    private SI measure;
+    private SI unit;
     private double quantity;
     private final LocalDate bestBefore;
     private final double price;
@@ -47,8 +48,8 @@ public class Grocery {
 
     public Grocery (String name, SI measure, double quantity, LocalDate date, double price, Fridge fridge) {
         this.name = name;
-        this.measure = measure;
-        this.quantity = quantity * measure.getConvertionFactor();
+        this.unit = measure;
+        this.quantity = quantity * unit.getConvertionFactor();
         this.bestBefore = date;
         this.price = price;
         this.fridge = fridge;
@@ -58,42 +59,56 @@ public class Grocery {
         return name;
     }
 
-    public String getDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy");
+    public String getDateToStr() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         return formatter.format(bestBefore);
     }
+    private LocalDate getDate() {
+        return bestBefore;
+    }
 
-    public String getPrice() {
-        return String.format("%.2f kr/%s", this.price, this.measure.getAbrev());
+    public String getPriceToStr() {
+        return String.format("%.2f kr/%s", this.price, this.unit.getAbrev());
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public double getQuantity() {
         return quantity;
     }
 
-    private void convertUnit () {
-        if (this.quantity < 1.0 && this.measure.getUnit().contains("Liter")) {
-            this.measure = new SI("Desiliter", "dL","L", "Desi");
-            this.quantity *= 10;
-        }
-        else if (this.quantity < 1.0 && this.measure.getUnit().contains("Kilo")) {
-            this.measure = new SI("Gram", "g", "kg", "");
-            this.quantity *= 1000;
-        }
-        else if (this.quantity >= 1000 && this.measure.getUnit().contains("Gram")) {
-            this.measure = new SI("Kilogram", "kg", "kg", "Kilo");
-            this.quantity /= 1000;
-        }
-        else if (this.quantity >= 1.0 && this.measure.getUnit().contains("Desi")) {
-            this.measure = new SI("Liter", "L", "L","Desi");
-            this.quantity /= 10;
-        }
+    public SI getUnit() {
+        return unit;
     }
 
-    public double addAmount(final double amount) {
+    public double convertUnit () {
+        if (this.quantity < 1.0 && this.unit.getPrefix().equals("")) {
+            this.unit = new SI("Desiliter", "dL","L", "Desi");
+            this.quantity *= 10;
+        }
+        else if (this.quantity >= 10.0 && this.unit.getPrefix().equals("Desi")) {
+            this.unit = new SI("Liter", "L", "L","Desi");
+            this.quantity /= 10;
+        }
+        else if (this.quantity < 1.0 && this.unit.getPrefix().equals("Kilo")) {
+            this.unit = new SI("Gram", "g", "kg", "");
+            this.quantity *= 1000;
+        }
+        else if (this.quantity >= 1000.0 && this.unit.getPrefix().equals("Gram")) {
+            this.unit = new SI("Kilogram", "kg", "kg", "Kilo");
+            this.quantity /= 1000;
+        }
+
+        return quantity;
+    }
+
+    public double addAmount(final double amount, final SI amountUnit) {
         if (amount > 0) {
-            this.quantity += amount*measure.getConvertionFactor();
+            this.quantity =  (double)(Math.round((this.quantity+amount*amountUnit.getConvertionFactor())*100))/100;
             convertUnit();
+
             return quantity;
         }
         else {
@@ -101,14 +116,21 @@ public class Grocery {
         }
     }
 
-    public double removeAmount(final double amount) {
+    public double removeAmount(final double amount, SI amountUnit) {
         if (amount > 0) {
-            this.quantity -= amount;
+            /*
+            System.out.println("quantity: " + this.quantity + " L.");
+            System.out.println("amount: " + amount*amountUnit.getConvertionFactor() + " L.");
+            System.out.println("difference: " + (double)(Math.round((this.quantity-amount*amountUnit.getConvertionFactor())*100))/100 + " L.");
+             */
+
+            this.quantity = (double)(Math.round((this.quantity-amount*amountUnit.getConvertionFactor())*100))/100;
+            convertUnit();
+
             if (this.quantity <= 0) {
                 this.fridge.removeGrocery(this);
                 return 0;
             }
-            convertUnit();
             return quantity;
         }
         else {
