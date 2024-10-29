@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Fridge.java" afterDir="false" />
@@ -40,6 +42,9 @@
     &quot;accountId&quot;: &quot;cad34979-4cea-4e83-bc06-4ad9a8e14cfe&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -73,6 +78,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "Errors",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -84,7 +90,7 @@
       <recent name="edu.ntnu.idi.idatt" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.Run all Tests">
     <configuration name="Run Program" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.Client" />
       <module name="Foodwaste" />
@@ -193,10 +199,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.GroceryTest.groceryGetDate" />
         <item itemvalue="JUnit.GroceryTest.groceryFailRemoveAmount" />
         <item itemvalue="JUnit.GroceryTest.groceryRemoveAmount" />
         <item itemvalue="JUnit.GroceryTest.groceryConvertUnit" />
-        <item itemvalue="JUnit.GroceryTest.groceryGetDate" />
         <item itemvalue="JUnit.FridgeTest.removeGrocery" />
       </list>
     </recent_temporary>
@@ -219,11 +225,15 @@
       <updated>1729495267799</updated>
       <workItem from="1729495268724" duration="4993000" />
       <workItem from="1729953363495" duration="12717000" />
-      <workItem from="1729971442903" duration="896000" />
+      <workItem from="1729971442903" duration="27136000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

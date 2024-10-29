@@ -49,7 +49,7 @@ public class Grocery {
     public Grocery (String name, SI measure, double quantity, LocalDate date, double price, Fridge fridge) {
         this.name = name;
         this.unit = measure;
-        this.quantity = quantity * unit.getConvertionFactor();
+        this.quantity = quantity;
         this.bestBefore = date;
         this.price = price;
         this.fridge = fridge;
@@ -63,7 +63,7 @@ public class Grocery {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         return formatter.format(bestBefore);
     }
-    private LocalDate getDate() {
+    public LocalDate getDate() {
         return bestBefore;
     }
 
@@ -92,6 +92,14 @@ public class Grocery {
             this.unit = new SI("Liter", "L", "L","Desi");
             this.quantity /= 10;
         }
+        else if (this.quantity < 1.0 && this.unit.getPrefix().equals("Desi")) {
+            this.unit = new SI("Milliliter", "mL", "L","Milli");
+            this.quantity *= 100;
+        }
+        else if (this.quantity >= 100 && this.unit.getPrefix().equals("Milli")) {
+            this.unit = new SI("Desiliter", "dL", "L","Desi");
+            this.quantity /= 100;
+        }
         else if (this.quantity < 1.0 && this.unit.getPrefix().equals("Kilo")) {
             this.unit = new SI("Gram", "g", "kg", "");
             this.quantity *= 1000;
@@ -106,8 +114,16 @@ public class Grocery {
 
     public double addAmount(final double amount, final SI amountUnit) {
         if (amount > 0) {
-            this.quantity =  (double)(Math.round((this.quantity+amount*amountUnit.getConvertionFactor())*100))/100;
-            convertUnit();
+            if (this.unit.getAbrev().equals("stk") && amountUnit.getAbrev().equals("stk")) {
+                this.quantity += amount;
+            }
+            else if (this.unit.getAbrev().equals("stk") || amountUnit.getAbrev().equals("stk")) {
+                System.err.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
+            }
+            else {
+                this.quantity =  (double)(Math.round((this.quantity*unit.getConvertionFactor()+amount*amountUnit.getConvertionFactor())*100))/100;
+                convertUnit();
+            }
 
             return quantity;
         }
@@ -118,14 +134,16 @@ public class Grocery {
 
     public double removeAmount(final double amount, SI amountUnit) {
         if (amount > 0) {
-            /*
-            System.out.println("quantity: " + this.quantity + " L.");
-            System.out.println("amount: " + amount*amountUnit.getConvertionFactor() + " L.");
-            System.out.println("difference: " + (double)(Math.round((this.quantity-amount*amountUnit.getConvertionFactor())*100))/100 + " L.");
-             */
-
-            this.quantity = (double)(Math.round((this.quantity-amount*amountUnit.getConvertionFactor())*100))/100;
-            convertUnit();
+            if (this.unit.getAbrev().equals("stk") && amountUnit.getAbrev().equals("stk")) {
+                this.quantity -= amount;
+            }
+            else if (this.unit.getAbrev().equals("stk") || amountUnit.getAbrev().equals("stk")) {
+                System.err.println("Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
+            }
+            else {
+                this.quantity = (double)(Math.round((this.quantity*unit.getConvertionFactor()-amount*amountUnit.getConvertionFactor())*100))/100;
+                convertUnit();
+            }
 
             if (this.quantity <= 0) {
                 this.fridge.removeGrocery(this);
@@ -139,6 +157,6 @@ public class Grocery {
     }
 
     public boolean hasExpired() {
-        return this.bestBefore.compareTo(LocalDate.now()) <= 0;
+        return this.bestBefore.compareTo(LocalDate.now()) < 0;
     }
 }

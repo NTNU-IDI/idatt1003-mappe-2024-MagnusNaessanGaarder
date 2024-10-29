@@ -17,11 +17,13 @@ public class SI {
     */
     private static final HashMap<String, Double> SI_PREFIXES = new HashMap<>();
     static {
-        SI_PREFIXES.put("", 1.0);         // No prefix = base unit
-        SI_PREFIXES.put("Milli", 0.001);  // 1 base unit = 1000 millibases
-        SI_PREFIXES.put("Centi", 0.01);   // 1 base unit = 100 centibases
-        SI_PREFIXES.put("Desi", 0.1);     // 1 base unit = 10 decibases
-        SI_PREFIXES.put("Kilo", 1000.0);  // 1 kilobase = 1000 base units
+        SI_PREFIXES.put("", 1.0);         // uten prefix = base unit
+        SI_PREFIXES.put("Milli", 0.001);  // 1 basisenhet = 1000 millienheter
+        SI_PREFIXES.put("Centi", 0.01);   // 1 basisenhet = 100 centienheter
+        SI_PREFIXES.put("Desi", 0.1);     // 1 basisenhet = 10 desienheter
+        SI_PREFIXES.put("Kilo", 1000.0);  // 1 kiloenhet = 1000 basisenheter
+        SI_PREFIXES.put("Teskje", 0.015);     // 1 basisenhet = ca. 67 desienheter
+        SI_PREFIXES.put("Spiseskje", 0.005);  // 1 basisenhet = 200 centienheter
     }
 
     //konstruktør for klassen SI
@@ -31,7 +33,18 @@ public class SI {
         this.unitForPrice = unitForPrice;
         this.prefix = prefix;
 
-        this.convertionFactor = SI_PREFIXES.getOrDefault(prefix,1.0);
+        if (unitAbrev.equals("stk")) {
+            this.convertionFactor = 1;
+        }
+        else {
+            this.convertionFactor = SI_PREFIXES.getOrDefault(prefix,1.0);
+        }
+
+    }
+
+    //get metode for å få SI_PREFIX hashmapet
+    public static HashMap<String, Double> getSIPrefixes() {
+        return SI_PREFIXES;
     }
 
     //get metode for å få SI-enheten
