@@ -66,6 +66,7 @@ public class Client {
             }
             case 2 -> {
                 //Oversikt over datovarer
+                //display();
             }
             case 3 -> {
                 //Legg til vare
@@ -114,11 +115,17 @@ public class Client {
         }
         else {
             for (int i = 0; i < fridge.getGroceryList().size(); i++) {
-                str.append(topBar).append("                   ").append(fridge.getGrocery(i).getName()).append("\n").append(topBar);
-                str.append("           Vare ID: ").append(i + 1);
-                str.append("           Mengde: ").append(fridge.getGrocery(i).getQuantity()).append(" ").append(fridge.getGrocery(i).getUnit().getAbrev()).append("\n");
-                str.append("           Pris: ").append(fridge.getGrocery(i).getPriceToStr()).append("\n");
-                str.append("           Dato: ").append(fridge.getGrocery(i).getDateToStr()).append("\n\n");
+                Table groceryTable = new Table(fridge.getGrocery(i).getName(),
+                        new String[]{"VareID", "Mengde","Pris","Dato"},
+                        new String[]{
+                                Integer.toString(i+1),
+                                fridge.getGrocery(i).getQuantity()+ " " + fridge.getGrocery(i).getUnit().getAbrev(),
+                                fridge.getGrocery(i).getPriceToStr(),
+                                fridge.getGrocery(i).getDateToStr()
+                        }
+                );
+
+                str.append(groceryTable.createTable());
             }
         }
         System.out.println(str);
@@ -149,10 +156,13 @@ public class Client {
         String topBar = "-------------------------------------------------------------------------------------------------------------------------\n";
         str.append(topBar).append("                                                       ENDRE VARE\n").append(topBar).append("\n");
 
-        str.append("           Vare: ").append(grocery.getName()).append("\n");
-        str.append("           Mengde: ").append(grocery.getQuantity()).append(" ").append(grocery.getUnit().getAbrev()).append("\n");
-        str.append("           Pris: ").append(grocery.getPriceToStr()).append("\n");
-        str.append("           Dato: ").append(grocery.getDateToStr()).append("\n\n");
+        Table groceryTable = new Table(grocery.getName(),
+                new String[]{"Mengde","Pris","Dato"},
+                new String[]{grocery.getQuantity() + " " + grocery.getUnit().getAbrev(), grocery.getPriceToStr(),grocery.getDateToStr()}
+        );
+
+        str.append(groceryTable.createTable());
+        str.append("\n\n");
 
         str.append("                                  Velg en handling i listen under:\n\n");
 

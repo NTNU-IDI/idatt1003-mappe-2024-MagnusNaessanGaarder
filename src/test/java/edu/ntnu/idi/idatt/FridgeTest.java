@@ -83,4 +83,31 @@ class FridgeTest {
 
         assertEquals("2 varer er gått ut på dato.\nDu har tapt 72,75 kr.",fridge.getMoneyLoss(), "Did not get expected money loss.");
     }
+
+    @Test
+    void getSortedList() {
+        SI kg = new SI("Kilogram", "kg","kg","Kilo");
+        SI L = new SI("Liter", "L","L","");
+        SI dL = new SI("Desiliter", "dL","L","Desi");
+        SI stk = new SI("Stykker", "stk","stk","");
+
+        Fridge fridge = new Fridge();
+        Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.of(2023,3,24), 49, fridge);
+        Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.of(2023,3,20), 100, fridge);
+        Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023,3,21), 25, fridge);
+        Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2023,9,19), 3, fridge);
+
+        fridge.addGrocery(grocery1);
+        fridge.addGrocery(grocery2);
+        fridge.addGrocery(grocery3);
+        fridge.addGrocery(grocery4);
+
+        ArrayList<Grocery> expectedValues = new ArrayList<Grocery>();
+        expectedValues.add(grocery2);
+        expectedValues.add(grocery3);
+        expectedValues.add(grocery1);
+        expectedValues.add(grocery4);
+
+        assertEquals(expectedValues, fridge.getDateSorted(), "Did not get expected dateSorted.");
+    }
 }

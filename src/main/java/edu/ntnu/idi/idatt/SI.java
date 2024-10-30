@@ -5,11 +5,11 @@ import java.util.HashMap;
 public class SI {
 
     //Datafelt med globale variabler innenfor SI-enhet-scopet.
-    private String unit;
-    private String prefix;
-    private String unitAbrev;
-    private String unitForPrice;
-    private double convertionFactor;
+    final private String unit;
+    final private String prefix;
+    final private String unitAbrev;
+    final private String unitForPrice;
+    final private double convertionFactor;
 
     /*Hjelp av ChatGPT - lager et HashMap med en static block som initialiserer
     * ulike verdier til HashMap-et. I dette tilfellet er verdiene i HashMap-et

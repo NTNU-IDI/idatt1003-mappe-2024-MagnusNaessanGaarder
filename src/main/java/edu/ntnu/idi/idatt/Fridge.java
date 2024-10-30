@@ -1,7 +1,10 @@
 package edu.ntnu.idi.idatt;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Fridge {
@@ -51,17 +54,31 @@ public class Fridge {
         }
     }
 
-    public String getMoneyLoss() {
-        ArrayList<Grocery> expiredGroceries = new ArrayList<>();
-        for (Grocery grocery : groceryList) {
-            if (grocery.hasExpired()) {
-                expiredGroceries.add(grocery);
-            }
+    public List<Grocery> getListSortedDate(ArrayList<Grocery> list) {
+        if (list.isEmpty() || list.size() == 1) {
+            return list;
         }
 
-        //Funker ikke med stream
-        /*ArrayList<Grocery> expiredGroceries = Stream.of(groceryList)
-                .filter(grocery -> grocery.hasExpired());*/
+        return list.stream().sorted(Comparator.comparing(Grocery::getDate)).toList();
+    }
+
+    public List<Grocery> getListSortedDate() {
+        return this.groceryList.stream().sorted(Comparator.comparing(Grocery::getDate)).toList();
+    }
+
+    public List<Grocery> getExpiredList() {
+        if (this.groceryList.isEmpty()) {
+            return this.groceryList;
+        }
+        return groceryList.stream().filter(Grocery::hasExpired).toList();
+    }
+
+    public List<Grocery> getNearExpList() {
+        return groceryList.stream().filter(g -> !g.hasExpired() && g.getDate().isAfter(LocalDate.now()) && g.getDate().compareTo(LocalDate.now()) <= 3).toList();
+    }
+
+    public String getMoneyLoss() {
+        List<Grocery> expiredGroceries = getExpiredList();
 
         if (expiredGroceries.isEmpty()) {
             return "Ingen varer er gått ut på dato";
