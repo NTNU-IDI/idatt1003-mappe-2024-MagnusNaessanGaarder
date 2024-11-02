@@ -34,6 +34,12 @@ package edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
+import org.w3c.dom.ls.LSOutput;
+
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -59,21 +65,24 @@ public class Client {
     }
 
     public static void menuOption(int userInput) {
+        clearScreen();
+
         switch (userInput) {
             case 1 -> {
+                //legg til
+
+            }
+            case 2 -> {
+                //Fjern
+
+            }
+            case 3 -> {
                 //Oversikt over kjøleskapet
                 displayFridge();
             }
-            case 2 -> {
-                //Oversikt over datovarer
-                //display();
-            }
-            case 3 -> {
-                //Legg til vare
-            }
             case 4 -> {
-                //Fjern vare
-                break;
+                //Oversikt over datovarer
+                displayByDate();
             }
             case 5 -> {
                 //Samlet verdi av varer
@@ -84,6 +93,21 @@ public class Client {
             default -> {
                 clearScreen();
             }
+        }
+    }
+
+    public static void displayList(List<Grocery> list) {
+        for (int i = 0; i < list.size(); i++) {
+            Table groceryTable = new Table(list.get(i).getName(),
+                    new String[]{"VareID", "Mengde","Pris","Dato"},
+                    new String[]{
+                            Integer.toString(i+1),
+                            list.get(i).getQuantity()+ " " + list.get(i).getUnit().getAbrev(),
+                            list.get(i).getPriceToStr(),
+                            list.get(i).getDateToStr()
+                    }
+            );
+            str.append(groceryTable.createTable());
         }
     }
 
@@ -100,6 +124,115 @@ public class Client {
             }
             else {
                 System.err.println("Ugyldig brukerinput.");
+            }
+        }
+    }
+
+    public static void displayByDate() {
+        str = new StringBuilder();
+        String topBar = "-------------------------------------------------------------------------------------------------------------------------\n";
+        str.append(topBar).append("                                                       DATOVARER\n").append(topBar);
+        str.append("                                  Her er en liste med datovarer i kjøleskapet:\n\n");
+
+        if (fridge.getExpiredList().isEmpty()) {
+            str.append("            ---- Ingen varer er gått ut på dato i kjøleskapet ----\n\n");
+        }
+        else {
+            displayList(fridge.getExpiredList());
+        }
+
+        if (fridge.getNearExpList().isEmpty()) {
+            str.append("            ---- Ingen varer er i ferd med å gå ut på dato i kjøleskapet ----\n\n");
+        }
+        else {
+            displayList(fridge.getNearExpList());
+        }
+
+        if (fridge.getRestGroceryList().isEmpty()) {
+            str.append("            ---- Ingen varer med lenger holdbarhetstid i kjøleskapet ----\n\n");
+        }
+        else {
+            displayList(fridge.getRestGroceryList());
+        }
+
+        if (!fridge.getGroceryList().isEmpty()) {
+            String[] colTitle = new String[fridge.getGroceryList().size() + 1];
+            colTitle[0] = "Vare";
+
+            String[] colData = new String[fridge.getGroceryList().size() + 1];
+            colData[0] = "Pris";
+
+            for (int i = 1; i < fridge.getExpiredList().size(); i++) {
+                colTitle[i] = fridge.getExpiredList().get(i).getName();
+                colData[i] = fridge.getExpiredList().get(i).getPriceToStr();
+            }
+
+            Table groceryTable = new Table("Total pengetap av datovarer",
+                    colTitle,
+                    colData
+            );
+            str.append(groceryTable.createTable());
+            str.append(fridge.getMoneyLoss());
+        }
+
+        System.out.println(str);
+
+
+        while (true) {
+            str = new StringBuilder();
+
+            if (fridge.getExpiredList().isEmpty()) {
+                System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
+            }
+            else {
+                System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-delete\" for å slette en vare.\n"
+                        + "Skriv \"-delete all\" for å slette alle utgåtte varer.");
+            }
+
+            String userInput = getInput();
+            if (userInput.equals("-e")) {
+                break;
+            }
+            else if (userInput.equals("-delete") && !fridge.getExpiredList().isEmpty()) {
+                try {
+                    clearScreen();
+                    displayList(fridge.getExpiredList());
+                    System.out.println("Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet." +
+                            "Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet.");
+
+                    userInput = getInput();
+                    String[] deleteStrArr = userInput.replaceAll("\\s+","").split(",");
+                    int[] deleteArr = Arrays.stream(deleteStrArr).mapToInt(Integer::parseInt).toArray();
+
+                    for (int groceryIndex : deleteArr) {
+                        Grocery removableGrocery = fridge.getExpiredList().get(groceryIndex - 1);
+                        if (fridge.getGroceryList().contains(removableGrocery)) {
+                            fridge.removeGrocery(removableGrocery);
+                        }
+                        else {
+                            System.err.println("Kunne ikke fjerne "  + removableGrocery.getName() + " fra kjøleskapet.");
+                        }
+                    }
+
+                    System.out.println("Alle gyldige valgte datovarer er nå fjernet!\n");
+                }
+                catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+            else if (userInput.equals("-delete all") && !fridge.getExpiredList().isEmpty()) {
+                clearScreen();
+                for(Grocery expiredItem : fridge.getExpiredList()) {
+                    fridge.removeGrocery(expiredItem);
+                }
+                System.out.println("Alle datovarer er nå fjernet!\n");
+            }
+            else if (fridge.getGroceryList().isEmpty() && userInput.contains("-delete")) {
+                clearScreen();
+                System.err.println("Det finnes ingen datovarer. Kan ikke fjerne datovarer fra kjøleskapet.");
+            }
+            else {
+                throw new IllegalArgumentException("Ugyldig kommando. \"\"");
             }
         }
     }
@@ -124,7 +257,6 @@ public class Client {
                                 fridge.getGrocery(i).getDateToStr()
                         }
                 );
-
                 str.append(groceryTable.createTable());
             }
         }
@@ -284,10 +416,10 @@ public class Client {
             str.append("           Bruk en kommando for å navigere. For å få en overikt over tilgjengelige kommandoer skriv \"-help\".\n");
             str.append("           Velg et alternativ under ved å skrive et tall:\n\n");
 
-            str.append("                   [1] Oversikt over kjøleskapet.\n");
-            str.append("                   [2] Oversikt over datovarer.\n");
-            str.append("                   [3] Legg til vare.\n");
-            str.append("                   [4] Fjern vare.\n");
+            str.append("                   [1] Legg til vare.\n");
+            str.append("                   [2] Fjern vare.\n");
+            str.append("                   [3] Oversikt over kjøleskapet.\n");
+            str.append("                   [4] Oversikt over datovarer.\n");
             str.append("                   [5] Samlet verdi av varer.\n");
             str.append("                   [6] Avslutt.\n");
             System.out.println(str);
@@ -295,11 +427,11 @@ public class Client {
             int userInput = 0;
             do {
                 userInput = Integer.parseInt(getInput());
-                if (userInput < 0 || userInput > 5) {
+                if (userInput < 0 || userInput > 6) {
                     System.err.println("Input er for stor eller for liten. Brukerinputen må være i intervallet [0,5].");
                 }
             }
-            while (userInput < 0 || userInput > 5);
+            while (userInput < 0 || userInput > 6);
 
             menuOption(userInput);
 

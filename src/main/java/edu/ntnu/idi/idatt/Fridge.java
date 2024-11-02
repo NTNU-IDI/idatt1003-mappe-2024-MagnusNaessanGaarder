@@ -54,27 +54,38 @@ public class Fridge {
         }
     }
 
-    public List<Grocery> getListSortedDate(ArrayList<Grocery> list) {
+    private List<Grocery> getListSortedDate(List<Grocery> list) {
         if (list.isEmpty() || list.size() == 1) {
             return list;
         }
 
-        return list.stream().sorted(Comparator.comparing(Grocery::getDate)).toList();
-    }
-
-    public List<Grocery> getListSortedDate() {
-        return this.groceryList.stream().sorted(Comparator.comparing(Grocery::getDate)).toList();
+        return list.stream()
+                .sorted(Comparator.comparing(Grocery::getDate))
+                .toList();
     }
 
     public List<Grocery> getExpiredList() {
         if (this.groceryList.isEmpty()) {
             return this.groceryList;
         }
-        return groceryList.stream().filter(Grocery::hasExpired).toList();
+        return this.getListSortedDate(
+                this.groceryList.stream()
+                    .filter(Grocery::hasExpired)
+                    .toList());
     }
 
     public List<Grocery> getNearExpList() {
-        return groceryList.stream().filter(g -> !g.hasExpired() && g.getDate().isAfter(LocalDate.now()) && g.getDate().compareTo(LocalDate.now()) <= 3).toList();
+        return this.getListSortedDate(
+                groceryList.stream()
+                        .filter(g -> !g.hasExpired() && g.getDate().isAfter(LocalDate.now()) && g.getDate().compareTo(LocalDate.now()) <= 3)
+                        .toList());
+    }
+
+    public List<Grocery> getRestGroceryList() {
+        return this.getListSortedDate(
+                groceryList.stream()
+                    .filter(g -> g.getDate().compareTo(LocalDate.now()) > 3)
+                    .toList());
     }
 
     public String getMoneyLoss() {
