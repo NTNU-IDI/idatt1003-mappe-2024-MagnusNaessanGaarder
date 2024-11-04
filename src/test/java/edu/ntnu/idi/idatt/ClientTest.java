@@ -2,9 +2,7 @@ package edu.ntnu.idi.idatt;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
