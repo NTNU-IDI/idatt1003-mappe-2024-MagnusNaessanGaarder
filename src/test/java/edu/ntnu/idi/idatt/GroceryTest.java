@@ -86,9 +86,9 @@ class GroceryTest {
     @Test
     void groceryHasExpired() {
         Grocery grocery1 = new Grocery("Melk", new SI("Desiliter", "dl","L","Desi"), 9, LocalDate.now(), 10, null);
-        assertEquals(false,grocery1.hasExpired(), "Expected grocery to be expired");
+        assertFalse(grocery1.hasExpired(), "Expected grocery to be expired");
 
         Grocery grocery2 = new Grocery("Melk", new SI("Desiliter", "dl","L","Desi"), 9, LocalDate.of(2023,12,24), 10, null);
-        assertEquals(true,grocery2.hasExpired(), "Expected grocery to be expired");
+        assertTrue(grocery2.hasExpired(), "Expected grocery to be expired");
     }
 }

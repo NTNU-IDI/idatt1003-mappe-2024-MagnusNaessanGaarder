@@ -13,10 +13,11 @@ class TableTest {
 
         Table testTable = new Table(title,colTitle,colData);
         String expectedStr =
-                "━━━━━━━━━━━━━━━━━━━━━━━━Title━━━━━━━━━━━━━━━━━━━━━━━━\n"
-                        +"|       testTittel1       |          data1          |\n"
-                        +"|       testTittel2       |          data2          |\n"
-                + "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+                """
+                        ————————————————————————Title————————————————————————
+                        |       testTittel1       |          data1          |
+                        |       testTittel2       |          data2          |
+                        —————————————————————————————————————————————————————""";
 
 
         assertEquals(expectedStr, testTable.createTable());

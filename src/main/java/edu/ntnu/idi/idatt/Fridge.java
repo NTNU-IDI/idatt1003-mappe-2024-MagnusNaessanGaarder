@@ -6,12 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Fridge {
-    private ArrayList<Grocery> groceryList;
-
-    public Fridge(final Grocery grocery) {
-        this.groceryList = new ArrayList<>(0);
-        this.groceryList.add(grocery);
-    }
+    final private ArrayList<Grocery> groceryList;
 
     public Fridge() {
         this.groceryList = new ArrayList<>(0);
@@ -84,7 +79,7 @@ public class Fridge {
     public List<Grocery> getNearExpList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                        .filter(g -> !g.hasExpired() && g.getDate().isAfter(LocalDate.now()) && g.getDate().compareTo(LocalDate.now()) <= 3)
+                        .filter(g -> g.getDate().compareTo(LocalDate.now()) <= 3)
                         .toList());
     }
 

@@ -17,7 +17,7 @@ class FridgeTest {
         fridge.addGrocery(grocery);
 
         //lager en test-liste som inneholder varen lagd ovenfor.
-        ArrayList<Grocery> testList = new ArrayList<Grocery>();
+        ArrayList<Grocery> testList = new ArrayList<>();
         testList.add(grocery);
 
         //tester om test-listen samsvarer med listen over varer i kjøleskapet.
@@ -59,7 +59,7 @@ class FridgeTest {
         fridge.addGrocery(grocery);
 
         fridge.removeGrocery(grocery);
-        ArrayList<Grocery> emptyList = new ArrayList<Grocery>(0);
+        ArrayList<Grocery> emptyList = new ArrayList<>(0);
         assertEquals(emptyList,fridge.getGroceryList(), "Did not remove grocery as expected.");
     }
 
@@ -73,7 +73,7 @@ class FridgeTest {
         Fridge fridge = new Fridge();
         Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.now(), 49, fridge);
         Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 100, fridge);
-        Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023,03,21), 25, fridge);
+        Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023, 3,21), 25, fridge);
         Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2024,9,30), 3, fridge);
 
         fridge.addGrocery(grocery1);
@@ -94,7 +94,7 @@ class FridgeTest {
         Fridge fridge = new Fridge();
         Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.of(2023,3,24), 49, fridge);
         Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.of(2023,3,20), 100, fridge);
-        Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023,3,21), 25, fridge);
+        Grocery grocery3 = new Grocery ("Coca-Cola", dL, 7.5, LocalDate.of(2023,3,21), 25, fridge);
         Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2023,9,19), 3, fridge);
 
         fridge.addGrocery(grocery1);

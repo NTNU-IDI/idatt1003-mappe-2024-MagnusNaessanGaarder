@@ -1,12 +1,9 @@
 package edu.ntnu.idi.idatt;
 
-import java.util.List;
-import java.util.Objects;
-
 public class Table {
-    private String title;
-    private String[] colTitleArr;
-    private String[] colData;
+    final private String title;
+    final private String[] colTitleArr;
+    final private String[] colData;
 
     public Table(String title, String[] colTitles, String[] colData) {
         if (colTitles.length != colData.length) {
@@ -37,17 +34,15 @@ public class Table {
     public String createTable() {
         StringBuilder sb = new StringBuilder();
         String longBar = "————————————————————————";
-        String bottomBar = longBar + longBar;
-        for (int i = 0; i < title.length(); i++) {
-            bottomBar += "—";
-        }
+        StringBuilder bottomBar = new StringBuilder(longBar + longBar);
+        bottomBar.append("—".repeat(title.length()));
 
         sb.append(longBar);
         sb.append(title);
         sb.append(longBar);
         sb.append("\n");
 
-        final StringBuilder tableData = getTableData(bottomBar);
+        final StringBuilder tableData = getTableData(bottomBar.toString());
         sb.append(tableData);
         sb.append(bottomBar);
 
@@ -66,7 +61,7 @@ public class Table {
             rightStr += String.format("%"+ (rightPadding) +"s|", "");
 
             tableData.append(leftStr);
-            tableData.append(rightStr + "\n");
+            tableData.append(rightStr).append("\n");
         }
         return tableData;
     }

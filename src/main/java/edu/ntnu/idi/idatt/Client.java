@@ -36,7 +36,6 @@ package edu.ntnu.idi.idatt;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.List;
 import java.util.Arrays;
 
 public class Client {
@@ -64,33 +63,25 @@ public class Client {
     public static void menuOption(int userInput) {
         clearScreen();
         switch (userInput) {
-            case 1 -> {
-                //legg til
-                addToFridge();
-            }
-            case 2 -> {
-                //Fjern
-                removeFromFridge();
-            }
-            case 3 -> {
-                //Oversikt over kjøleskapet
-                displayFridge();
-            }
-            case 4 -> {
-                //Oversikt over datovarer
-                displayByDate();
-            }
-            case 5 -> {
-                //Samlet verdi av varer
-                displayValue();
-            }
-            case 6 -> {
-                //avslutt program
-                finish();
-            }
-            default -> {
-                System.err.println("Input er ugyldig. Brukerinputen må være i intervallet [0,5].");
-            }
+            //legg til
+            case 1 -> addToFridge();
+
+            //Fjern
+            case 2 -> removeFromFridge();
+
+            //Oversikt over kjøleskapet
+            case 3 -> displayFridge();
+
+            //Oversikt over datovarer
+            case 4 -> displayByDate();
+
+            //Samlet verdi av varer
+            case 5 -> displayValue();
+
+            //avslutt program
+            case 6 -> finish();
+
+            default -> System.err.println("Input er ugyldig. Brukerinputen må være i intervallet [0,5].");
         }
     }
 
@@ -98,7 +89,7 @@ public class Client {
         str = new StringBuilder();
         final Display display = new Display("SAMLET PRIS PÅ VARER", "Under er en oversikt over total prissum på varer:", fridge);
         str.append(display.getTitle());
-        str.append(display.displayPrice(fridge.getGroceryList(),"Vare","Pris på mengde"));
+        str.append(display.displayPrice(fridge.getGroceryList(),"Prisoversikt","Vare","Pris på mengde"));
         System.out.println(str);
 
         System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
@@ -392,12 +383,11 @@ public class Client {
 
         if (!userInput.equals("-e")) {
             switch (Integer.parseInt(userInput)) {
-                case 1 -> {
-                    addAmountGrocery(grocery);
-                }
-                case 2 -> {
-                    removeAmountGrocery(grocery);
-                }
+                //legg til mengde til varen
+                case 1 -> addAmountGrocery(grocery);
+
+                //legg til mengde til varen
+                case 2 -> removeAmountGrocery(grocery);
                 case 3 -> {
                     //sjekk om en vare er gått ut på dato
                     try{
@@ -427,9 +417,7 @@ public class Client {
                         System.err.println(e.getMessage());
                     }
                 }
-                default -> {
-                    System.err.println("Ugyldig input. ");
-                }
+                default -> System.err.println("Ugyldig input. ");
             }
         }
     }
