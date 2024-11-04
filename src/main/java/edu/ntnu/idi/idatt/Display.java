@@ -79,14 +79,14 @@ public class Display {
 
     public static String displayList(List<Grocery> list) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            Table groceryTable = new Table(list.get(i).getName(),
-                    new String[]{"VareID", "Mengde","Pris","Dato"},
+        for (Grocery grocery : list) {
+            Table groceryTable = new Table(grocery.getName(),
+                    new String[]{"VareID", "Mengde", "Pris", "Dato"},
                     new String[]{
-                            Integer.toString(i+1),
-                            list.get(i).getQuantity()+ " " + list.get(i).getUnit().getAbrev(),
-                            list.get(i).getPriceToStr(),
-                            list.get(i).getDateToStr()
+                            grocery.getGroceryID() + "",
+                            grocery.getQuantity() + " " + grocery.getUnit().getAbrev(),
+                            grocery.getPriceToStr(),
+                            grocery.getDateToStr()
                     }
             );
             sb.append(groceryTable.createTable());

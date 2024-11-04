@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Fridge {
     final private ArrayList<Grocery> groceryList;
+    final private int NEAR_EXPIRATION = 3;
 
     public Fridge() {
         this.groceryList = new ArrayList<>(0);
@@ -79,14 +80,14 @@ public class Fridge {
     public List<Grocery> getNearExpList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                        .filter(g -> g.getDate().compareTo(LocalDate.now()) <= 3)
-                        .toList());
+                    .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().compareTo(LocalDate.now()) <= NEAR_EXPIRATION)
+                    .toList());
     }
 
     public List<Grocery> getRestGroceryList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                    .filter(g -> g.getDate().compareTo(LocalDate.now()) > 3)
+                    .filter(g -> g.getDate().compareTo(LocalDate.now()) > NEAR_EXPIRATION)
                     .toList());
     }
 

@@ -144,7 +144,7 @@ public class Client {
             String name;
             SI measure;
             double quantity;
-            LocalDate date;
+            LocalDate date = null;
             double price;
 
             //navn på varen
@@ -164,19 +164,47 @@ public class Client {
             quantity = Double.parseDouble(String.join(",", quantityStr.split("/[,.]/gm")));
 
             //Best-før dato
-            int day, month, year;
+            int day = 0;
+            int month = 0;
+            int year = 0;
+            
+            boolean valid = false;
+
             do {
-                System.out.print("          Skriv best-før dato på formatet DD-MM-YYYY: ");
-                userInput = getInput();
+                try{
+                    String[] splitDateStr = userInput.split("-");
+                    for (String s : splitDateStr) {
+                        if (s.charAt(0) == '0') {
+                            if (s.equals(splitDateStr[0])) {
+                                String str = userInput.substring(0,userInput.indexOf('-'));
+                                day = Integer.parseInt(String.join("", str.split("^0")));
+                            }
+                            else if (s.equals(splitDateStr[1])) {
+                                String str = userInput.substring(userInput.indexOf('-')+1, userInput.indexOf('-',4));
+                                month = Integer.parseInt(String.join("",str.split("^0")));
+                            }
+                        }
+                        else {
+                            if (s.equals(splitDateStr[0])) {
+                                day = Integer.parseInt(s);
+                            }
+                            else if (s.equals(splitDateStr[1])) {
+                                month = Integer.parseInt(s);
+                            }
+                            else {
+                                year = Integer.parseInt(s);
+                            }
+                        }
+                    }
 
-                String[] splitDateStr = userInput.split("-");
-                day = Integer.parseInt(String.join(Arrays.toString(splitDateStr[0].split("/^0/gm"))));
-                month = Integer.parseInt(String.join(Arrays.toString(splitDateStr[1].split("/^0/gm"))));
-                year = Integer.parseInt(String.join(Arrays.toString(splitDateStr[2].split("/^0/gm"))));
+                    date = LocalDate.of(year,month,day);
+                    valid = true;
+                }
+                catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
             }
-            while (isValidDate(day, month, year));
-
-            date = LocalDate.of(year,month,day);
+            while (!valid);
 
             //pris
             assert measure != null;
@@ -222,17 +250,6 @@ public class Client {
         catch (Exception e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    public static boolean isValidDate(int day, int month, int year) {
-        try {
-            LocalDate date = LocalDate.of(year,month,day);
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-        return true;
     }
 
     public static void finish() {
