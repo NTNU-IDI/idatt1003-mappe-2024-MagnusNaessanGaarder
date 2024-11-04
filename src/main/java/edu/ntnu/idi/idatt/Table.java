@@ -18,13 +18,28 @@ public class Table {
         this.colData = colData;
     }
 
-    public String createTable() {
+    private static String createWhitespace(int length, int wordLength) {
+        int wsLength = length/2 - wordLength;
+        return " ".repeat(Math.max(0, wsLength));
+    }
 
+    public static String createMenuTable(String title, String subTitle) {
+        String longBar = "————————————————————————————————————————————————————————————————————————————————————————————————";
+
+        return longBar + "\n\n" +
+                createWhitespace(longBar.length(), title.length()) +
+                title + "\n\n" +
+                longBar + "\n" +
+                createWhitespace("              ".length(), title.length()) +
+                subTitle + "\n\n";
+    }
+
+    public String createTable() {
         StringBuilder sb = new StringBuilder();
-        String longBar = "━━━━━━━━━━━━━━━━━━━━━━━━";
+        String longBar = "————————————————————————";
         String bottomBar = longBar + longBar;
         for (int i = 0; i < title.length(); i++) {
-            bottomBar += "━";
+            bottomBar += "—";
         }
 
         sb.append(longBar);

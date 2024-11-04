@@ -34,13 +34,10 @@ package edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.List;
+import java.util.Arrays;
 
 public class Client {
 
@@ -52,7 +49,7 @@ public class Client {
 
     public static String getInput() {
         String data = "";
-        while (myReader.hasNextLine()) {
+        if (myReader.hasNextLine()) {
             data = myReader.nextLine();
             return data;
         }
@@ -66,15 +63,14 @@ public class Client {
 
     public static void menuOption(int userInput) {
         clearScreen();
-
         switch (userInput) {
             case 1 -> {
                 //legg til
-
+                addToFridge();
             }
             case 2 -> {
                 //Fjern
-
+                removeFromFridge();
             }
             case 3 -> {
                 //Oversikt over kjøleskapet
@@ -86,29 +82,166 @@ public class Client {
             }
             case 5 -> {
                 //Samlet verdi av varer
+                displayValue();
             }
             case 6 -> {
+                //avslutt program
                 finish();
             }
             default -> {
-                clearScreen();
+                System.err.println("Input er ugyldig. Brukerinputen må være i intervallet [0,5].");
             }
         }
     }
 
-    public static void displayList(List<Grocery> list) {
-        for (int i = 0; i < list.size(); i++) {
-            Table groceryTable = new Table(list.get(i).getName(),
-                    new String[]{"VareID", "Mengde","Pris","Dato"},
-                    new String[]{
-                            Integer.toString(i+1),
-                            list.get(i).getQuantity()+ " " + list.get(i).getUnit().getAbrev(),
-                            list.get(i).getPriceToStr(),
-                            list.get(i).getDateToStr()
-                    }
-            );
-            str.append(groceryTable.createTable());
+    public static void displayValue () {
+        str = new StringBuilder();
+        final Display display = new Display("SAMLET PRIS PÅ VARER", "Under er en oversikt over total prissum på varer:", fridge);
+        str.append(display.getTitle());
+        str.append(display.displayPrice(fridge.getGroceryList(),"Vare","Pris på mengde"));
+        System.out.println(str);
+
+        System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
+        while (true) {
+            String userInput = getInput();
+            if (userInput.equals("-e")) {
+                break;
+            }
         }
+    }
+
+    public static void removeFromFridge() {
+        str = new StringBuilder();
+        final String title = Table.createMenuTable("FJERN FRA KJØLESKAPET", "Fyll ut feltene nedenfor for å legge til vare:");
+        str.append(title);
+
+        if (fridge.getGroceryList().isEmpty()) {
+            str.append("            ---- Ingen varer er lagt til i kjøleskapet ----");
+        }
+        else {
+            Display.displayList(fridge.getGroceryList());
+        }
+        System.out.println(str);
+
+        while (true) {
+            System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-remove [Vare ID]\" for å endre på en vare.\n"
+                    + "[Vare ID] skal skrives som et tall.");
+            String userInput = getInput();
+
+            if (userInput.equals("-e")) {
+                break;
+            }
+            else if (userInput.contains("-remove")) {
+                int userIndex = Integer.parseInt(String.join("", userInput.split("-remove"))) - 1;
+
+                if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
+                    removeAmountGrocery(fridge.getGrocery(userIndex));
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void addToFridge() {
+
+        str = new StringBuilder();
+        final String title = Table.createMenuTable("LEGG TIL VARE", "Fyll ut feltene nedenfor for å legge til vare:");
+        str.append(title);
+        System.out.println(str);
+
+        try{
+            String name;
+            SI measure;
+            double quantity;
+            LocalDate date;
+            double price;
+
+            //navn på varen
+            System.out.print("          Skriv navnet på varen: ");
+            name = getInput();
+
+            //mengden og enheten av varen
+            String userInput;
+            do {
+                System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
+                userInput = getInput();
+            }
+            while (isValidUnit(userInput));
+
+            measure = getUnit(userInput);
+            String quantityStr = String.join("", userInput.split("/[^,\\d]/gm"));
+            quantity = Double.parseDouble(String.join(",", quantityStr.split("/[,.]/gm")));
+
+            //Best-før dato
+            int day, month, year;
+            do {
+                System.out.print("          Skriv best-før dato på formatet DD-MM-YYYY: ");
+                userInput = getInput();
+
+                String[] splitDateStr = userInput.split("-");
+                day = Integer.parseInt(String.join(Arrays.toString(splitDateStr[0].split("/^0/gm"))));
+                month = Integer.parseInt(String.join(Arrays.toString(splitDateStr[1].split("/^0/gm"))));
+                year = Integer.parseInt(String.join(Arrays.toString(splitDateStr[2].split("/^0/gm"))));
+            }
+            while (isValidDate(day, month, year));
+
+            date = LocalDate.of(year,month,day);
+
+            //pris
+            assert measure != null;
+            System.out.print("          Skriv price. Oppgi pris i kr/" + measure.getUnitForPrice() + " f.eks (20 kr/" + measure.getUnitForPrice() + "): ");
+
+            String priceStr = String.join("", userInput.split("/[^,\\d]/gm"));
+            price = Double.parseDouble(String.join(",", priceStr.split("/[,.]/gm")));
+
+            //sjekker om brukeren ønsker å legge til varen
+            clearScreen();
+            str = new StringBuilder();
+            Table table = new Table(
+                    name,
+                    new String[]{"Mengde","Best-før dato","pris"},
+                    new String[]{quantity +  " " + measure.getAbrev(), date + "", price + " kr/" + measure.getUnitForPrice()}
+            );
+            str.append(table.createTable());
+
+            while(true) {
+                System.out.println(str);
+                System.out.println("Er du sikker på at du ønsker å legge til denne varen til kjøleskapet? Skriv \"y\" for JA eller \"n\" for NEI.");
+                userInput = getInput();
+                if (userInput.equalsIgnoreCase("y")) {
+                    //sjekker om varen allerede er i kjøleskapet
+                    Grocery grocery = new Grocery(name,measure,quantity,date,price,fridge);
+
+                    for (int i = 0; i < fridge.getGroceryList().size(); i++) {
+                        if (fridge.getGroceryList().get(i).getName().equals(grocery.getName()) && fridge.getGroceryList().get(i).getDate().equals(grocery.getDate())) {
+                            fridge.getGroceryList().get(i).addAmount(quantity,measure);
+                            return;
+                        }
+                    }
+                    fridge.addGrocery(grocery);
+                }
+                else if (userInput.equalsIgnoreCase("n")) {
+                    break;
+                }
+                else {
+                    System.err.println("Ugyldig input. Svar \"y\", eller \"n\".");
+                }
+            }
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static boolean isValidDate(int day, int month, int year) {
+        try {
+            LocalDate date = LocalDate.of(year,month,day);
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     public static void finish() {
@@ -129,49 +262,17 @@ public class Client {
     }
 
     public static void displayByDate() {
+
         str = new StringBuilder();
-        String topBar = "-------------------------------------------------------------------------------------------------------------------------\n";
-        str.append(topBar).append("                                                       DATOVARER\n").append(topBar);
-        str.append("                                  Her er en liste med datovarer i kjøleskapet:\n\n");
+        Display display = new Display("DATOVARER", "Her er en liste med datovarer i kjøleskapet:", fridge);
+        str.append(display.getTitle());
 
-        if (fridge.getExpiredList().isEmpty()) {
-            str.append("            ---- Ingen varer er gått ut på dato i kjøleskapet ----\n\n");
-        }
-        else {
-            displayList(fridge.getExpiredList());
-        }
-
-        if (fridge.getNearExpList().isEmpty()) {
-            str.append("            ---- Ingen varer er i ferd med å gå ut på dato i kjøleskapet ----\n\n");
-        }
-        else {
-            displayList(fridge.getNearExpList());
-        }
-
-        if (fridge.getRestGroceryList().isEmpty()) {
-            str.append("            ---- Ingen varer med lenger holdbarhetstid i kjøleskapet ----\n\n");
-        }
-        else {
-            displayList(fridge.getRestGroceryList());
-        }
+        str.append(display.list(fridge.getExpiredList()));
+        str.append(display.list(fridge.getNearExpList()));
+        str.append(display.list(fridge.getRestGroceryList()));
 
         if (!fridge.getGroceryList().isEmpty()) {
-            String[] colTitle = new String[fridge.getGroceryList().size() + 1];
-            colTitle[0] = "Vare";
-
-            String[] colData = new String[fridge.getGroceryList().size() + 1];
-            colData[0] = "Pris";
-
-            for (int i = 1; i < fridge.getExpiredList().size(); i++) {
-                colTitle[i] = fridge.getExpiredList().get(i).getName();
-                colData[i] = fridge.getExpiredList().get(i).getPriceToStr();
-            }
-
-            Table groceryTable = new Table("Total pengetap av datovarer",
-                    colTitle,
-                    colData
-            );
-            str.append(groceryTable.createTable());
+            str.append(display.displayPriceUnique(fridge.getExpiredList(),"Total pengetap på datovarer", "Vare", "Pris"));
             str.append(fridge.getMoneyLoss());
         }
 
@@ -196,7 +297,7 @@ public class Client {
             else if (userInput.equals("-delete") && !fridge.getExpiredList().isEmpty()) {
                 try {
                     clearScreen();
-                    displayList(fridge.getExpiredList());
+                    Display.displayList(fridge.getExpiredList());
                     System.out.println("Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet." +
                             "Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet.");
 
@@ -239,27 +340,10 @@ public class Client {
 
     public static void displayFridge() {
         str = new StringBuilder();
-        String topBar = "-------------------------------------------------------------------------------------------------------------------------\n";
-        str.append(topBar).append("                                                       KJØLESKAP\n").append(topBar);
-        str.append("                                  Her er en liste med tilgjengelige varer i kjøleskapet:\n\n");
+        Display display = new Display("KJØLESKAP","Her er en liste med tilgjengelige varer i kjøleskapet:", fridge);
 
-        if (fridge.getGroceryList().isEmpty()) {
-            str.append("            ---- Ingen varer er lagt til i kjøleskapet ----");
-        }
-        else {
-            for (int i = 0; i < fridge.getGroceryList().size(); i++) {
-                Table groceryTable = new Table(fridge.getGrocery(i).getName(),
-                        new String[]{"VareID", "Mengde","Pris","Dato"},
-                        new String[]{
-                                Integer.toString(i+1),
-                                fridge.getGrocery(i).getQuantity()+ " " + fridge.getGrocery(i).getUnit().getAbrev(),
-                                fridge.getGrocery(i).getPriceToStr(),
-                                fridge.getGrocery(i).getDateToStr()
-                        }
-                );
-                str.append(groceryTable.createTable());
-            }
-        }
+        str.append(display.getTitle());
+        str.append(display.list(fridge.getGroceryList()));
         System.out.println(str);
 
         System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-change [Vare ID]\" for å endre på en vare.\n"
@@ -285,18 +369,9 @@ public class Client {
         final Grocery grocery = fridge.getGrocery(index);
 
         str = new StringBuilder();
-        String topBar = "-------------------------------------------------------------------------------------------------------------------------\n";
-        str.append(topBar).append("                                                       ENDRE VARE\n").append(topBar).append("\n");
-
-        Table groceryTable = new Table(grocery.getName(),
-                new String[]{"Mengde","Pris","Dato"},
-                new String[]{grocery.getQuantity() + " " + grocery.getUnit().getAbrev(), grocery.getPriceToStr(),grocery.getDateToStr()}
-        );
-
-        str.append(groceryTable.createTable());
-        str.append("\n\n");
-
-        str.append("                                  Velg en handling i listen under:\n\n");
+        Display display = new Display("ENDRE VARE","Velg en handling i listen under:", fridge);
+        str.append(display.getTitle());
+        str.append(display.grocery(grocery));
 
         str.append("           [1] Legg til en mengde til varen.");
         str.append("           [2] Trekk fra en mengde fra varen.");
@@ -305,96 +380,161 @@ public class Client {
 
         System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"tall\" for å endre på en vare.\n"
                 + "\"tall\" skal skrives som et heltall i intervallet [1,3].");
-        String userInput = "";
+
+        String userInput;
         do {
             userInput = getInput();
+            if (userInput.equals("-e")) {
+                break;
+            }
         }
-        while (Integer.parseInt(userInput) < 1 || Integer.parseInt(userInput) > 3 || !userInput.equals("-e"));
+        while (Integer.parseInt(userInput) < 1 || Integer.parseInt(userInput) > 3);
 
         if (!userInput.equals("-e")) {
             switch (Integer.parseInt(userInput)) {
                 case 1 -> {
-                    //legg til en mengde
-                    int amount = Integer.parseInt(str.toString());
-                    SI unit = getUnit();
-
-                    grocery.addAmount(amount, unit);
+                    addAmountGrocery(grocery);
                 }
                 case 2 -> {
-                    //trekk fra en mengde
-                    int amount = Integer.parseInt(str.toString());
-                    SI unit = getUnit();
-
-                    grocery.removeAmount(amount, unit);
+                    removeAmountGrocery(grocery);
                 }
                 case 3 -> {
-                    //sjekk om vare er gått ut på dato
+                    //sjekk om en vare er gått ut på dato
+                    try{
+                        if(grocery.hasExpired()) {
+                            System.out.println("Varen har gått ut på dato");
+
+                            while (true) {
+                                System.out.println("Ønsker du å slette varen? Skriv \"y\" for JA og \"n\" for NEI.");
+                                userInput = getInput();
+                                if (userInput.equalsIgnoreCase("y")) {
+                                    fridge.removeGrocery(grocery);
+                                    break;
+                                }
+                                else if(userInput.equalsIgnoreCase("n")) {
+                                    break;
+                                }
+                                else {
+                                    System.err.println("Ugyldig input. Skriv enten \"y\" eller \"n\".");
+                                }
+                            }
+                        }
+                        else {
+                            System.out.println("Varen har ikke gått ut på dato");
+                        }
+                    }
+                    catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    }
                 }
                 default -> {
-                    break;
+                    System.err.println("Ugyldig input. ");
                 }
             }
         }
     }
 
-    public static SI getUnit() {
-        String unit, abrev, unitForPrice, prefix;
-        unit = "";
-        abrev = "";
-        unitForPrice = "";
-        prefix = "";
+    public static void addAmountGrocery(Grocery grocery) {
+        try {
+            //legg til en mengde
+            String userInput;
+            System.out.println("Skriv en mengde som skal legges til varen (f.eks 2 gram / desiliter / stykker):");
+            do {
+                userInput = getInput();
+            }
+            while (isValidUnit(userInput));
 
-        String userInput = "";
-        do {
-            userInput = getInput();
-            if (isValidUnit(userInput)) {
-                unit = userInput;
-                if (userInput.equalsIgnoreCase("Stykker")) {
-                    prefix = "";
-                    abrev = userInput.toLowerCase().charAt(0) + "stk";
-                    unitForPrice = "stk";
-                }
-                else if (userInput.contains("gram")){
-                    prefix = String.join("",userInput.split("gram"));
-                    abrev = userInput.toLowerCase().charAt(0) + "g";
-                    unitForPrice = "L";
-                }
-                else if (userInput.contains("liter")) {
-                    prefix = String.join("",userInput.split("liter"));
-                    abrev = userInput.toLowerCase().charAt(0) + "L";
-                    unitForPrice = "L";
+            SI unit = getUnit(userInput);
+            String amountStr = String.join("", userInput.split("/[^,\\d]/gm"));
+            double amount = Double.parseDouble(String.join(",", amountStr.split("/[,.]/gm")));
+
+            grocery.addAmount(amount, unit);
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void removeAmountGrocery(Grocery grocery) {
+        try{
+            //trekk fra en mengde
+            String userInput;
+            System.out.println("Skriv en mengde som skal fjernes fra varen (f.eks 2 gram / desiliter / stykker):");
+            do {
+                userInput = getInput();
+            }
+            while (isValidUnit(userInput));
+
+            SI unit = getUnit(userInput);
+            String amountStr = String.join("", userInput.split("/[^,\\d]/gm"));
+            double amount = Double.parseDouble(String.join(",", amountStr.split("/[,.]/gm")));
+
+            grocery.removeAmount(amount, unit);
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static SI getUnit(String input) {
+        String unit;
+        String abrev;
+        String unitForPrice;
+        String prefix;
+
+        if (isValidUnit(input)) {
+            unit = input;
+            if (input.contains("Stykker")) {
+                prefix = "";
+                abrev = input.toLowerCase().charAt(0) + "stk";
+                unitForPrice = "stk";
+            }
+            else if (input.contains("gram")){
+                prefix = String.join("", input.split("gram"));
+                abrev = input.toLowerCase().charAt(0) + "g";
+                unitForPrice = "L";
+            }
+            else if (input.contains("liter")) {
+                prefix = String.join("", input.split("liter"));
+                abrev = input.toLowerCase().charAt(0) + "L";
+                unitForPrice = "L";
+            }
+            else {
+                prefix = "";
+                if (input.contains("Gram")) {
+                    abrev = unitForPrice = "g";
                 }
                 else {
-                    prefix = "";
-                    if (userInput.equals("Gram")) {
-                        abrev = unitForPrice = "g";
-                    }
-                    else {
-                        abrev = unitForPrice = "L";
-                    }
+                    abrev = unitForPrice = "L";
                 }
             }
-        }
-        while(isValidUnit(userInput));
 
-        return new SI(unit,abrev,unitForPrice,prefix);
+            return new SI(unit,abrev,unitForPrice,prefix);
+        }
+        else{
+            return null;
+        }
     }
 
     public static boolean isValidUnit(String userInput) {
-        String prefix;
+        //fjerner eventuelle tall som kom med input fra brukerinput
+        String prefix = String.join("", userInput.split("/[\\d\\s+]/gm"));
+
+        //sjekker om brukerinput inneholder gram, liter eller stykker
         if(!userInput.toLowerCase().contains("liter") && !userInput.toLowerCase().contains("gram") && !userInput.equalsIgnoreCase("Stykker")) {
             return false;
         }
         else if(userInput.toLowerCase().contains("liter")) {
-            prefix = String.join("",userInput.toLowerCase().split("liter"));
+            prefix = String.join("",prefix.toLowerCase().split("liter"));
         }
         else if(userInput.toLowerCase().contains("gram")) {
-            prefix = String.join("",userInput.toLowerCase().split("gram"));
+            prefix = String.join("", prefix.toLowerCase().split("gram"));
         }
         else {
             prefix = "";
         }
 
+        //sjekker validitet. Hvis prefiksen er en gyldig prefiks i SI-klassen, returner true. Ellers, false
         for (String hashKey : SI.getSIPrefixes().keySet()) {
             if(hashKey.toLowerCase().equals(prefix)) {
                 return true;
@@ -404,18 +544,15 @@ public class Client {
     }
 
     public static void main(final String[] args) {
-        str = new StringBuilder();
 
         while (running) {
-            clearScreen();
 
             // Menyvalg i konsollen
-            final String topBar = "-----------------------------------------------------------------------------------------------------------------------------------\n";
+            clearScreen();
+            str = new StringBuilder();
 
-            str.append(topBar + "\n                                                         HOVEDMENY - MATLAGER\n\n" + topBar);
-            str.append("           Bruk en kommando for å navigere. For å få en overikt over tilgjengelige kommandoer skriv \"-help\".\n");
-            str.append("           Velg et alternativ under ved å skrive et tall:\n\n");
-
+            final String menuStr = Table.createMenuTable("HOVEDMENY - MATLAGER","Velg et alternativ under ved å skrive et tall:");
+            str.append(menuStr);
             str.append("                   [1] Legg til vare.\n");
             str.append("                   [2] Fjern vare.\n");
             str.append("                   [3] Oversikt over kjøleskapet.\n");
@@ -424,49 +561,13 @@ public class Client {
             str.append("                   [6] Avslutt.\n");
             System.out.println(str);
 
-            int userInput = 0;
-            do {
-                userInput = Integer.parseInt(getInput());
-                if (userInput < 0 || userInput > 6) {
-                    System.err.println("Input er for stor eller for liten. Brukerinputen må være i intervallet [0,5].");
-                }
+            try {
+                int userInput = Integer.parseInt(getInput());
+                menuOption(userInput);
             }
-            while (userInput < 0 || userInput > 6);
-
-            menuOption(userInput);
-
-            // Legg til vare
-            str = new StringBuilder();
-            str.append(topBar + "                                                  LEGG TIL EN VARE I KJØLESKAPET\n" + topBar);
-            str.append("           Skriv navnet på varen du ønsker å legge til:\n\n");
-            str.append("           Varenavn: ");
-            str.append("\n");
-
-            // Legg til en måleenhet til varen
-            str.append(topBar + "                                                         VELG ET MÅLEENHET\n" + topBar);
-            str.append("           Velg menden av  under ved å skrive et tall:\n\n");
-
-            str.append("                   [1] Stykker (stk)\n");
-            str.append("                   [2] Gram (g)\n");
-            str.append("                   [3] Kilo (kg)\n");
-            str.append("                   [4] Desiliter (dl)\n");
-            str.append("                   [5] Liter (l)\n");
-            str.append("                   [6] Legg til måleenhet\n");
-
-            // Legg til mengde
-            str.append(topBar + "                                                   LEGG TIL EN MENGDE TIL VAREN\n" + topBar);
-            str.append("           Skriv antallet {måleenhet} du øsnker å legge til av varen i kjøleskapet:\n\n");
-            str.append("           Varenavn: ");
-
-            // Best før dato
-            str.append(topBar + "                                                           BEST FØR DATO\n" + topBar);
-            str.append("           Skriv \"Best Før\"-datoen til varen. Skriv datoen på formen: DD.MM.ÅÅÅÅ\n\n");
-            str.append("           Best-før dato: ");
-
-            // Pris på vare
-            str.append(topBar + "                                                           PRIS PÅ VARE\n" + topBar);
-            str.append("           Skriv prisen på varen som et tall under. Prisen oppgis som pris per kg eller l.\n\n");
-            str.append("           Pris: ");
+            catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
 
         myReader.close();

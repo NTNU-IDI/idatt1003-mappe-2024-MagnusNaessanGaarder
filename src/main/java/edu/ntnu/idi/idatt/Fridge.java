@@ -2,10 +2,8 @@ package edu.ntnu.idi.idatt;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Fridge {
     private ArrayList<Grocery> groceryList;
@@ -25,6 +23,15 @@ public class Fridge {
 
     public Grocery getGrocery(int index) {
         return groceryList.get(index);
+    }
+
+    public Grocery search(String name) {
+        for (Grocery g : groceryList) {
+            if (g.getName().equals(name)) {
+                return g;
+            }
+        }
+        return null;
     }
 
     public void addGrocery(final Grocery grocery) {
@@ -97,16 +104,27 @@ public class Fridge {
 
         double sum = 0.0;
         for (Grocery grocery : expiredGroceries) {
-            if (grocery.getUnit().getAbrev().equals(grocery.getUnit().getUnitForPrice())) {
-                sum += grocery.getQuantity() * grocery.getPrice();
-            }
-            else {
-                sum += grocery.getPrice() * (grocery.getQuantity()*grocery.getUnit().getConvertionFactor());
-            }
+            sum += grocery.getPricePerQuantity();
         }
         String str = "%d varer er gått ut på dato.\n";
         str += "Du har tapt %.2f kr.";
 
         return String.format(str, expiredGroceries.size(), sum);
+    }
+
+    public double getTotalPrice() {
+        double sum = 0;
+        for(Grocery g : groceryList) {
+            sum += g.getPricePerQuantity();
+        }
+        return sum;
+    }
+
+    public double getTotalFromList(List<Grocery> list) {
+        double sum = 0;
+        for(Grocery g : list) {
+            sum += g.getPricePerQuantity();
+        }
+        return sum;
     }
 }

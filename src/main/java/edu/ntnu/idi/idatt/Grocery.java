@@ -34,11 +34,12 @@ package edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Grocery {
+    private static int nextID = 0;
+    private final int groceryID;
     private final String name;
     private SI unit;
     private double quantity;
@@ -53,6 +54,15 @@ public class Grocery {
         this.bestBefore = date;
         this.price = price;
         this.fridge = fridge;
+        this.groceryID = advanceID();
+    }
+
+    private static int advanceID() {
+        return ++nextID;
+    }
+
+    public int getGroceryID() {
+        return this.groceryID;
     }
 
     public String getName() {
@@ -84,7 +94,7 @@ public class Grocery {
     }
 
     public double convertUnit () {
-        if (this.quantity < 1.0 && this.unit.getPrefix().equals("")) {
+        if (this.quantity < 1.0 && this.unit.getPrefix().isEmpty()) {
             this.unit = new SI("Desiliter", "dL","L", "Desi");
             this.quantity *= 10;
         }
@@ -112,7 +122,7 @@ public class Grocery {
         return quantity;
     }
 
-    public double addAmount(final double amount, final SI amountUnit) {
+    public void addAmount(final double amount, final SI amountUnit) {
         if (amount > 0) {
             if (this.unit.getAbrev().equals("stk") && amountUnit.getAbrev().equals("stk")) {
                 this.quantity += amount;
@@ -124,8 +134,6 @@ public class Grocery {
                 this.quantity =  (double)(Math.round((this.quantity*unit.getConvertionFactor()+amount*amountUnit.getConvertionFactor())*100))/100;
                 convertUnit();
             }
-
-            return quantity;
         }
         else {
             throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
@@ -156,7 +164,19 @@ public class Grocery {
         }
     }
 
+    public double getPricePerQuantity() {
+        double result;
+        if (unit.getAbrev().equals(unit.getUnitForPrice())) {
+            result = quantity * price;
+        }
+        else {
+            result = price * (quantity*unit.getConvertionFactor());
+        }
+
+        return result;
+    }
+
     public boolean hasExpired() {
-        return this.bestBefore.compareTo(LocalDate.now()) < 0;
+        return this.bestBefore.isBefore(LocalDate.now());
     }
 }
