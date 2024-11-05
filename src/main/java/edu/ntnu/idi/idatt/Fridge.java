@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Fridge {
     final private ArrayList<Grocery> groceryList;
@@ -19,6 +20,13 @@ public class Fridge {
 
     public Grocery getGrocery(int index) {
         return groceryList.get(index);
+    }
+
+    public int getGroceryListIndex(int groceryID) {
+        return IntStream.range(0, groceryList.size())
+                .filter(i -> groceryList.get(i).getGroceryID() == groceryID)
+                .findFirst()
+                .orElse(-1);
     }
 
     public Grocery search(String name) {

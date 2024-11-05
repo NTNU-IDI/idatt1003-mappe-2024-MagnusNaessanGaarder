@@ -14,10 +14,10 @@ class TableTest {
         Table testTable = new Table(title,colTitle,colData);
         String expectedStr =
                 """
-                        ————————————————————————Title————————————————————————
+                        ------------------------Title------------------------
                         |       testTittel1       |          data1          |
                         |       testTittel2       |          data2          |
-                        —————————————————————————————————————————————————————""";
+                        -----------------------------------------------------""";
 
 
         assertEquals(expectedStr, testTable.createTable());

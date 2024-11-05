@@ -16,12 +16,12 @@ public class Table {
     }
 
     private static String createWhitespace(int length, int wordLength) {
-        int wsLength = length/2 - wordLength;
+        int wsLength = length/2 - wordLength/2;
         return " ".repeat(Math.max(0, wsLength));
     }
 
     public static String createMenuTable(String title, String subTitle) {
-        String longBar = "————————————————————————————————————————————————————————————————————————————————————————————————";
+        String longBar = "------------------------------------------------------------------------------------------------";
 
         return longBar + "\n\n" +
                 createWhitespace(longBar.length(), title.length()) +
@@ -33,9 +33,9 @@ public class Table {
 
     public String createTable() {
         StringBuilder sb = new StringBuilder();
-        String longBar = "————————————————————————";
+        String longBar = "------------------------";
         StringBuilder bottomBar = new StringBuilder(longBar + longBar);
-        bottomBar.append("—".repeat(title.length()));
+        bottomBar.append("-".repeat(title.length()));
 
         sb.append(longBar);
         sb.append(title);
@@ -52,8 +52,8 @@ public class Table {
     private StringBuilder getTableData(String bottomBar) {
         StringBuilder tableData = new StringBuilder();
         for (int i = 0; i < colTitleArr.length; i++) {
-            int leftPadding = (bottomBar.length()/2 - (colTitleArr[i].length())) / 2;
-            int rightPadding = (bottomBar.length()/2 - (colData[i].length())) / 2;
+            int leftPadding = bottomBar.length()/4 - colTitleArr[i].length()/2 - 1;
+            int rightPadding = bottomBar.length()/4 - colData[i].length()/2 - 1;
 
             String leftStr = String.format("|%" + (leftPadding + colTitleArr[i].length()) + "s", colTitleArr[i]);
             leftStr += String.format("%" + (leftPadding) + "s", "");

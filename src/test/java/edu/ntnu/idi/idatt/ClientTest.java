@@ -3,51 +3,75 @@ package edu.ntnu.idi.idatt;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+import static edu.ntnu.idi.idatt.Client.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
     @Test
     public void testAddToFridgeDate() {
-        //Best-før dato
-        assertEquals(LocalDate.of(2003,3,21), testDate("21-03-2003"), "Expected Date of 21-03-2003, but got a different value.");
+        //enhet og mengde test
+        SI meassure;
+        double quantity;
 
+        String[] testRes = testQuantityUnit("2.0 Liter");
+
+        meassure = getUnit(String.join("",testRes[0].split(" ")));
+        String quantityStr = String.join("", testRes[1].split(" "));
+        quantity = Double.parseDouble(String.join(",", quantityStr.split("/[,.]/gm")));
+
+
+        SI testUnit = new SI("Liter","L","L","");
+
+        assertEquals(testUnit,meassure);
+        assertEquals(2.0, quantity);
+
+
+        //Best-før dato-test
+        assertEquals(LocalDate.of(2025,1,1), testDate("01-01-2025"), "Expected Date of 21-03-2003, but got a different value.");
         assertThrows(RuntimeException.class, () -> testDate("11-02-20033\n"), "Expected an RuntimeException, but got something else.");
+
+        //Pris
+        String userInput = "20,0 kr";
+        String priceStr = String.join("", userInput.split("[^,.\\d]"));
+        double price = Double.parseDouble(String.join(".", priceStr.split("[,.]")));
+        assertEquals(20.0, price);
+    }
+
+    @Test
+    public void testGetUnit(){
+        SI testUnit = new SI("Stykker","stk","stk","");
+        assertEquals(testUnit,getUnit("Stykker"));
+    }
+
+    @Test
+    public void testValidUnit(){
+        SI testUnit = new SI("Stykker","stk","stk","");
+        assertTrue(isValidUnit("Stykker"));
+    }
+
+    private String[] testQuantityUnit(String input) {
+        //mengden og enheten av varen
+        String userInput = "";
+        try{
+            do {
+                userInput = input;
+            }
+            while (!isValidUnit(String.join("",userInput.split(" ")[1])));
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        String[] res = userInput.split(" ");
+
+        return new String[]{res[1], res[0]};
     }
 
     private LocalDate testDate(String input) {
-        LocalDate date;
         try{
-            String[] splitDateStr = input.split("-");
-            int day = 0;
-            int month = 0;
-            int year = 0;
-            for (String s : splitDateStr) {
-                if (s.charAt(0) == '0') {
-                    if (s.equals(splitDateStr[0])) {
-                        String str = input.substring(0,input.indexOf('-'));
-                        day = Integer.parseInt(String.join("", str.split("^0")));
-                    }
-                    else if (s.equals(splitDateStr[1])) {
-                        String str = input.substring(input.indexOf('-')+1, input.indexOf('-',4));
-                        month = Integer.parseInt(String.join("",str.split("^0")));
-                    }
-                }
-                else {
-                    if (s.equals(splitDateStr[0])) {
-                        day = Integer.parseInt(s);
-                    }
-                    else if (s.equals(splitDateStr[1])) {
-                        month = Integer.parseInt(s);
-                    }
-                    else {
-                        year = Integer.parseInt(s);
-                    }
-                }
-            }
-
-            date = LocalDate.of(year,month,day);
-            return date;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            return LocalDate.parse(input, formatter);
         }
         catch (Exception e) {
             throw new RuntimeException("Ugyldig format");
