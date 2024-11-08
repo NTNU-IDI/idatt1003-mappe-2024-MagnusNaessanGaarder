@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.Client;
 
 /*
  # Nivå 1:
@@ -34,19 +34,29 @@ package edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
+import edu.ntnu.idi.idatt.modules.Display;
+import edu.ntnu.idi.idatt.Manager.FridgeManager;
+import edu.ntnu.idi.idatt.Manager.GroceryManager;
+import edu.ntnu.idi.idatt.Manager.SI_manager;
+import edu.ntnu.idi.idatt.Utils.SI;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.Table;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Arrays;
 
 public class Client {
 
-    public static Scanner myReader = new Scanner(System.in);
-    public static StringBuilder str = new StringBuilder();
-    public static boolean running = true;
+    final private static Scanner myReader = new Scanner(System.in);
+    private static StringBuilder str = new StringBuilder();
+    private static boolean running = true;
 
-    public static Fridge fridge = new Fridge();
+    final private static Fridge fridge = new Fridge();
+    final private static FridgeManager fm = new FridgeManager(fridge);
+    final private static GroceryManager gm = new GroceryManager(fm);
 
     public static String getInput() {
         String data = "";
@@ -118,7 +128,7 @@ public class Client {
 
         while (true) {
             System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-remove [Vare ID]\" for å endre på en vare.\n"
-                    + "[Vare ID] skal skrives som et tall.");
+                               + "[Vare ID] skal skrives som et tall.");
             String userInput = getInput();
             int userIndex = -1;
 
@@ -129,11 +139,11 @@ public class Client {
                 System.out.println("Skriv en vareID du ønsker å fjerne fra:");
                 userInput = getInput();
                 int userInt = Integer.parseInt(userInput);
-                userIndex = fridge.getGroceryListIndex(userInt);
+                userIndex = fm.getGroceryListIndex(userInt);
             }
             else if (userInput.contains("-remove")) {
                 int userInt = Integer.parseInt(String.join("", userInput.split("[^0-9]")));
-                userIndex = fridge.getGroceryListIndex(userInt);
+                userIndex = fm.getGroceryListIndex(userInt);
             }
             else {
                 System.err.println("Ugyldig kommando. Skriv enten \"-e\" eller \"-remove\".");
@@ -141,7 +151,7 @@ public class Client {
 
             if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
                 clearScreen();
-                removeAmountGrocery(fridge.getGrocery(userIndex));
+                gm.removeAmountGrocery(fm.getGrocery(userIndex));
                 System.out.println("Fjernet fra vare med vareID " + (userIndex+1));
             }
             else {
@@ -169,8 +179,8 @@ public class Client {
         name = getInput();
 
         //mengden og enheten av varen
-        String[] amountAndUnit = getAmountAndUnit();
-        measure = getUnit(amountAndUnit[1]);
+        String[] amountAndUnit = GroceryManager.getAmountAndUnit();
+        measure = SI_manager.getUnit(amountAndUnit[1]);
         quantity = Double.parseDouble(amountAndUnit[0]);
 
         //Best-før dato
@@ -213,7 +223,7 @@ public class Client {
             if (userInput.equalsIgnoreCase("y")) {
                 //sjekker om varen allerede er i kjøleskapet
                 Grocery grocery = new Grocery(name,measure,quantity,date,price,fridge);
-                fridge.addGrocery(grocery);
+                fm.addGrocery(grocery);
                 break;
             }
             else if (userInput.equalsIgnoreCase("n")) {
@@ -231,6 +241,7 @@ public class Client {
             String userInput = getInput();
             if(userInput.equalsIgnoreCase("y")) {
                 running = false;
+                myReader.close();
                 break;
             }
             else if (userInput.equalsIgnoreCase("n")) {
@@ -248,13 +259,16 @@ public class Client {
         Display display = new Display("DATOVARER", "Her er en liste med datovarer i kjøleskapet:", fridge);
         str.append(display.getTitle());
 
-        str.append(display.list(fridge.getExpiredList(), "Ingen varer er gått ut på dato"));
-        str.append(display.list(fridge.getNearExpList(), "Ingen varer er nær ved å gå ut på dato"));
-        str.append(display.list(fridge.getRestGroceryList(), "Ingen resterende varer"));
+        str.append("Utgåtte varer:");
+        str.append(display.list(fm.getExpiredList(), "Ingen varer er gått ut på dato"));
+        str.append("Varer som holder på å gå ut på dato:");
+        str.append(display.list(fm.getNearExpList(), "Ingen varer er nær ved å gå ut på dato"));
+        str.append("Resterende varer:");
+        str.append(display.list(fm.getRestGroceryList(), "Ingen resterende varer"));
 
         if (!fridge.getGroceryList().isEmpty()) {
-            str.append(display.displayPriceUnique(fridge.getExpiredList(),"Total pengetap på datovarer", "Vare", "Pris"));
-            str.append(fridge.getMoneyLoss());
+            str.append(display.displayPriceUnique(fm.getExpiredList(),"Total pengetap på datovarer", "Vare", "Pris beregnet på mengde"));
+            str.append(fm.getMoneyLoss());
         }
 
         System.out.println(str);
@@ -263,7 +277,7 @@ public class Client {
         while (true) {
             str = new StringBuilder();
 
-            if (fridge.getExpiredList().isEmpty()) {
+            if (fm.getExpiredList().isEmpty()) {
                 System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
             }
             else {
@@ -275,10 +289,10 @@ public class Client {
             if (userInput.equals("-e")) {
                 break;
             }
-            else if (userInput.equals("-delete") && !fridge.getExpiredList().isEmpty()) {
+            else if (userInput.equals("-delete") && !fm.getExpiredList().isEmpty()) {
                 try {
                     clearScreen();
-                    Display.displayList(fridge.getExpiredList());
+                    Display.displayList(fm.getExpiredList());
                     System.out.println("Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet." +
                             "Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet.");
 
@@ -287,9 +301,9 @@ public class Client {
                     int[] deleteArr = Arrays.stream(deleteStrArr).mapToInt(Integer::parseInt).toArray();
 
                     for (int groceryIndex : deleteArr) {
-                        Grocery removableGrocery = fridge.getExpiredList().get(groceryIndex - 1);
+                        Grocery removableGrocery = fm.getExpiredList().get(groceryIndex - 1);
                         if (fridge.getGroceryList().contains(removableGrocery)) {
-                            fridge.removeGrocery(removableGrocery);
+                            fm.removeGrocery(removableGrocery);
                         }
                         else {
                             System.err.println("Kunne ikke fjerne "  + removableGrocery.getName() + " fra kjøleskapet.");
@@ -302,10 +316,10 @@ public class Client {
                     System.err.println(e.getMessage());
                 }
             }
-            else if (userInput.equals("-delete all") && !fridge.getExpiredList().isEmpty()) {
+            else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
                 clearScreen();
-                for(Grocery expiredItem : fridge.getExpiredList()) {
-                    fridge.removeGrocery(expiredItem);
+                for(Grocery expiredItem : fm.getExpiredList()) {
+                    fm.removeGrocery(expiredItem);
                 }
                 System.out.println("Alle datovarer er nå fjernet!\n");
             }
@@ -340,11 +354,11 @@ public class Client {
                 System.out.println("Skriv en vareID du ønsker å fjerne fra:");
                 userInput = getInput();
                 int userInt = Integer.parseInt(userInput);
-                userIndex = fridge.getGroceryListIndex(userInt);
+                userIndex = fm.getGroceryListIndex(userInt);
             }
             else if (userInput.contains("-change")) {
                 int userInt = Integer.parseInt(String.join("", userInput.split("[^0-9]")));
-                userIndex = fridge.getGroceryListIndex(userInt);
+                userIndex = fm.getGroceryListIndex(userInt);
             }
             else {
                 System.err.println("Ugyldig kommando. Skriv enten \"-e\" eller \"-change\".");
@@ -352,7 +366,7 @@ public class Client {
 
             if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
                 clearScreen();
-                changeGrocery(fridge.getGrocery(userIndex));
+                changeGrocery(fm.getGrocery(userIndex));
                 System.out.println("Endret vare " + (userIndex+1));
             }
             else {
@@ -387,10 +401,10 @@ public class Client {
             }
             switch (Integer.parseInt(userInput)) {
                 //legg til mengde til varen
-                case 1 -> addAmountGrocery(grocery);
+                case 1 -> gm.addAmountGrocery(grocery);
 
                 //legg til mengde til varen
-                case 2 -> removeAmountGrocery(grocery);
+                case 2 -> gm.removeAmountGrocery(grocery);
                 case 3 -> {
                     //sjekk om en vare er gått ut på dato
                     try {
@@ -401,7 +415,7 @@ public class Client {
                                 System.out.println("Ønsker du å slette varen? Skriv \"y\" for JA og \"n\" for NEI.");
                                 userInput = getInput();
                                 if (userInput.equalsIgnoreCase("y")) {
-                                    fridge.removeGrocery(grocery);
+                                    fm.removeGrocery(grocery);
                                     break;
                                 } else if (userInput.equalsIgnoreCase("n")) {
                                     break;
@@ -421,123 +435,6 @@ public class Client {
         }
         while (Integer.parseInt(userInput) < 1 || Integer.parseInt(userInput) > 3);
 
-    }
-
-    public static String[] getAmountAndUnit() {
-        //mengden og enheten av varen
-        String userInput = "";
-        try{
-            do {
-                System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
-                userInput = getInput();
-            }
-            while (!isValidUnit(String.join("",userInput.split(" ")[1])));
-        }
-        catch (Exception e) {
-            System.err.println("Invalid format for unit or amount.");;
-        }
-        return userInput.split(" ");
-    }
-
-    public static void addAmountGrocery(Grocery grocery) {
-        try {
-            //legg til en mengde
-            String[] amountAndUnit = getAmountAndUnit();
-
-            SI unit = getUnit(amountAndUnit[1]);
-            double amount = Double.parseDouble(amountAndUnit[0]);
-
-            grocery.addAmount(amount, unit);
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public static void removeAmountGrocery(Grocery grocery) {
-        try{
-            //trekk fra en mengde
-            String[] amountAndUnit = getAmountAndUnit();
-
-            SI unit = getUnit(amountAndUnit[1]);
-            double amount = Double.parseDouble(amountAndUnit[0]);
-
-            grocery.removeAmount(amount, unit);
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public static SI getUnit(String input) {
-        input = String.join("", input.split("[\\d\\s+\\W]"));
-
-        String unit;
-        String abrev;
-        String unitForPrice;
-        String prefix;
-
-        if (isValidUnit(input)) {
-            unit = input;
-            if (input.equalsIgnoreCase(SI.getValidUnit().get("Stykker")) || input.equalsIgnoreCase("Stykker")) {
-                prefix = "";
-                abrev = unitForPrice = "stk";
-            }
-            else if (input.equalsIgnoreCase(SI.getValidUnit().get("Desiliter")) || input.equalsIgnoreCase("Desiliter")){
-                prefix = "Desi";
-                abrev = "dL";
-                unitForPrice = "L";
-            }
-            else if (input.equalsIgnoreCase(SI.getValidUnit().get("Milliliter")) || input.equalsIgnoreCase("Milliliter")) {
-                prefix = "Milli";
-                abrev = "mL";
-                unitForPrice = "L";
-            }
-            else if (input.equalsIgnoreCase(SI.getValidUnit().get("Centiliter")) || input.equalsIgnoreCase("Centiliter")) {
-                prefix = "Centi";
-                abrev = "cL";
-                unitForPrice = "L";
-            }
-            else if (input.equalsIgnoreCase(SI.getValidUnit().get("Liter")) || input.equalsIgnoreCase("Liter")) {
-                prefix = "";
-                abrev = "L";
-                unitForPrice = "L";
-            }
-            else if (input.equalsIgnoreCase(SI.getValidUnit().get("Gram")) || input.equalsIgnoreCase("Gram")) {
-                prefix = "";
-                abrev = "g";
-                unitForPrice = "kg";
-            }
-            else {
-                prefix = "Kilo";
-                abrev = "kg";
-                unitForPrice = "kg";
-            }
-            return new SI(unit,abrev,unitForPrice,prefix);
-        }
-        else{
-            return null;
-        }
-    }
-
-    public static boolean isValidUnit(String userInput) {
-
-        //fjerner eventuelle tall som kom med input fra brukerinput
-        String prefix = String.join("", userInput.split("[\\d\\s+\\W]"));
-
-        for (String hashVal: SI.getValidUnit().values()) {
-            if (hashVal.equalsIgnoreCase(userInput)) {
-                return true;
-            }
-        }
-
-        //sjekker validitet. Hvis prefiksen er en gyldig prefiks i SI-klassen, returner true. Ellers, false
-        for (String hashKey : SI.getValidUnit().keySet()) {
-            if(hashKey.equalsIgnoreCase(userInput)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static void main(final String[] args) {
@@ -566,7 +463,5 @@ public class Client {
                 System.err.println(e.getMessage());
             }
         }
-
-        myReader.close();
     }
 }

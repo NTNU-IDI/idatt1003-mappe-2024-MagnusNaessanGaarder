@@ -1,11 +1,13 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.Utils.SI;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static edu.ntnu.idi.idatt.Client.*;
+import static edu.ntnu.idi.idatt.Manager.SI_manager.getUnit;
+import static edu.ntnu.idi.idatt.Manager.SI_manager.isValidUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {

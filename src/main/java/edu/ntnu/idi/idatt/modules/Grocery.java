@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.modules;
 
 /*
  # Nivå 1:
@@ -33,6 +33,8 @@ package edu.ntnu.idi.idatt;
      java.text.SimpleDateFormater)
      • Pris/kostnad i norske kroner pr enhet.
 */
+
+import edu.ntnu.idi.idatt.Utils.SI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -132,8 +134,8 @@ public class Grocery {
             }
             else {
                 this.quantity =  (double)(Math.round((this.quantity*unit.getConvertionFactor()+amount*amountUnit.getConvertionFactor())*100))/100;
-                convertUnit();
             }
+            convertUnit();
         }
         else {
             throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
@@ -150,8 +152,8 @@ public class Grocery {
             }
             else {
                 this.quantity = (double)(Math.round((this.quantity*unit.getConvertionFactor()-amount*amountUnit.getConvertionFactor())*100))/100;
-                convertUnit();
             }
+            convertUnit();
 
             if (this.quantity <= 0) {
                 this.fridge.removeGrocery(this);

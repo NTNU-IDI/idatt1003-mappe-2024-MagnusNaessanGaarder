@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.modules.Table;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

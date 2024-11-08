@@ -1,4 +1,7 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.Manager;
+
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,30 +9,27 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Fridge {
+public class FridgeManager {
+    final private Fridge fridge;
     final private ArrayList<Grocery> groceryList;
-    final private int NEAR_EXPIRATION = 3;
 
-    public Fridge() {
-        this.groceryList = new ArrayList<>(0);
+    public FridgeManager (Fridge fridge) {
+        this.fridge = fridge;
+        this.groceryList = this.fridge.getGroceryList();
     }
 
-    public ArrayList<Grocery> getGroceryList() {
-        return this.groceryList;
+    public Grocery getGrocery(final int index) {
+        return fridge.getGroceryList().get(index);
     }
 
-    public Grocery getGrocery(int index) {
-        return groceryList.get(index);
-    }
-
-    public int getGroceryListIndex(int groceryID) {
-        return IntStream.range(0, groceryList.size())
+    public int getGroceryListIndex(final int groceryID) {
+        return IntStream.range(0, fridge.getGroceryList().size())
                 .filter(i -> groceryList.get(i).getGroceryID() == groceryID)
                 .findFirst()
                 .orElse(-1);
     }
 
-    public Grocery search(String name) {
+    public Grocery search(final String name) {
         for (Grocery g : groceryList) {
             if (g.getName().equals(name)) {
                 return g;
@@ -41,19 +41,19 @@ public class Fridge {
     public void addGrocery(final Grocery grocery) {
         for (Grocery groceryItem : groceryList) {
             if (groceryItem.equals(grocery)) {
-                this.groceryList.get(groceryList.indexOf(grocery)).addAmount(grocery.getQuantity(), grocery.getUnit());
+                fridge.getGroceryList().get(groceryList.indexOf(grocery)).addAmount(grocery.getQuantity(), grocery.getUnit());
                 return;
             }
         }
 
-        this.groceryList.add(grocery);
+        groceryList.add(grocery);
     }
 
     public void removeGrocery(final Grocery grocery) {
-        if (this.groceryList.contains(grocery)) {
-            int index = this.groceryList.indexOf(grocery);
+        if (groceryList.contains(grocery)) {
+            final int index = groceryList.indexOf(grocery);
             if (index != -1) {
-                this.groceryList.remove(index);
+                groceryList.remove(index);
             }
             else {
                 throw new IllegalArgumentException("Argument not valid! Cannot remove grocery from grocery list.");
@@ -61,7 +61,7 @@ public class Fridge {
         }
         else {
             throw new IllegalArgumentException("Cannot remove grocery \"" +
-                    grocery.getName() + "\" from Fridge. Grocery does not currently exist in Fridge.");
+                                               grocery.getName() + "\" from Fridge. Grocery does not currently exist in Fridge.");
         }
     }
 
@@ -76,27 +76,27 @@ public class Fridge {
     }
 
     public List<Grocery> getExpiredList() {
-        if (this.groceryList.isEmpty()) {
-            return this.groceryList;
+        if (groceryList.isEmpty()) {
+            return fridge.getGroceryList();
         }
         return this.getListSortedDate(
                 this.groceryList.stream()
-                    .filter(Grocery::hasExpired)
-                    .toList());
+                        .filter(Grocery::hasExpired)
+                        .toList());
     }
 
     public List<Grocery> getNearExpList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                    .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().isBefore(LocalDate.now().plusDays(4)))
-                    .toList());
+                        .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().isBefore(LocalDate.now().plusDays(4)))
+                        .toList());
     }
 
     public List<Grocery> getRestGroceryList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                    .filter(g -> g.getDate().isAfter(LocalDate.now().plusDays(3)))
-                    .toList());
+                        .filter(g -> g.getDate().isAfter(LocalDate.now().plusDays(3)))
+                        .toList());
     }
 
     public String getMoneyLoss() {

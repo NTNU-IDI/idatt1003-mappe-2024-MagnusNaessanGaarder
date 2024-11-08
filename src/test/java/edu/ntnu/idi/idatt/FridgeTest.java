@@ -1,5 +1,9 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.Manager.FridgeManager;
+import edu.ntnu.idi.idatt.Utils.SI;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,14 +11,16 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FridgeTest {
+    final private Fridge fridge = new Fridge();
+    final private FridgeManager fm = new FridgeManager(fridge);
 
     @Test
     void fridgeGetGroceryList() {
         //Lager et kjøleskap, en SI-enhet og en vare. Legger til varen i kjøleskapet
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
-        Fridge fridge = new Fridge();
+
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fridge.addGrocery(grocery);
+        fm.addGrocery(grocery);
 
         //lager en test-liste som inneholder varen lagd ovenfor.
         ArrayList<Grocery> testList = new ArrayList<>();
@@ -29,16 +35,15 @@ class FridgeTest {
         //Lager et kjøleskap, en SI-enhet og en vare. Legger til varen i kjøleskapet
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
         SI stk = new SI("Stykker", "stk", "stk","");
-        Fridge fridge = new Fridge();
         Grocery grocery1 = new Grocery ("Egg", stk, 18, LocalDate.now(), 25, fridge);
         Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fridge.addGrocery(grocery1);
-        fridge.addGrocery(grocery2);
+        fm.addGrocery(grocery1);
+        fm.addGrocery(grocery2);
 
 
         //tester om test-listen samsvarer med listen over varer i kjøleskapet.
-        assertEquals(grocery1, fridge.getGrocery(0),"Expected Arraylist with groceryObject, but got something else");
-        assertEquals(grocery2, fridge.getGrocery(1),"Expected Arraylist with groceryObject, but got something else");
+        assertEquals(grocery1, fm.getGrocery(0),"Expected Arraylist with groceryObject, but got something else");
+        assertEquals(grocery2, fm.getGrocery(1),"Expected Arraylist with groceryObject, but got something else");
     }
 
     @Test
@@ -46,9 +51,9 @@ class FridgeTest {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
         Fridge fridge = new Fridge();
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fridge.addGrocery(grocery);
+        fm.addGrocery(grocery);
 
-        assertEquals(grocery, fridge.getGrocery(0), "Did not get expected grocery.");
+        assertEquals(grocery, fm.getGrocery(0), "Did not get expected grocery.");
     }
 
     @Test
@@ -56,9 +61,9 @@ class FridgeTest {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
         Fridge fridge = new Fridge();
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fridge.addGrocery(grocery);
+        fm.addGrocery(grocery);
 
-        fridge.removeGrocery(grocery);
+        fm.removeGrocery(grocery);
         ArrayList<Grocery> emptyList = new ArrayList<>(0);
         assertEquals(emptyList,fridge.getGroceryList(), "Did not remove grocery as expected.");
     }
@@ -76,15 +81,17 @@ class FridgeTest {
         Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023, 3,21), 25, fridge);
         Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2024,9,30), 3, fridge);
 
-        fridge.addGrocery(grocery1);
-        fridge.addGrocery(grocery2);
-        fridge.addGrocery(grocery3);
-        fridge.addGrocery(grocery4);
+        fm.addGrocery(grocery1);
+        fm.addGrocery(grocery2);
+        fm.addGrocery(grocery3);
+        fm.addGrocery(grocery4);
 
-        assertEquals("2 varer er gått ut på dato.\nDu har tapt 72,75 kr.",fridge.getMoneyLoss(), "Did not get expected money loss.");
+        assertEquals("2 varer er gått ut på dato.\nDu har tapt 72,75 kr.",fm.getMoneyLoss(), "Did not get expected money loss.");
     }
 
-    /*@Test
+    /*
+    For at denne testen skal funke må
+    @Test
     void getSortedList() {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
         SI L = new SI("Liter", "L","L","");

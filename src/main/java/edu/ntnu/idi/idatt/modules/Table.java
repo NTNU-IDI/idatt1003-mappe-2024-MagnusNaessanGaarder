@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.modules;
 
 public class Table {
     final private String title;
@@ -15,7 +15,7 @@ public class Table {
         this.colData = colData;
     }
 
-    private static String createWhitespace(int length, int wordLength) {
+    private static String createWhitespaceTitle(int length, int wordLength) {
         int wsLength = length/2 - wordLength/2;
         return " ".repeat(Math.max(0, wsLength));
     }
@@ -24,10 +24,10 @@ public class Table {
         String longBar = "------------------------------------------------------------------------------------------------";
 
         return longBar + "\n\n" +
-                createWhitespace(longBar.length(), title.length()) +
+                createWhitespaceTitle(longBar.length(), title.length()) +
                 title + "\n\n" +
                 longBar + "\n" +
-                createWhitespace("              ".length(), title.length()) +
+                createWhitespaceTitle("              ".length(), title.length()) +
                 subTitle + "\n\n";
     }
 
@@ -49,7 +49,7 @@ public class Table {
         return sb.toString();
     }
 
-    private String wsGen(String s, int  width) {
+    private String createWhitespace(String s, int  width) {
         return String.format("%-" + (width-1)  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 
@@ -58,16 +58,8 @@ public class Table {
         for (int i = 0; i < colTitleArr.length; i++) {
             int width = bottomBar.length()/2;
 
-            String leftStr = wsGen(colTitleArr[i], width);
-            String rightStr = wsGen(colData[i], width);
-
-            //int leftPadding = bottomBar.length()/4 - colTitleArr[i].length()/2;
-            //int rightPadding = bottomBar.length()/4 - colData[i].length()/2;
-
-            //String leftStr = String.format("|%" + (leftPadding + colTitleArr[i].length()) + "s", colTitleArr[i]);
-            //leftStr += String.format("%" + (leftPadding) + "s", "");
-            //String rightStr = String.format("|%" + (rightPadding + colData[i].length()) + "s", colData[i]);
-            //rightStr += String.format("%"+ (rightPadding) +"s|", "");
+            String leftStr = createWhitespace(colTitleArr[i], width);
+            String rightStr = createWhitespace(colData[i], width);
 
             tableData.append("|").append(leftStr).append("|");
             tableData.append(rightStr).append("|\n");

@@ -4,13 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Feiloppretting på klient">
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="endret på klient og logikk i ulike klasser">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/FridgeManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/GroceryManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/SI_manager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Fridge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/SI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Fridge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/SI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/ClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/TableTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +31,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Test" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -99,7 +108,7 @@
   </component>
   <component name="RunManager" selected="JUnit.Run all Tests">
     <configuration name="Run Program" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.Client" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.Client.Client" />
       <module name="Foodwaste" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -109,7 +118,7 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -125,7 +134,7 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -141,7 +150,7 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -157,7 +166,7 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -183,7 +192,7 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -269,7 +278,14 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1730773264721</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="endret på klient og logikk i ulike klasser">
+      <option name="closed" value="true" />
+      <created>1731066010703</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1731066010703</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,7 +308,8 @@
     <MESSAGE value="mer fiks av warnings + test på klient og Display.java" />
     <MESSAGE value="nesten klarert med warnings" />
     <MESSAGE value="Feiloppretting på klient" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feiloppretting på klient" />
+    <MESSAGE value="endret på klient og logikk i ulike klasser" />
+    <option name="LAST_COMMIT_MESSAGE" value="endret på klient og logikk i ulike klasser" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,21 +1,23 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.modules;
+
+import edu.ntnu.idi.idatt.Manager.FridgeManager;
 
 import java.util.List;
 
 public class Display {
     private final String title;
-    private final Fridge fridge;
+    private final FridgeManager fm;
 
     public Display(String title, String subTitle, Fridge fridge) {
         this.title = Table.createMenuTable(title, subTitle);
-        this.fridge = fridge;
+        this.fm = new FridgeManager(fridge);
     }
 
     public String getTitle() {
         return this.title;
     }
 
-    public String displayPrice (List<Grocery> list, String title,  String colomnTitle, String colomnData) {
+    public String displayPrice (List<Grocery> list, String title, String colomnTitle, String colomnData) {
         StringBuilder str = new StringBuilder();
         if(list.isEmpty()) {
             str.append("         ---- Ingen varer er lagt til i kjøleskap ----\n");
@@ -24,7 +26,7 @@ public class Display {
         else {
             str.append(buildTable(list, title, colomnTitle,colomnData));
 
-            str.append("            Total brukt på varer: ").append(this.fridge.getTotalPrice()).append(" kr\n\n");
+            str.append("            Total brukt på varer: ").append(fm.getTotalPrice()).append(" kr\n\n");
         }
         return str.toString();
     }
@@ -50,7 +52,7 @@ public class Display {
         else {
             str.append(buildTable(list, title, colomnTitle,colomnData));
 
-            str.append("            Total pengetap på datovarer: ").append(this.fridge.getTotalPrice()).append(" kr\n\n");
+            str.append("            Total pengetap på datovarer: ").append(fm.getTotalPrice()).append(" kr\n\n");
         }
         return str.toString();
     }

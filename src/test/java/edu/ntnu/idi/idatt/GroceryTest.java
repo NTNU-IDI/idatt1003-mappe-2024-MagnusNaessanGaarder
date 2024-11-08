@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.Utils.SI;
+import edu.ntnu.idi.idatt.modules.Grocery;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
