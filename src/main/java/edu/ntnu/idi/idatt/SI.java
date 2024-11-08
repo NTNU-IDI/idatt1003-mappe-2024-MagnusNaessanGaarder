@@ -3,6 +3,7 @@ package edu.ntnu.idi.idatt;
 import java.util.HashMap;
 
 public class SI {
+
     @Override
     public boolean equals(Object o) {
         return true;
@@ -30,6 +31,19 @@ public class SI {
         SI_PREFIXES.put("Spiseskje", 0.005);  // 1 basisenhet = 200 centienheter
     }
 
+    private static final HashMap<String,String> VALID_UNIT = new HashMap<>();
+    static {
+        VALID_UNIT.put("Stykker","stk");
+        VALID_UNIT.put("Desiliter", "dL");
+        VALID_UNIT.put("Milliliter", "mL");
+        VALID_UNIT.put("Centiliter", "cL");
+        VALID_UNIT.put("Liter", "");
+        VALID_UNIT.put("Gram", "g");
+        VALID_UNIT.put("Kilogram", "kg");
+    }
+
+
+
     //konstruktør for klassen SI
     public SI(String unit, String unitShort, String unitForPrice, String prefix) {
         this.unit = unit;
@@ -44,6 +58,10 @@ public class SI {
             this.convertionFactor = SI_PREFIXES.getOrDefault(prefix,1.0);
         }
 
+    }
+
+    public static HashMap<String,String> getValidUnit() {
+        return VALID_UNIT;
     }
 
     //get metode for å få SI_PREFIX hashmapet

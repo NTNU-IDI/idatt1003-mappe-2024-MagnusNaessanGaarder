@@ -17,7 +17,9 @@ class TableTest {
                         ------------------------Title------------------------
                         |       testTittel1       |          data1          |
                         |       testTittel2       |          data2          |
-                        -----------------------------------------------------""";
+                        -----------------------------------------------------
+                        
+                        """;
 
 
         assertEquals(expectedStr, testTable.createTable());

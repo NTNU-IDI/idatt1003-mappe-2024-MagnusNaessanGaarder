@@ -88,14 +88,14 @@ public class Fridge {
     public List<Grocery> getNearExpList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                    .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().compareTo(LocalDate.now()) <= NEAR_EXPIRATION)
+                    .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().isBefore(LocalDate.now().plusDays(4)))
                     .toList());
     }
 
     public List<Grocery> getRestGroceryList() {
         return this.getListSortedDate(
                 groceryList.stream()
-                    .filter(g -> g.getDate().compareTo(LocalDate.now()) > NEAR_EXPIRATION)
+                    .filter(g -> g.getDate().isAfter(LocalDate.now().plusDays(3)))
                     .toList());
     }
 
@@ -119,14 +119,6 @@ public class Fridge {
     public double getTotalPrice() {
         double sum = 0;
         for(Grocery g : groceryList) {
-            sum += g.getPricePerQuantity();
-        }
-        return sum;
-    }
-
-    public double getTotalFromList(List<Grocery> list) {
-        double sum = 0;
-        for(Grocery g : list) {
             sum += g.getPricePerQuantity();
         }
         return sum;

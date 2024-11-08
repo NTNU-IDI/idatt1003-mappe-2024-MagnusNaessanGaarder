@@ -55,10 +55,10 @@ public class Display {
         return str.toString();
     }
 
-    public String list (List<Grocery> list){
+    public String list (List<Grocery> list, String altText){
         StringBuilder str = new StringBuilder();
         if (list.isEmpty()) {
-            str.append("            ---- Ingen varer er lagt til i kjøleskapet ----");
+            str.append("            ---- ").append(altText).append(" ----\n\n");
         }
         else {
             str.append(displayList(list));

@@ -44,24 +44,33 @@ public class Table {
 
         final StringBuilder tableData = getTableData(bottomBar.toString());
         sb.append(tableData);
-        sb.append(bottomBar);
+        sb.append(bottomBar).append("\n\n");
 
         return sb.toString();
+    }
+
+    private String wsGen(String s, int  width) {
+        return String.format("%-" + (width-1)  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 
     private StringBuilder getTableData(String bottomBar) {
         StringBuilder tableData = new StringBuilder();
         for (int i = 0; i < colTitleArr.length; i++) {
-            int leftPadding = bottomBar.length()/4 - colTitleArr[i].length()/2 - 1;
-            int rightPadding = bottomBar.length()/4 - colData[i].length()/2 - 1;
+            int width = bottomBar.length()/2;
 
-            String leftStr = String.format("|%" + (leftPadding + colTitleArr[i].length()) + "s", colTitleArr[i]);
-            leftStr += String.format("%" + (leftPadding) + "s", "");
-            String rightStr = String.format("|%" + (rightPadding + colData[i].length()) + "s", colData[i]);
-            rightStr += String.format("%"+ (rightPadding) +"s|", "");
+            String leftStr = wsGen(colTitleArr[i], width);
+            String rightStr = wsGen(colData[i], width);
 
-            tableData.append(leftStr);
-            tableData.append(rightStr).append("\n");
+            //int leftPadding = bottomBar.length()/4 - colTitleArr[i].length()/2;
+            //int rightPadding = bottomBar.length()/4 - colData[i].length()/2;
+
+            //String leftStr = String.format("|%" + (leftPadding + colTitleArr[i].length()) + "s", colTitleArr[i]);
+            //leftStr += String.format("%" + (leftPadding) + "s", "");
+            //String rightStr = String.format("|%" + (rightPadding + colData[i].length()) + "s", colData[i]);
+            //rightStr += String.format("%"+ (rightPadding) +"s|", "");
+
+            tableData.append("|").append(leftStr).append("|");
+            tableData.append(rightStr).append("|\n");
         }
         return tableData;
     }
