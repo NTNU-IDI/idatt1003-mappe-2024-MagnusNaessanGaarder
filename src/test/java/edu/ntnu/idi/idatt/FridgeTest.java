@@ -2,8 +2,8 @@ package edu.ntnu.idi.idatt;
 
 import edu.ntnu.idi.idatt.Manager.FridgeManager;
 import edu.ntnu.idi.idatt.Utils.SI;
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.Modules.Fridge;
+import edu.ntnu.idi.idatt.Modules.Grocery;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ class FridgeTest {
         fridge.addGrocery(grocery3);
         fridge.addGrocery(grocery4);
 
-        assertEquals("2 varer er gått ut på dato.\nDu har tapt 72,75 kr.",fm.getMoneyLoss(), "Did not get expected money loss.");
+        assertEquals("          2 varer er gått ut på dato.\n          Du har tapt 72,75 kr.",fm.getMoneyLossStr(), "Did not get expected money loss.");
     }
 
     /*

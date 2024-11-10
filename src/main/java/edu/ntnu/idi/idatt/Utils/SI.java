@@ -1,12 +1,28 @@
 package edu.ntnu.idi.idatt.Utils;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 public class SI {
-
     @Override
     public boolean equals(Object o) {
-        return true;
+        try {
+            Class<?> c = o.getClass();
+            if (c == SI.class) {
+                if ( ((SI) o).getUnit().equalsIgnoreCase(this.unit) &&
+                     ((SI) o).getPrefix().equalsIgnoreCase(this.prefix) &&
+                     ((SI) o).getAbrev().equalsIgnoreCase(this.unitAbrev) &&
+                     ((SI) o).getUnitForPrice().equalsIgnoreCase(this.unitForPrice) &&
+                     ((SI) o).getConvertionFactor() == this.convertionFactor) {
+
+                    return ((SI) o).getUnit().equalsIgnoreCase(this.unit);
+                }
+            }
+            return false;
+        }
+        catch (RuntimeException e) {
+            return false;
+        }
     }
 
     //Datafelt med globale variabler innenfor SI-enhet-scopet.

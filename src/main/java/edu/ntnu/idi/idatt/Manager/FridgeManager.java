@@ -1,7 +1,7 @@
 package edu.ntnu.idi.idatt.Manager;
 
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.Modules.Fridge;
+import edu.ntnu.idi.idatt.Modules.Grocery;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -72,22 +72,27 @@ public class FridgeManager {
                         .toList());
     }
 
-    public String getMoneyLoss() {
+    public String getMoneyLossStr() {
         List<Grocery> expiredGroceries = getExpiredList();
-
         if (expiredGroceries.isEmpty()) {
             return "Ingen varer er gått ut på dato";
         }
+        String str = "          %d varer er gått ut på dato.\n";
+        str +=       "          Du har tapt %.2f kr.";
 
-        double sum = 0.0;
+        return String.format(str, expiredGroceries.size(), this.getMoneyLoss());
+    }
+
+    public double getMoneyLoss() {
+        List<Grocery> expiredGroceries = getExpiredList();
+
+        double sum = 0;
         for (Grocery g : expiredGroceries) {
             final GroceryManager gm = new GroceryManager(g);
             sum += gm.getPricePerQuantity();
         }
-        String str = "%d varer er gått ut på dato.\n";
-        str += "Du har tapt %.2f kr.";
 
-        return String.format(str, expiredGroceries.size(), sum);
+        return sum;
     }
 
     public double getTotalPrice() {

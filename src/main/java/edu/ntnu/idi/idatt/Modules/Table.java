@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt.Modules;
 
 public class Table {
     final private String title;
@@ -22,12 +22,11 @@ public class Table {
 
     public static String createMenuTable(String title, String subTitle) {
         String longBar = "------------------------------------------------------------------------------------------------";
-
         return longBar + "\n\n" +
                 createWhitespaceTitle(longBar.length(), title.length()) +
                 title + "\n\n" +
                 longBar + "\n" +
-                createWhitespaceTitle("              ".length(), title.length()) +
+                createWhitespaceTitle(12*2, 0) +
                 subTitle + "\n\n";
     }
 

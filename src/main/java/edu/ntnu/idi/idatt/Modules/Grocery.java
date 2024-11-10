@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt.Modules;
 
 /*
  # Nivå 1:
@@ -84,7 +84,7 @@ public class Grocery {
     }
 
     public String getPriceToStr() {
-        return String.format("%.2f kr/%s", this.price, this.unit.getAbrev());
+        return String.format("%.2f kr/%s", this.price, this.unit.getUnitForPrice());
     }
 
     public double getPrice() {
@@ -102,6 +102,7 @@ public class Grocery {
     public SI getUnit() {
         return unit;
     }
+
     public void setUnit(SI unit) {
         this.unit = unit;
     }

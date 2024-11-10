@@ -34,14 +34,14 @@ package edu.ntnu.idi.idatt.Client;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
-import edu.ntnu.idi.idatt.modules.Display;
+import edu.ntnu.idi.idatt.Modules.Display;
 import edu.ntnu.idi.idatt.Manager.FridgeManager;
 import edu.ntnu.idi.idatt.Manager.GroceryManager;
 import edu.ntnu.idi.idatt.Manager.SI_manager;
 import edu.ntnu.idi.idatt.Utils.SI;
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
-import edu.ntnu.idi.idatt.modules.Table;
+import edu.ntnu.idi.idatt.Modules.Fridge;
+import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.Modules.Table;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -83,8 +83,8 @@ public class Client {
             //Oversikt over kjøleskapet
             case 3 -> displayFridge();
 
-            //Oversikt over datovarer
-            case 4 -> displayByDate();
+            //Søk etter vare
+            case 4 -> {/*searchFridge();*/}
 
             //Samlet verdi av varer
             case 5 -> displayValue();
@@ -254,129 +254,6 @@ public class Client {
         }
     }
 
-    public static void displayByDate() {
-
-        str = new StringBuilder();
-        Display display = new Display("DATOVARER", "Her er en liste med datovarer i kjøleskapet:", fridge);
-        str.append(display.getTitle());
-
-        str.append("Utgåtte varer:");
-        str.append(display.list(fm.getExpiredList(), "Ingen varer er gått ut på dato"));
-        str.append("Varer som holder på å gå ut på dato:");
-        str.append(display.list(fm.getNearExpList(), "Ingen varer er nær ved å gå ut på dato"));
-        str.append("Resterende varer:");
-        str.append(display.list(fm.getRestGroceryList(), "Ingen resterende varer"));
-
-        if (!fridge.getGroceryList().isEmpty()) {
-            str.append(display.displayPriceUnique(fm.getExpiredList(),"Total pengetap på datovarer", "Vare", "Pris beregnet på mengde"));
-            str.append(fm.getMoneyLoss());
-        }
-
-        System.out.println(str);
-
-
-        while (true) {
-            str = new StringBuilder();
-
-            if (fm.getExpiredList().isEmpty()) {
-                System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
-            }
-            else {
-                System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-delete\" for å slette en vare.\n"
-                        + "Skriv \"-delete all\" for å slette alle utgåtte varer.");
-            }
-
-            String userInput = getInput();
-            if (userInput.equals("-e")) {
-                break;
-            }
-            else if (userInput.equals("-delete") && !fm.getExpiredList().isEmpty()) {
-                try {
-                    clearScreen();
-                    Display.displayList(fm.getExpiredList());
-                    System.out.println("Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet." +
-                            "Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet.");
-
-                    userInput = getInput();
-                    String[] deleteStrArr = userInput.replaceAll("\\s+","").split(",");
-                    int[] deleteArr = Arrays.stream(deleteStrArr).mapToInt(Integer::parseInt).toArray();
-
-                    for (int groceryIndex : deleteArr) {
-                        Grocery removableGrocery = fm.getExpiredList().get(groceryIndex - 1);
-                        if (fridge.getGroceryList().contains(removableGrocery)) {
-                            fridge.removeGrocery(removableGrocery);
-                        }
-                        else {
-                            System.err.println("Kunne ikke fjerne "  + removableGrocery.getName() + " fra kjøleskapet.");
-                        }
-                    }
-
-                    System.out.println("Alle gyldige valgte datovarer er nå fjernet!\n");
-                }
-                catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-            else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
-                clearScreen();
-                for(Grocery expiredItem : fm.getExpiredList()) {
-                    fridge.removeGrocery(expiredItem);
-                }
-                System.out.println("Alle datovarer er nå fjernet!\n");
-            }
-            else if (fridge.getGroceryList().isEmpty() && userInput.contains("-delete")) {
-                clearScreen();
-                System.err.println("Det finnes ingen datovarer. Kan ikke fjerne datovarer fra kjøleskapet.");
-            }
-            else {
-                throw new IllegalArgumentException("Ugyldig kommando. \"\"");
-            }
-        }
-    }
-
-    public static void displayFridge() {
-        str = new StringBuilder();
-        Display display = new Display("KJØLESKAP","Her er en liste med tilgjengelige varer i kjøleskapet:", fridge);
-
-        str.append(display.getTitle());
-        str.append(display.list(fridge.getGroceryList(), "Fant ingen varer i kjøleskapet"));
-        System.out.println(str);
-
-        while (true) {
-            System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-change [Vare ID]\" for å endre på en vare.\n"
-                               + "[Vare ID] skal skrives som et tall.");
-            String userInput = getInput();
-            int userIndex = -1;
-
-            if (userInput.equals("-e")) {
-                break;
-            }
-            else if (userInput.equals("-change")) {
-                System.out.println("Skriv en vareID du ønsker å fjerne fra:");
-                userInput = getInput();
-                int userInt = Integer.parseInt(userInput);
-                userIndex = fm.getGroceryListIndex(userInt);
-            }
-            else if (userInput.contains("-change")) {
-                int userInt = Integer.parseInt(String.join("", userInput.split("[^0-9]")));
-                userIndex = fm.getGroceryListIndex(userInt);
-            }
-            else {
-                System.err.println("Ugyldig kommando. Skriv enten \"-e\" eller \"-change\".");
-            }
-
-            if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
-                clearScreen();
-                changeGrocery(fm.getGrocery(userIndex));
-                System.out.println("Endret vare " + (userIndex+1));
-            }
-            else {
-                clearScreen();
-                System.err.println("Ugyldig vareID");
-            }
-        }
-    }
-
     public static void changeGrocery(Grocery grocery) {
         clearScreen();
 
@@ -393,8 +270,11 @@ public class Client {
 
         String userInput;
         do {
-            System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"tall\" for å endre på en vare.\n"
-                    + "\"tall\" skal skrives som et heltall i intervallet [1,3].");
+            System.out.println("""
+                    Skriv "-e" for å gå tilbake til menyen, eller "tall" for å endre på en vare.
+                    "tall" skal skrives som et heltall i intervallet [1,3].
+                    
+                    """);
             userInput = getInput();
             final GroceryManager gm = new GroceryManager(grocery);
 
@@ -439,6 +319,126 @@ public class Client {
 
     }
 
+    public static void displayFridge() {
+        str = new StringBuilder();
+        Display display = new Display("KJØLESKAP","Her er en overikt over ulike varer i kjøleskapet:", fridge);
+        str.append(display.getTitle());
+
+        if (fridge.getGroceryList().isEmpty()) {
+            str.append("            ---- Kjøleskapet er tomt ----\n\n");
+        }
+        else {
+            str.append("        Utgåtte varer:\n\n");
+            str.append(display.list(fm.getExpiredList(), "Ingen varer er gått ut på dato"));
+            str.append("        Varer som holder på å gå ut på dato:\n\n");
+            str.append(display.list(fm.getNearExpList(), "Ingen varer er nær ved å gå ut på dato"));
+            str.append("        Resterende varer:\n\n");
+            str.append(display.list(fm.getRestGroceryList(), "Ingen resterende varer")).append("\n\n");
+        }
+
+        if (!fm.getExpiredList().isEmpty()) {
+            str.append(display.displayPriceUnique(fm.getExpiredList(),"Total pengetap på datovarer", "Vare", "Pris beregnet på mengde"));
+        }
+        System.out.println(str);
+        commands();
+    }
+
+    public static void commands() {
+        while (true) {
+            str = new StringBuilder();
+
+            str.append("\n\n");
+            if (fridge.getGroceryList().isEmpty()) {
+                System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
+            }
+            else if (fm.getExpiredList().isEmpty()) {
+                System.out.println("""
+                        Skriv "-change" eller "-change [vareID]" for å endre på en vare. "[vareID]" skrives som et tall.
+                        Skriv "-e" for å gå tilbake til menyen.""");
+            }
+            else {
+                System.out.println("""
+                        Skriv "-delete" for å slette en vare. Kommandoen "-delete all" vil slette alle utgåtte varer.
+                        Skriv "-change" eller "-change [vareID]" for å endre på en vare. "[vareID]" skrives som et tall.
+                        Skriv "-e" for å gå tilbake til menyen.""");
+            }
+
+            String userInput = getInput();
+            int userIndex;
+
+            if (userInput.equals("-e")) {
+                break;
+            }
+            else if (userInput.equals("-delete") && !fm.getExpiredList().isEmpty()) {
+                deleteItems(userInput);
+            }
+            else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
+                clearScreen();
+                for(Grocery expiredItem : fm.getExpiredList()) {
+                    fridge.removeGrocery(expiredItem);
+                }
+                System.out.println("Alle datovarer er nå fjernet!\n");
+            }
+            else if (userInput.contains("-change")) {
+                if (userInput.equals("-change")) {
+                    System.out.println("Skriv en vareID du ønsker å fjerne fra:");
+                    userInput = getInput();
+                }
+                int userInt = Integer.parseInt(userInput);
+                userIndex = fm.getGroceryListIndex(userInt);
+
+                if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
+                    clearScreen();
+                    changeGrocery(fm.getGrocery(userIndex));
+                    System.out.println("Endret vare " + (userIndex+1));
+                }
+                else {
+                    clearScreen();
+                    System.err.println("Ugyldig vareID");
+                }
+            }
+            else if (fridge.getGroceryList().isEmpty() && userInput.contains("-delete")) {
+                clearScreen();
+                System.err.println("Det finnes ingen datovarer. Kan ikke fjerne datovarer fra kjøleskapet.");
+            }
+            else {
+                System.err.println("Ugyldig kommando. \""+ userInput +"\"");
+            }
+        }
+    }
+
+    public static void deleteItems(String input) {
+        try {
+            clearScreen();
+            Display.displayList(fm.getExpiredList());
+            System.out.println("Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet." +
+                               "Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet.");
+
+            input = getInput();
+            String[] deleteStrArr = input.replaceAll("\\s+","").split(",");
+            int[] deleteArr = Arrays.stream(deleteStrArr).mapToInt(Integer::parseInt).toArray();
+
+            for (int groceryID : deleteArr) {
+                Grocery removableGrocery = fridge.getGroceryList().stream()
+                        .filter(Grocery::hasExpired)
+                        .filter(grocery -> grocery.getGroceryID() == groceryID)
+                        .findFirst()
+                        .orElse(null);
+                if (removableGrocery != null) {
+                    fridge.removeGrocery(removableGrocery);
+                }
+                else {
+                    System.err.println("Kunne ikke fjerne vare med vareID "  + groceryID + " fra kjøleskapet.");
+                }
+            }
+
+            System.out.println("Alle gyldige valgte datovarer er nå fjernet!\n");
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     public static void main(final String[] args) {
 
         while (running) {
@@ -447,12 +447,16 @@ public class Client {
             clearScreen();
             str = new StringBuilder();
 
-            final String menuStr = Table.createMenuTable("HOVEDMENY - MATLAGER","Velg et alternativ under ved å skrive et tall:");
+            final String menuStr = Table.createMenuTable("HOVEDMENY - MATLAGER","Liste med tilgjengelige varer");
             str.append(menuStr);
+            str.append(Display.menuList(fridge.getGroceryList(), "Fant ingen varer i kjøleskapet")).append("\n");
+
+            str.append("            Velg fra listen nedenfor:").append("\n\n");
+
             str.append("                   [1] Legg til vare.\n");
             str.append("                   [2] Fjern vare.\n");
             str.append("                   [3] Oversikt over kjøleskapet.\n");
-            str.append("                   [4] Oversikt over datovarer.\n");
+            str.append("                   [4] Søk etter vare.\n");
             str.append("                   [5] Samlet verdi av varer.\n");
             str.append("                   [6] Avslutt.\n");
             System.out.println(str);

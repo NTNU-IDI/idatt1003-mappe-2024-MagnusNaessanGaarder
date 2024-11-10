@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt.Modules;
 
 import edu.ntnu.idi.idatt.Manager.FridgeManager;
 import edu.ntnu.idi.idatt.Manager.GroceryManager;
@@ -54,7 +54,7 @@ public class Display {
         else {
             str.append(buildTable(list, title, colomnTitle,colomnData));
 
-            str.append("            Total pengetap på datovarer: ").append(fm.getTotalPrice()).append(" kr\n\n");
+            str.append("            Total pengetap på datovarer: ").append(fm.getMoneyLoss()).append(" kr\n\n");
         }
         return str.toString();
     }
@@ -66,6 +66,17 @@ public class Display {
         }
         else {
             str.append(displayList(list));
+        }
+        return str.toString();
+    }
+
+    public static String menuList (List<Grocery> list, String altText){
+        StringBuilder str = new StringBuilder();
+        if (list.isEmpty()) {
+            str.append("            ---- ").append(altText).append(" ----\n\n");
+        }
+        else {
+            str.append(displayMenuList(list));
         }
         return str.toString();
     }
@@ -95,6 +106,20 @@ public class Display {
             );
             sb.append(groceryTable.createTable());
         }
+        return sb.toString();
+    }
+    public static String displayMenuList(List<Grocery> list) {
+        StringBuilder sb = new StringBuilder();
+        for (Grocery grocery : list) {
+            sb.append("         ")
+                    .append(grocery.getName())
+                    .append(", ")
+                    .append(grocery.getQuantity()).append(" ").append(grocery.getUnit().getAbrev()).append(", ")
+                    .append(grocery.getPriceToStr()).append(", ")
+                    .append(grocery.getDateToStr())
+                    .append("\n");
+        }
+        sb.append("\n\n");
         return sb.toString();
     }
 }

@@ -65,6 +65,7 @@ public class SI_manager {
                 return true;
             }
         }
+
         //sjekker validitet. Hvis prefiksen er en gyldig prefiks i SI-klassen, returner true. Ellers, false
         for (String hashKey : SI.getValidUnit().keySet()) {
             if(hashKey.equalsIgnoreCase(userInput)) {

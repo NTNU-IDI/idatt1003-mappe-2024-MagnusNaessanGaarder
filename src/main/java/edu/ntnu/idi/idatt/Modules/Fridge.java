@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt.Modules;
 
 import edu.ntnu.idi.idatt.Manager.GroceryManager;
 
@@ -15,10 +15,11 @@ public class Fridge {
     }
 
     public void addGrocery(final Grocery grocery) {
+        final GroceryManager gm = new GroceryManager(grocery);
+        gm.convertUnit();
         if (!groceryList.isEmpty()) {
             for (Grocery g : this.groceryList) {
-                if (g.equals(grocery)) {
-                    final GroceryManager gm = new GroceryManager(grocery);
+                if (g.equals(grocery) || (g.getName().equalsIgnoreCase(grocery.getName()) && g.getDate().equals(grocery.getDate()))) {
                     gm.addAmount(grocery.getQuantity(), grocery.getUnit());
                     return;
                 }
