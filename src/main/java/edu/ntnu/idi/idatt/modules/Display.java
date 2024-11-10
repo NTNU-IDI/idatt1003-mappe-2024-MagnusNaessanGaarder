@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.modules;
 
 import edu.ntnu.idi.idatt.Manager.FridgeManager;
+import edu.ntnu.idi.idatt.Manager.GroceryManager;
 
 import java.util.List;
 
@@ -37,8 +38,9 @@ public class Display {
         colTitle[0] = colomnTitle;
         colData[0] = colomnData;
         for(int i=0; i < list.size(); i++) {
+            final GroceryManager gm = new GroceryManager(list.get(i));
             colTitle[i+1] = list.get(i).getName();
-            colData[i+1] = list.get(i).getPricePerQuantity() + " kr";
+            colData[i+1] = gm.getPricePerQuantity() + " kr";
         }
         Table table = new Table(title, colTitle, colData);
         return table.createTable();

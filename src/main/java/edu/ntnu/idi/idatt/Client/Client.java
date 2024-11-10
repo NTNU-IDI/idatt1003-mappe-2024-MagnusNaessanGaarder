@@ -56,7 +56,6 @@ public class Client {
 
     final private static Fridge fridge = new Fridge();
     final private static FridgeManager fm = new FridgeManager(fridge);
-    final private static GroceryManager gm = new GroceryManager(fm);
 
     public static String getInput() {
         String data = "";
@@ -151,8 +150,10 @@ public class Client {
 
             if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
                 clearScreen();
-                gm.removeAmountGrocery(fm.getGrocery(userIndex));
-                System.out.println("Fjernet fra vare med vareID " + (userIndex+1));
+                Grocery grocery = fm.getGrocery(userIndex);
+                final GroceryManager gm = new GroceryManager(grocery);
+
+                gm.removeAmountGrocery();
             }
             else {
                 clearScreen();
@@ -223,7 +224,7 @@ public class Client {
             if (userInput.equalsIgnoreCase("y")) {
                 //sjekker om varen allerede er i kjøleskapet
                 Grocery grocery = new Grocery(name,measure,quantity,date,price,fridge);
-                fm.addGrocery(grocery);
+                fridge.addGrocery(grocery);
                 break;
             }
             else if (userInput.equalsIgnoreCase("n")) {
@@ -303,7 +304,7 @@ public class Client {
                     for (int groceryIndex : deleteArr) {
                         Grocery removableGrocery = fm.getExpiredList().get(groceryIndex - 1);
                         if (fridge.getGroceryList().contains(removableGrocery)) {
-                            fm.removeGrocery(removableGrocery);
+                            fridge.removeGrocery(removableGrocery);
                         }
                         else {
                             System.err.println("Kunne ikke fjerne "  + removableGrocery.getName() + " fra kjøleskapet.");
@@ -319,7 +320,7 @@ public class Client {
             else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
                 clearScreen();
                 for(Grocery expiredItem : fm.getExpiredList()) {
-                    fm.removeGrocery(expiredItem);
+                    fridge.removeGrocery(expiredItem);
                 }
                 System.out.println("Alle datovarer er nå fjernet!\n");
             }
@@ -395,16 +396,17 @@ public class Client {
             System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"tall\" for å endre på en vare.\n"
                     + "\"tall\" skal skrives som et heltall i intervallet [1,3].");
             userInput = getInput();
+            final GroceryManager gm = new GroceryManager(grocery);
 
             if (userInput.equals("-e")) {
                 break;
             }
             switch (Integer.parseInt(userInput)) {
                 //legg til mengde til varen
-                case 1 -> gm.addAmountGrocery(grocery);
+                case 1 -> gm.addAmountGrocery();
 
                 //legg til mengde til varen
-                case 2 -> gm.removeAmountGrocery(grocery);
+                case 2 -> gm.removeAmountGrocery();
                 case 3 -> {
                     //sjekk om en vare er gått ut på dato
                     try {
@@ -415,7 +417,7 @@ public class Client {
                                 System.out.println("Ønsker du å slette varen? Skriv \"y\" for JA og \"n\" for NEI.");
                                 userInput = getInput();
                                 if (userInput.equalsIgnoreCase("y")) {
-                                    fm.removeGrocery(grocery);
+                                    fridge.removeGrocery(grocery);
                                     break;
                                 } else if (userInput.equalsIgnoreCase("n")) {
                                     break;

@@ -4,65 +4,38 @@ import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class FridgeManager {
     final private Fridge fridge;
-    final private ArrayList<Grocery> groceryList;
 
     public FridgeManager (Fridge fridge) {
         this.fridge = fridge;
-        this.groceryList = this.fridge.getGroceryList();
     }
 
     public Grocery getGrocery(final int index) {
+        if (fridge.getGroceryList().isEmpty()) {
+            return null;
+        }
         return fridge.getGroceryList().get(index);
     }
 
     public int getGroceryListIndex(final int groceryID) {
         return IntStream.range(0, fridge.getGroceryList().size())
-                .filter(i -> groceryList.get(i).getGroceryID() == groceryID)
+                .filter(i -> fridge.getGroceryList().get(i).getGroceryID() == groceryID)
                 .findFirst()
                 .orElse(-1);
     }
 
     public Grocery search(final String name) {
-        for (Grocery g : groceryList) {
+        for (Grocery g : fridge.getGroceryList()) {
             if (g.getName().equals(name)) {
                 return g;
             }
         }
         return null;
-    }
-
-    public void addGrocery(final Grocery grocery) {
-        for (Grocery groceryItem : groceryList) {
-            if (groceryItem.equals(grocery)) {
-                fridge.getGroceryList().get(groceryList.indexOf(grocery)).addAmount(grocery.getQuantity(), grocery.getUnit());
-                return;
-            }
-        }
-
-        groceryList.add(grocery);
-    }
-
-    public void removeGrocery(final Grocery grocery) {
-        if (groceryList.contains(grocery)) {
-            final int index = groceryList.indexOf(grocery);
-            if (index != -1) {
-                groceryList.remove(index);
-            }
-            else {
-                throw new IllegalArgumentException("Argument not valid! Cannot remove grocery from grocery list.");
-            }
-        }
-        else {
-            throw new IllegalArgumentException("Cannot remove grocery \"" +
-                                               grocery.getName() + "\" from Fridge. Grocery does not currently exist in Fridge.");
-        }
     }
 
     private List<Grocery> getListSortedDate(List<Grocery> list) {
@@ -76,25 +49,25 @@ public class FridgeManager {
     }
 
     public List<Grocery> getExpiredList() {
-        if (groceryList.isEmpty()) {
+        if (fridge.getGroceryList().isEmpty()) {
             return fridge.getGroceryList();
         }
         return this.getListSortedDate(
-                this.groceryList.stream()
+                fridge.getGroceryList().stream()
                         .filter(Grocery::hasExpired)
                         .toList());
     }
 
     public List<Grocery> getNearExpList() {
         return this.getListSortedDate(
-                groceryList.stream()
+                fridge.getGroceryList().stream()
                         .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().isBefore(LocalDate.now().plusDays(4)))
                         .toList());
     }
 
     public List<Grocery> getRestGroceryList() {
         return this.getListSortedDate(
-                groceryList.stream()
+                fridge.getGroceryList().stream()
                         .filter(g -> g.getDate().isAfter(LocalDate.now().plusDays(3)))
                         .toList());
     }
@@ -107,8 +80,9 @@ public class FridgeManager {
         }
 
         double sum = 0.0;
-        for (Grocery grocery : expiredGroceries) {
-            sum += grocery.getPricePerQuantity();
+        for (Grocery g : expiredGroceries) {
+            final GroceryManager gm = new GroceryManager(g);
+            sum += gm.getPricePerQuantity();
         }
         String str = "%d varer er gått ut på dato.\n";
         str += "Du har tapt %.2f kr.";
@@ -118,8 +92,9 @@ public class FridgeManager {
 
     public double getTotalPrice() {
         double sum = 0;
-        for(Grocery g : groceryList) {
-            sum += g.getPricePerQuantity();
+        for(Grocery g : fridge.getGroceryList()) {
+            final GroceryManager gm = new GroceryManager(g);
+            sum += gm.getPricePerQuantity();
         }
         return sum;
     }

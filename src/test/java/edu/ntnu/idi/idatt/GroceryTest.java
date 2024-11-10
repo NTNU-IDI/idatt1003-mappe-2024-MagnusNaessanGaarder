@@ -1,6 +1,9 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.Manager.FridgeManager;
+import edu.ntnu.idi.idatt.Manager.GroceryManager;
 import edu.ntnu.idi.idatt.Utils.SI;
+import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 import org.junit.jupiter.api.Test;
 
@@ -9,19 +12,21 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GroceryTest {
+    final Fridge fridge = new Fridge();
+    final Grocery grocery = new Grocery("Melk", new SI("Liter", "L","L",""), 10, LocalDate.now(), 10, fridge);
+    final FridgeManager fm = new FridgeManager(fridge);
 
     @Test
     void groceryGetName() {
-        Grocery grocery = new Grocery("Melk", new SI("Liter", "L","L",""), 10, LocalDate.now(), 10, null);
+        final GroceryManager gm = new GroceryManager(grocery);
         assertEquals("Melk", grocery.getName(), "Name should be Melk, but wasn't");
     }
 
 
     @Test
     void groceryAddAmount() {
-        Grocery grocery = new Grocery("Melk", new SI("Liter", "L","L",""), 10, LocalDate.now(), 10, null);
-
-        grocery.addAmount(10,  new SI("Liter", "L","L",""));
+        final GroceryManager gm = new GroceryManager(grocery);
+        gm.addAmount(10,  new SI("Liter", "L","L",""));
 
         assertEquals(20, grocery.getQuantity(),"Quantity should be 20, but wasn't");
     }
@@ -29,15 +34,17 @@ class GroceryTest {
 
     @Test
     void groceryFailAddAmount() {
-        Grocery grocery = new Grocery("Melk", new SI("Liter", "L","L",""), 10, LocalDate.now(), 10, null);
+        final GroceryManager gm = new GroceryManager(grocery);
 
-        assertThrows(IllegalArgumentException.class, () -> grocery.addAmount(-1, new SI("Liter", "L","L","")), "Grocery.addAmount should throw an error on negative values");
+        assertThrows(IllegalArgumentException.class, () -> gm.addAmount(-1, new SI("Liter", "L","L","")), "Grocery.addAmount should throw an error on negative values");
     }
 
     @Test
     void groceryRemoveAmount() {
         Grocery grocery = new Grocery("Melk", new SI("Liter", "L","L",""), 1, LocalDate.now(), 1, null);
-        assertEquals(1, grocery.removeAmount(9, new SI("Desiliter", "dL","L","Desi")), "Expected 9 but got another value.");
+        final GroceryManager gm = new GroceryManager(grocery);
+        gm.removeAmount(9, new SI("Desiliter", "dL","L","Desi"));
+        assertEquals(1, grocery.getQuantity(), "Expected 9 but got another value.");
     }
 
     @Test
@@ -61,7 +68,8 @@ class GroceryTest {
     @Test
     void groceryFailRemoveAmount() {
         Grocery grocery = new Grocery("Melk", new SI("Liter", "L","L",""), 1, LocalDate.now(), 1, null);
-        assertThrows(IllegalArgumentException.class, () -> grocery.removeAmount(-1, new SI("Desiliter", "dL", "L", "Desi")), "Grocery.removeAmount should throw an error on negative values");
+        final GroceryManager gm = new GroceryManager(grocery);
+        assertThrows(IllegalArgumentException.class, () -> gm.removeAmount(-1, new SI("Desiliter", "dL", "L", "Desi")), "Grocery.removeAmount should throw an error on negative values");
     }
 
     @Test
@@ -76,13 +84,16 @@ class GroceryTest {
         assertEquals("26 oktober 2024", grocery.getDateToStr(), "Expected date does not match return value.");
     }
 
+
     @Test
     void groceryConvertUnit() {
         Grocery grocery = new Grocery("Melk", new SI("Desiliter", "dl","L","Desi"), 0.9, LocalDate.now(), 10, null);
-        assertEquals(90.0,grocery.convertUnit(), "Expected amount to be 90.0, but wasn't");
+        final GroceryManager gm = new GroceryManager(grocery);
+        assertEquals(90.0,grocery.getQuantity(), "Expected amount to be 90.0, but wasn't");
 
         grocery = new Grocery("Mel", new SI("Kilogram", "kg","kg","Kilo"), 0.9, LocalDate.now(), 10, null);
-        assertEquals(900,grocery.convertUnit(), "Expected amount to be 900, but wasn't");
+        final GroceryManager gm1 = new GroceryManager(grocery);
+        assertEquals(900,grocery.getQuantity(), "Expected amount to be 900, but wasn't");
     }
 
     @Test

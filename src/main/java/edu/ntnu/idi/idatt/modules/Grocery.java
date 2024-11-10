@@ -67,6 +67,10 @@ public class Grocery {
         return this.groceryID;
     }
 
+    public Fridge getFridge() {
+        return fridge;
+    }
+
     public String getName() {
         return name;
     }
@@ -91,91 +95,15 @@ public class Grocery {
         return quantity;
     }
 
+    public void setQuantity(double quantity){
+        this.quantity = quantity;
+    }
+
     public SI getUnit() {
         return unit;
     }
-
-    public double convertUnit () {
-        if (this.quantity < 1.0 && this.unit.getPrefix().isEmpty()) {
-            this.unit = new SI("Desiliter", "dL","L", "Desi");
-            this.quantity *= 10;
-        }
-        else if (this.quantity >= 10.0 && this.unit.getPrefix().equals("Desi")) {
-            this.unit = new SI("Liter", "L", "L","Desi");
-            this.quantity /= 10;
-        }
-        else if (this.quantity < 1.0 && this.unit.getPrefix().equals("Desi")) {
-            this.unit = new SI("Milliliter", "mL", "L","Milli");
-            this.quantity *= 100;
-        }
-        else if (this.quantity >= 100 && this.unit.getPrefix().equals("Milli")) {
-            this.unit = new SI("Desiliter", "dL", "L","Desi");
-            this.quantity /= 100;
-        }
-        else if (this.quantity < 1.0 && this.unit.getPrefix().equals("Kilo")) {
-            this.unit = new SI("Gram", "g", "kg", "");
-            this.quantity *= 1000;
-        }
-        else if (this.quantity >= 1000.0 && this.unit.getPrefix().equals("Gram")) {
-            this.unit = new SI("Kilogram", "kg", "kg", "Kilo");
-            this.quantity /= 1000;
-        }
-
-        return quantity;
-    }
-
-    public void addAmount(final double amount, final SI amountUnit) {
-        if (amount > 0) {
-            if (this.unit.getAbrev().equals("stk") && amountUnit.getAbrev().equals("stk")) {
-                this.quantity += amount;
-            }
-            else if (this.unit.getAbrev().equals("stk") || amountUnit.getAbrev().equals("stk")) {
-                System.err.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
-            }
-            else {
-                this.quantity =  (double)(Math.round((this.quantity*unit.getConvertionFactor()+amount*amountUnit.getConvertionFactor())*100))/100;
-            }
-            convertUnit();
-        }
-        else {
-            throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
-        }
-    }
-
-    public double removeAmount(final double amount, SI amountUnit) {
-        if (amount > 0) {
-            if (this.unit.getAbrev().equals("stk") && amountUnit.getAbrev().equals("stk")) {
-                this.quantity -= amount;
-            }
-            else if (this.unit.getAbrev().equals("stk") || amountUnit.getAbrev().equals("stk")) {
-                System.err.println("Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
-            }
-            else {
-                this.quantity = (double)(Math.round((this.quantity*unit.getConvertionFactor()-amount*amountUnit.getConvertionFactor())*100))/100;
-            }
-            convertUnit();
-
-            if (this.quantity <= 0) {
-                this.fridge.removeGrocery(this);
-                return 0;
-            }
-            return quantity;
-        }
-        else {
-            throw new IllegalArgumentException("Illegal argument error: Cannot remove a negative amount.");
-        }
-    }
-
-    public double getPricePerQuantity() {
-        double result;
-        if (unit.getAbrev().equals(unit.getUnitForPrice())) {
-            result = quantity * price;
-        }
-        else {
-            result = price * (quantity*unit.getConvertionFactor());
-        }
-
-        return result;
+    public void setUnit(SI unit) {
+        this.unit = unit;
     }
 
     public boolean hasExpired() {

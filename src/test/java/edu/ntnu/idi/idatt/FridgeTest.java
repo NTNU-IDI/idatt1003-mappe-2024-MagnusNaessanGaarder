@@ -20,7 +20,7 @@ class FridgeTest {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
 
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fm.addGrocery(grocery);
+        fridge.addGrocery(grocery);
 
         //lager en test-liste som inneholder varen lagd ovenfor.
         ArrayList<Grocery> testList = new ArrayList<>();
@@ -37,8 +37,8 @@ class FridgeTest {
         SI stk = new SI("Stykker", "stk", "stk","");
         Grocery grocery1 = new Grocery ("Egg", stk, 18, LocalDate.now(), 25, fridge);
         Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fm.addGrocery(grocery1);
-        fm.addGrocery(grocery2);
+        fridge.addGrocery(grocery1);
+        fridge.addGrocery(grocery2);
 
 
         //tester om test-listen samsvarer med listen over varer i kjøleskapet.
@@ -49,9 +49,8 @@ class FridgeTest {
     @Test
     void fridgeAddGrocery() {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
-        Fridge fridge = new Fridge();
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fm.addGrocery(grocery);
+        fridge.addGrocery(grocery);
 
         assertEquals(grocery, fm.getGrocery(0), "Did not get expected grocery.");
     }
@@ -59,11 +58,10 @@ class FridgeTest {
     @Test
     void fridgeRemoveGrocery() {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
-        Fridge fridge = new Fridge();
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
-        fm.addGrocery(grocery);
+        fridge.addGrocery(grocery);
 
-        fm.removeGrocery(grocery);
+        fridge.removeGrocery(grocery);
         ArrayList<Grocery> emptyList = new ArrayList<>(0);
         assertEquals(emptyList,fridge.getGroceryList(), "Did not remove grocery as expected.");
     }
@@ -75,16 +73,15 @@ class FridgeTest {
         SI dL = new SI("Desiliter", "dL","L","Desi");
         SI stk = new SI("Stykker", "stk","stk","");
 
-        Fridge fridge = new Fridge();
         Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.now(), 49, fridge);
         Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 100, fridge);
         Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023, 3,21), 25, fridge);
         Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2024,9,30), 3, fridge);
 
-        fm.addGrocery(grocery1);
-        fm.addGrocery(grocery2);
-        fm.addGrocery(grocery3);
-        fm.addGrocery(grocery4);
+        fridge.addGrocery(grocery1);
+        fridge.addGrocery(grocery2);
+        fridge.addGrocery(grocery3);
+        fridge.addGrocery(grocery4);
 
         assertEquals("2 varer er gått ut på dato.\nDu har tapt 72,75 kr.",fm.getMoneyLoss(), "Did not get expected money loss.");
     }
