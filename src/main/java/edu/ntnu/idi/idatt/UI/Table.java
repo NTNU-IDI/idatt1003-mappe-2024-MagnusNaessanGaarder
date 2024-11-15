@@ -1,14 +1,18 @@
-package edu.ntnu.idi.idatt.Modules;
-
+package edu.ntnu.idi.idatt.UI;
+/**
+ *
+ */
 public class Table {
-    final private String title;
-    final private String[] colTitleArr;
-    final private String[] colData;
+    /**
+     *
+     */
+    private final String title;
+    private final String[] colTitleArr;
+    private final String[] colData;
 
     public Table(String title, String[] colTitles, String[] colData) {
-        if (colTitles.length != colData.length) {
+        if (colTitles.length != colData.length)
             throw new IllegalArgumentException("The number of columns and titles do not match");
-        }
 
         this.title = title;
         this.colTitleArr = colTitles;
@@ -16,18 +20,18 @@ public class Table {
     }
 
     private static String createWhitespaceTitle(int length, int wordLength) {
-        int wsLength = length/2 - wordLength/2;
+        int wsLength = length / 2 - wordLength / 2;
         return " ".repeat(Math.max(0, wsLength));
     }
 
     public static String createMenuTable(String title, String subTitle) {
         String longBar = "------------------------------------------------------------------------------------------------";
-        return longBar + "\n\n" +
-                createWhitespaceTitle(longBar.length(), title.length()) +
-                title + "\n\n" +
-                longBar + "\n" +
-                createWhitespaceTitle(12*2, 0) +
-                subTitle + "\n\n";
+        return longBar + "\n\n"
+               + createWhitespaceTitle(longBar.length(), title.length())
+               + title + "\n\n"
+               + longBar + "\n"
+               + createWhitespaceTitle(12 * 2, 0)
+               + subTitle + "\n\n";
     }
 
     public String createTable() {
@@ -49,13 +53,14 @@ public class Table {
     }
 
     private String createWhitespace(String s, int  width) {
-        return String.format("%-" + (width-1)  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
+        return String.format("%-" + (width - 1) + "s",
+                String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 
     private StringBuilder getTableData(String bottomBar) {
         StringBuilder tableData = new StringBuilder();
         for (int i = 0; i < colTitleArr.length; i++) {
-            int width = bottomBar.length()/2;
+            int width = bottomBar.length() / 2;
 
             String leftStr = createWhitespace(colTitleArr[i], width);
             String rightStr = createWhitespace(colData[i], width);

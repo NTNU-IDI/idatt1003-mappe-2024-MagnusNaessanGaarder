@@ -49,7 +49,7 @@ public class Grocery {
     private final double price;
     private final Fridge fridge;
 
-    public Grocery (String name, SI measure, double quantity, LocalDate date, double price, Fridge fridge) {
+    public Grocery(String name, SI measure, double quantity, LocalDate date, double price, Fridge fridge) {
         this.name = name;
         this.unit = measure;
         this.quantity = quantity;

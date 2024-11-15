@@ -1,10 +1,10 @@
 package edu.ntnu.idi.idatt.Manager;
 
-import edu.ntnu.idi.idatt.Utils.SI;
 import edu.ntnu.idi.idatt.Modules.Fridge;
 import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.Utils.SI;
 
-import static edu.ntnu.idi.idatt.Client.Client.getInput;
+import static edu.ntnu.idi.idatt.Client.Main.getInput;
 
 public class GroceryManager {
     private final Fridge fridge;
@@ -32,24 +32,24 @@ public class GroceryManager {
         else if (groceryQuantity >= 1000.0 && groceryUnit.isEmpty()) {
             if (unit.getAbrev().equalsIgnoreCase("g")) {
                 grocery.setUnit(new SI("Kilogram", "kg", "kg", "Kilo"));
-                grocery.setQuantity(groceryQuantity/1000);
+                grocery.setQuantity(groceryQuantity / 1000);
             }
         }
         else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
             grocery.setUnit(new SI("Gram", "g", "kg", ""));
-            grocery.setQuantity(groceryQuantity*1000);
+            grocery.setQuantity(groceryQuantity * 1000);
         }
         else if (groceryQuantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-            grocery.setUnit(new SI("Liter", "L", "L","Desi"));
-            grocery.setQuantity(groceryQuantity/10);
+            grocery.setUnit(new SI("Liter", "L", "L", "Desi"));
+            grocery.setQuantity(groceryQuantity / 10);
         }
         else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-            grocery.setUnit(new SI("Milliliter", "mL", "L","Milli"));
-            grocery.setQuantity(groceryQuantity*100);
+            grocery.setUnit(new SI("Milliliter", "mL", "L", "Milli"));
+            grocery.setQuantity(groceryQuantity * 100);
         }
         else if (groceryQuantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
-            grocery.setUnit(new SI("Desiliter", "dL", "L","Desi"));
-            grocery.setQuantity(groceryQuantity/100);
+            grocery.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
+            grocery.setQuantity(groceryQuantity / 100);
         }
 
     }
@@ -62,7 +62,7 @@ public class GroceryManager {
                 System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
                 userInput = getInput();
             }
-            while (!SI_manager.isValidUnit(String.join("",userInput.split(" ")[1])));
+            while (!SI_manager.isValidUnit(String.join("", userInput.split(" ")[1])));
         }
         catch (Exception e) {
             System.err.println("Invalid format for unit or amount.");;
@@ -74,8 +74,8 @@ public class GroceryManager {
         final double currentQuantity = grocery.getQuantity();
         final String groceryUnitAbrev = grocery.getUnit().getAbrev();
         final String amountUnitAbrev = amountUnit.getAbrev();
-        final double amountCF = amountUnit.getConvertionFactor();
-        final double groceryCF = unit.getConvertionFactor();
+        final double amount_cf = amountUnit.getConvertionFactor();
+        final double grocery_cf = unit.getConvertionFactor();
 
         if (amount > 0) {
             if (groceryUnitAbrev.equals("stk") || amountUnitAbrev.equals("stk")) {
@@ -85,12 +85,12 @@ public class GroceryManager {
             else {
                 if (groceryUnitAbrev.equals("kg")) {
                     grocery.setQuantity(
-                            (double)(Math.round(((currentQuantity*groceryCF + amount*amountCF)/groceryCF)*100))/100
+                            (double) (Math.round(((currentQuantity * grocery_cf + amount * amount_cf) / grocery_cf) * 100)) / 100
                     );
                 }
                 else {
                     grocery.setQuantity(
-                            (double)(Math.round((currentQuantity*groceryCF + amount*amountCF)*100))/100
+                            (double) (Math.round((currentQuantity * grocery_cf + amount * amount_cf) * 100)) / 100
                     );
                 }
 
@@ -109,8 +109,8 @@ public class GroceryManager {
         double currentQuantity = grocery.getQuantity();
         final String groceryUnitAbrev = unit.getAbrev();
         final String amountUnitAbrev = amountUnit.getAbrev();
-        final double amountCF = amountUnit.getConvertionFactor();
-        final double groceryCF = unit.getConvertionFactor();
+        final double amount_cf = amountUnit.getConvertionFactor();
+        final double grocery_cf = unit.getConvertionFactor();
 
         if (amount > 0) {
             //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre og en av dem er oppgitt i stykker, kjører denne.
@@ -121,12 +121,12 @@ public class GroceryManager {
             else {
                 if (groceryUnitAbrev.equals("kg")) {
                     grocery.setQuantity(
-                            (double)(Math.round(((currentQuantity*groceryCF - amount*amountCF)/groceryCF)*100))/100
+                            (double) (Math.round(((currentQuantity * grocery_cf - amount * amount_cf) / grocery_cf) * 100)) / 100
                     );
                 }
                 else {
                     grocery.setQuantity(
-                        (double)(Math.round((currentQuantity*groceryCF - amount*amountCF)*100))/100
+                            (double) (Math.round((currentQuantity * grocery_cf - amount * amount_cf) * 100)) / 100
                     );
                 }
                 System.out.println("Fjernet " + amount + " " + amountUnitAbrev + " fra varen " + grocery.getName());
@@ -150,13 +150,13 @@ public class GroceryManager {
             result = grocery.getQuantity() * grocery.getPrice();
         }
         else if (unit.getAbrev().equalsIgnoreCase("g")) {
-            result = grocery.getPrice() * (grocery.getQuantity()/unit.getConvertionFactor());
+            result = grocery.getPrice() * (grocery.getQuantity() / unit.getConvertionFactor());
         }
         else {
-            result = grocery.getPrice() * (grocery.getQuantity()*unit.getConvertionFactor());
+            result = grocery.getPrice() * (grocery.getQuantity() * unit.getConvertionFactor());
         }
 
-        return (double)Math.round(result*100)/100;
+        return (double) Math.round(result * 100) / 100;
     }
 
     public void addAmountGrocery() {
@@ -167,6 +167,7 @@ public class GroceryManager {
             double amount = Double.parseDouble(amountAndUnit[0]);
             SI unit = SI_manager.getUnit(amountAndUnit[1]);
 
+            assert unit != null;
             addAmount(amount, unit);
         }
         catch (Exception e) {
@@ -182,6 +183,7 @@ public class GroceryManager {
             SI unit = SI_manager.getUnit(amountAndUnit[1]);
             double amount = Double.parseDouble(amountAndUnit[0]);
 
+            assert unit != null;
             removeAmount(amount, unit);
         }
         catch (Exception e) {

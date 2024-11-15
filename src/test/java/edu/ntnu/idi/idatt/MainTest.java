@@ -10,7 +10,7 @@ import static edu.ntnu.idi.idatt.Manager.SI_manager.getUnit;
 import static edu.ntnu.idi.idatt.Manager.SI_manager.isValidUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
-class ClientTest {
+class MainTest {
     @Test
     public void testAddToFridgeDate() {
         //enhet og mengde test
