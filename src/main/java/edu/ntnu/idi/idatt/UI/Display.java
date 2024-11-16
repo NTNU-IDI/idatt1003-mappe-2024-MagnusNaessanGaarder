@@ -23,7 +23,7 @@ public class Display {
     public String displayPrice (List<Grocery> list, String title, String colomnTitle, String colomnData) {
         StringBuilder str = new StringBuilder();
         if(list.isEmpty()) {
-            str.append("         ---- Ingen varer er lagt til i kjøleskap ----\n");
+            str.append("\n         ---- Ingen varer er lagt til i kjøleskap ----\n");
             str.append("         Legg til varer for å se total prissum\n\n");
         }
         else {
@@ -75,7 +75,7 @@ public class Display {
     public static String menuList(List<Grocery> list, String altText){
         StringBuilder str = new StringBuilder();
         if (list.isEmpty()) {
-            str.append("            ---- ").append(altText).append(" ----\n\n");
+            str.append("\n            ---- ").append(altText).append(" ----\n\n");
         }
         else {
             str.append(displayMenuList(list));

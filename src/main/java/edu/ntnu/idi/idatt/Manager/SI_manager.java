@@ -56,10 +56,6 @@ public class SI_manager {
     }
 
     public static boolean isValidUnit(String userInput) {
-
-        //fjerner eventuelle tall som kom med input fra brukerinput
-        String prefix = String.join("", userInput.split("[\\d\\s+\\W]"));
-
         for (String hashVal: SI.getValidUnit().values()) {
             if (hashVal.equalsIgnoreCase(userInput)) {
                 return true;

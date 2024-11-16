@@ -57,6 +57,8 @@ public class Grocery {
         this.price = price;
         this.fridge = fridge;
         this.groceryID = advanceID();
+
+        convertUnit();
     }
 
     private static int advanceID() {
@@ -95,7 +97,7 @@ public class Grocery {
         return quantity;
     }
 
-    public void setQuantity(double quantity){
+    private void setQuantity(double quantity){
         this.quantity = quantity;
     }
 
@@ -103,11 +105,130 @@ public class Grocery {
         return unit;
     }
 
-    public void setUnit(SI unit) {
+    private void setUnit(SI unit) {
         this.unit = unit;
     }
 
     public boolean hasExpired() {
         return this.bestBefore.isBefore(LocalDate.now());
+    }
+
+    public void addAmount(final double amount, final SI amountUnit) {
+        final double currentQuantity = this.quantity;
+        final String groceryUnitAbrev = this.unit.getAbrev();
+        final String amountUnitAbrev = amountUnit.getAbrev();
+        final double amount_cf = amountUnit.getConvertionFactor();
+        final double grocery_cf = this.unit.getConvertionFactor();
+
+        if (amount > 0) {
+            if (groceryUnitAbrev.equals("stk") || amountUnitAbrev.equals("stk")) {
+                System.out.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
+            }
+            else {
+                if (groceryUnitAbrev.equals("kg")) {
+                    this.setQuantity(
+                            (double) (Math.round(((currentQuantity * grocery_cf + amount * amount_cf) / grocery_cf) * 100)) / 100
+                    );
+                }
+                else {
+                    this.setQuantity(
+                            (double) (Math.round((currentQuantity * grocery_cf + amount * amount_cf) * 100)) / 100
+                    );
+                }
+                convertUnit();
+                System.out.println("La til " + amount + " " + amountUnitAbrev + " til varen " + this.name);
+
+            }
+
+        }
+        else {
+            throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
+        }
+    }
+
+
+    public void removeAmount(final double amount, SI amountUnit) {
+        double currentQuantity = this.quantity;
+        final String groceryUnitAbrev = this.unit.getAbrev();
+        final String amountUnitAbrev = amountUnit.getAbrev();
+        final double amount_cf = amountUnit.getConvertionFactor();
+        final double grocery_cf = this.unit.getConvertionFactor();
+
+        if (amount > 0) {
+            //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre og en av dem er oppgitt i stykker, kjører denne.
+            if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk")) || (!groceryUnitAbrev.equals("stk") && amountUnitAbrev.equals("stk"))) {
+                System.err.println("Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
+                return;
+            }
+            else {
+                if (groceryUnitAbrev.equals("kg")) {
+                    this.setQuantity(
+                            (double) (Math.round(((currentQuantity * grocery_cf - amount * amount_cf) / grocery_cf) * 100)) / 100
+                    );
+                }
+                else {
+                    this.setQuantity(
+                            (double) (Math.round((currentQuantity * grocery_cf - amount * amount_cf) * 100)) / 100
+                    );
+                }
+                System.out.println("Fjernet " + amount + " " + amountUnitAbrev + " fra varen " + this.name);
+                currentQuantity = this.quantity;
+            }
+            convertUnit();
+
+            if (currentQuantity <= 0) {
+                fridge.removeGrocery(this);
+                System.out.println("Fjernet vare med vareID " + this.groceryID);
+            }
+        }
+        else {
+            throw new IllegalArgumentException("Illegal argument error: Cannot remove a negative amount.");
+        }
+    }
+
+    private void convertUnit() {
+        final double groceryQuantity = this.quantity;
+        final String groceryUnit = this.unit.getPrefix();
+
+        if (groceryQuantity < 1.0 && groceryUnit.isEmpty()) {
+            if (unit.getAbrev().equalsIgnoreCase("L")) {
+                this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
+                this.setQuantity(groceryQuantity * 10);
+            }
+        }
+        else if (groceryQuantity >= 1000.0 && groceryUnit.isEmpty()) {
+            if (unit.getAbrev().equalsIgnoreCase("g")) {
+                this.setUnit(new SI("Kilogram", "kg", "kg", "Kilo"));
+                this.setQuantity(groceryQuantity / 1000);
+            }
+        }
+        else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
+            this.setUnit(new SI("Gram", "g", "kg", ""));
+            this.setQuantity(groceryQuantity * 1000);
+        }
+        else if (groceryQuantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
+            this.setUnit(new SI("Liter", "L", "L", "Desi"));
+            this.setQuantity(groceryQuantity / 10);
+        }
+        else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
+            this.setUnit(new SI("Milliliter", "mL", "L", "Milli"));
+            this.setQuantity(groceryQuantity * 100);
+        }
+        else if (groceryQuantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
+            this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
+            this.setQuantity(groceryQuantity / 100);
+        }
+    }
+
+    @Override
+    public String toString() {
+        String str = "        Klasse Grocery;" + System.lineSeparator();
+        str += "            VareID: " + this.groceryID + System.lineSeparator();
+        str += "            Navn på varen: " + this.name + ";" + System.lineSeparator();
+        str += "            Mengde av varen: " + this.quantity + this.getUnit().getUnit() + ";" + System.lineSeparator();
+        str += "            Best-før dato: " + this.getDateToStr() + System.lineSeparator();
+        str += "            Pris per måleenhet: " + this.getPriceToStr() + System.lineSeparator();
+
+        return str;
     }
 }

@@ -3,7 +3,7 @@
 # Portfolio project IDATT1003
 This file uses Mark Down syntax. For more information see [here]([x]https://www.markdownguide.org/basic-syntax/).
 
-[//]: # (TODO: Fill inn your name and student ID)
+[//]: # Name and student ID
 
 STUDENT NAME = "Magnus Næssan Gaarder"  
 STUDENT ID = ""
@@ -16,9 +16,7 @@ STUDENT ID = ""
 
 [//]: # (TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc.)
 
-## Link to repository
-
-[//]: # (TODO: Include a link to your GitHub repository here.)
+## https://github.com/NTNU-IDI/idatt1003-mappe-2024-MagnusNaessanGaarder
 
 ## How to run the project
 

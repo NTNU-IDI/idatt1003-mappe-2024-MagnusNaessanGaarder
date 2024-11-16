@@ -25,7 +25,7 @@ public class Table {
     }
 
     public static String createMenuTable(String title, String subTitle) {
-        String longBar = "------------------------------------------------------------------------------------------------";
+        String longBar = "\n------------------------------------------------------------------------------------------------";
         return longBar + "\n\n"
                + createWhitespaceTitle(longBar.length(), title.length())
                + title + "\n\n"
@@ -40,7 +40,7 @@ public class Table {
         StringBuilder bottomBar = new StringBuilder(longBar + longBar);
         bottomBar.append("-".repeat(title.length()));
 
-        sb.append(longBar);
+        sb.append("\n").append(longBar);
         sb.append(title);
         sb.append(longBar);
         sb.append("\n");

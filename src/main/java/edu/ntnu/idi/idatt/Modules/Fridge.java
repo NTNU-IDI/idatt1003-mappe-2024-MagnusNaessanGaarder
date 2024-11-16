@@ -3,26 +3,28 @@ package edu.ntnu.idi.idatt.Modules;
 import edu.ntnu.idi.idatt.Manager.GroceryManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fridge {
-    final private ArrayList<Grocery> groceryList;
+    private final ArrayList<Grocery> groceryList;
 
     public Fridge() {
         this.groceryList = new ArrayList<>(0);
     }
-    public ArrayList<Grocery> getGroceryList() {
-        return this.groceryList;
+    public List<Grocery> getGroceryList() {
+        return this.groceryList.stream().toList();
     }
 
     public void addGrocery(final Grocery grocery) {
-        final GroceryManager gm = new GroceryManager(grocery);
-        gm.convertUnit();
         if (!groceryList.isEmpty()) {
-            for (Grocery g : this.groceryList) {
-                if (g.equals(grocery) || (g.getName().equalsIgnoreCase(grocery.getName()) && g.getDate().equals(grocery.getDate()))) {
-                    gm.addAmount(grocery.getQuantity(), grocery.getUnit());
-                    return;
-                }
+            final Grocery matchingGrocery = this.groceryList.stream()
+                    .filter(g -> g.equals(grocery) || (g.getName().equalsIgnoreCase(grocery.getName()) && g.getDate().equals(grocery.getDate())))
+                    .findFirst()
+                    .orElse(null);
+
+            if (matchingGrocery != null) {
+                grocery.addAmount(grocery.getQuantity(), grocery.getUnit());
+                return;
             }
         }
         this.groceryList.add(grocery);
@@ -42,5 +44,15 @@ public class Fridge {
             throw new IllegalArgumentException("Cannot remove grocery \"" + grocery.getName()
                 + "\" from Fridge. Grocery does not currently exist in Fridge.");
         }
+    }
+
+    @Override
+    public String toString() {
+        String str = "\nKlasse Fridge;\n";
+        str += "    Innhold:";
+        for(Grocery g : this.groceryList) {
+            str += g.toString() + "\n\n";
+        }
+        return str;
     }
 }

@@ -1,60 +1,29 @@
 package edu.ntnu.idi.idatt.Manager;
 
-import edu.ntnu.idi.idatt.Modules.Fridge;
 import edu.ntnu.idi.idatt.Modules.Grocery;
 import edu.ntnu.idi.idatt.Utils.SI;
 
-import static edu.ntnu.idi.idatt.Client.Main.getInput;
+import java.util.Scanner;
 
 public class GroceryManager {
-    private final Fridge fridge;
     private final Grocery grocery;
     private final SI unit;
+    private final Scanner myReader;
 
-    public GroceryManager(Grocery g) {
+    public GroceryManager(Grocery g, Scanner reader) {
         this.grocery = g;
-        this.fridge = this.grocery.getFridge();
         this.unit = this.grocery.getUnit();
-
-        convertUnit();
+        this.myReader = reader;
     }
 
-    public void convertUnit() {
-        final double groceryQuantity = grocery.getQuantity();
-        final String groceryUnit = unit.getPrefix();
-
-        if (groceryQuantity < 1.0 && groceryUnit.isEmpty()) {
-            if (unit.getAbrev().equalsIgnoreCase("L")) {
-                grocery.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
-                grocery.setQuantity(groceryQuantity * 10);
-            }
+    private String getInput() {
+        if (myReader.hasNextLine()) {
+            return myReader.nextLine();
         }
-        else if (groceryQuantity >= 1000.0 && groceryUnit.isEmpty()) {
-            if (unit.getAbrev().equalsIgnoreCase("g")) {
-                grocery.setUnit(new SI("Kilogram", "kg", "kg", "Kilo"));
-                grocery.setQuantity(groceryQuantity / 1000);
-            }
-        }
-        else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
-            grocery.setUnit(new SI("Gram", "g", "kg", ""));
-            grocery.setQuantity(groceryQuantity * 1000);
-        }
-        else if (groceryQuantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-            grocery.setUnit(new SI("Liter", "L", "L", "Desi"));
-            grocery.setQuantity(groceryQuantity / 10);
-        }
-        else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-            grocery.setUnit(new SI("Milliliter", "mL", "L", "Milli"));
-            grocery.setQuantity(groceryQuantity * 100);
-        }
-        else if (groceryQuantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
-            grocery.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
-            grocery.setQuantity(groceryQuantity / 100);
-        }
-
+        return "";
     }
 
-    public static String[] getAmountAndUnit() {
+    public String[] getAmountAndUnit() {
         //mengden og enheten av varen
         String userInput = "";
         try{
@@ -65,83 +34,9 @@ public class GroceryManager {
             while (!SI_manager.isValidUnit(String.join("", userInput.split(" ")[1])));
         }
         catch (Exception e) {
-            System.err.println("Invalid format for unit or amount.");;
+            System.out.println("Invalid format for unit or amount.");
         }
         return userInput.split(" ");
-    }
-
-    public void addAmount(final double amount, final SI amountUnit) {
-        final double currentQuantity = grocery.getQuantity();
-        final String groceryUnitAbrev = grocery.getUnit().getAbrev();
-        final String amountUnitAbrev = amountUnit.getAbrev();
-        final double amount_cf = amountUnit.getConvertionFactor();
-        final double grocery_cf = unit.getConvertionFactor();
-
-        if (amount > 0) {
-            if (groceryUnitAbrev.equals("stk") || amountUnitAbrev.equals("stk")) {
-                System.err.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
-                return;
-            }
-            else {
-                if (groceryUnitAbrev.equals("kg")) {
-                    grocery.setQuantity(
-                            (double) (Math.round(((currentQuantity * grocery_cf + amount * amount_cf) / grocery_cf) * 100)) / 100
-                    );
-                }
-                else {
-                    grocery.setQuantity(
-                            (double) (Math.round((currentQuantity * grocery_cf + amount * amount_cf) * 100)) / 100
-                    );
-                }
-
-            }
-            convertUnit();
-
-            System.out.println("La til " + amount + " " + amountUnitAbrev + " til varen " + grocery.getName());
-        }
-        else {
-            throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
-        }
-    }
-
-
-    public void removeAmount(final double amount, SI amountUnit) {
-        double currentQuantity = grocery.getQuantity();
-        final String groceryUnitAbrev = unit.getAbrev();
-        final String amountUnitAbrev = amountUnit.getAbrev();
-        final double amount_cf = amountUnit.getConvertionFactor();
-        final double grocery_cf = unit.getConvertionFactor();
-
-        if (amount > 0) {
-            //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre og en av dem er oppgitt i stykker, kjører denne.
-            if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk")) || (!groceryUnitAbrev.equals("stk") && amountUnitAbrev.equals("stk"))) {
-                System.err.println("Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
-                return;
-            }
-            else {
-                if (groceryUnitAbrev.equals("kg")) {
-                    grocery.setQuantity(
-                            (double) (Math.round(((currentQuantity * grocery_cf - amount * amount_cf) / grocery_cf) * 100)) / 100
-                    );
-                }
-                else {
-                    grocery.setQuantity(
-                            (double) (Math.round((currentQuantity * grocery_cf - amount * amount_cf) * 100)) / 100
-                    );
-                }
-                System.out.println("Fjernet " + amount + " " + amountUnitAbrev + " fra varen " + grocery.getName());
-                currentQuantity = grocery.getQuantity();
-            }
-            convertUnit();
-
-            if (currentQuantity <= 0) {
-                fridge.removeGrocery(grocery);
-                System.out.println("Fjernet vare med vareID " + grocery.getGroceryID());
-            }
-        }
-        else {
-            throw new IllegalArgumentException("Illegal argument error: Cannot remove a negative amount.");
-        }
     }
 
     public double getPricePerQuantity() {
@@ -164,11 +59,11 @@ public class GroceryManager {
             //legg til en mengde
             String[] amountAndUnit = getAmountAndUnit();
 
-            double amount = Double.parseDouble(amountAndUnit[0]);
-            SI unit = SI_manager.getUnit(amountAndUnit[1]);
+            double addAmount = Double.parseDouble(amountAndUnit[0]);
+            SI addUnit = SI_manager.getUnit(amountAndUnit[1]);
 
-            assert unit != null;
-            addAmount(amount, unit);
+            assert addUnit != null;
+            grocery.addAmount(addAmount, addUnit);
         }
         catch (Exception e) {
             System.err.println(e.getMessage());
@@ -184,7 +79,7 @@ public class GroceryManager {
             double amount = Double.parseDouble(amountAndUnit[0]);
 
             assert unit != null;
-            removeAmount(amount, unit);
+            grocery.removeAmount(amount, unit);
         }
         catch (Exception e) {
             System.err.println(e.getMessage());

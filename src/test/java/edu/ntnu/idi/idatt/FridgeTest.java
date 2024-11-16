@@ -68,13 +68,12 @@ class FridgeTest {
 
     @Test
     void fridgeGetMoneyLoss() {
-        SI kg = new SI("Kilogram", "kg","kg","Kilo");
         SI L = new SI("Liter", "L","L","");
         SI dL = new SI("Desiliter", "dL","L","Desi");
         SI stk = new SI("Stykker", "stk","stk","");
 
         Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.now(), 49, fridge);
-        Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 100, fridge);
+        Grocery grocery2 = new Grocery ("Melk", dL, 5, LocalDate.now(), 49, fridge);
         Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023, 3,21), 25, fridge);
         Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2024,9,30), 3, fridge);
 
@@ -84,34 +83,6 @@ class FridgeTest {
         fridge.addGrocery(grocery4);
 
         assertEquals("          2 varer er gått ut på dato.\n          Du har tapt 72,75 kr.",fm.getMoneyLossStr(), "Did not get expected money loss.");
+        assertEquals(1.5, fridge.getGroceryList().getFirst().getQuantity());
     }
-
-    /*
-    For at denne testen skal funke må
-    @Test
-    void getSortedList() {
-        SI kg = new SI("Kilogram", "kg","kg","Kilo");
-        SI L = new SI("Liter", "L","L","");
-        SI dL = new SI("Desiliter", "dL","L","Desi");
-        SI stk = new SI("Stykker", "stk","stk","");
-
-        Fridge fridge = new Fridge();
-        Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.of(2023,3,24), 49, fridge);
-        Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.of(2023,3,20), 100, fridge);
-        Grocery grocery3 = new Grocery ("Coca-Cola", dL, 7.5, LocalDate.of(2023,3,21), 25, fridge);
-        Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2023,9,19), 3, fridge);
-
-        fridge.addGrocery(grocery1);
-        fridge.addGrocery(grocery2);
-        fridge.addGrocery(grocery3);
-        fridge.addGrocery(grocery4);
-
-        ArrayList<Grocery> expectedValues = new ArrayList<Grocery>();
-        expectedValues.add(grocery2);
-        expectedValues.add(grocery3);
-        expectedValues.add(grocery1);
-        expectedValues.add(grocery4);
-
-        assertEquals(expectedValues, fridge.getDateSorted(), "Did not get expected dateSorted.");
-    }*/
 }
