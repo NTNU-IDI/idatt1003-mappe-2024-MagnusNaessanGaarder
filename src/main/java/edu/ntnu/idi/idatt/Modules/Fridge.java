@@ -1,7 +1,5 @@
 package edu.ntnu.idi.idatt.Modules;
 
-import edu.ntnu.idi.idatt.Manager.GroceryManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class Fridge {
                     .orElse(null);
 
             if (matchingGrocery != null) {
-                grocery.addAmount(grocery.getQuantity(), grocery.getUnit());
+                matchingGrocery.addAmount(grocery.getQuantity(), grocery.getUnit());
                 return;
             }
         }
@@ -48,11 +46,11 @@ public class Fridge {
 
     @Override
     public String toString() {
-        String str = "\nKlasse Fridge;\n";
-        str += "    Innhold:";
+        StringBuilder str = new StringBuilder("\nKlasse Fridge;\n");
+        str.append("    Innhold:");
         for(Grocery g : this.groceryList) {
-            str += g.toString() + "\n\n";
+            str.append(g.toString()).append("\n\n");
         }
-        return str;
+        return str.toString();
     }
 }

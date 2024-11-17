@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FridgeTest {
-    final private Fridge fridge = new Fridge();
-    final private FridgeManager fm = new FridgeManager(fridge);
+    private final Fridge fridge = new Fridge();
+    private final FridgeManager fm = new FridgeManager(fridge);
 
     @Test
     void fridgeGetGroceryList() {

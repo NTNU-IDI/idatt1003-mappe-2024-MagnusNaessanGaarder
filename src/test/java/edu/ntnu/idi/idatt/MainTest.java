@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static edu.ntnu.idi.idatt.Manager.SI_manager.getUnit;
-import static edu.ntnu.idi.idatt.Manager.SI_manager.isValidUnit;
+import static edu.ntnu.idi.idatt.Manager.Abstract_SI_manager.getUnit;
+import static edu.ntnu.idi.idatt.Manager.Abstract_SI_manager.isValidUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
     @Test
-    public void testAddToFridgeDate() {
+    void testAddToFridgeDate() {
         //enhet og mengde test
         SI meassure;
         double quantity;
 
-        String[] testRes = testQuantityUnit("2.0 Liter");
+        String[] testRes = testQuantityUnit();
 
         meassure = getUnit(String.join("",testRes[0].split(" ")));
         String quantityStr = String.join("", testRes[1].split(" "));
@@ -42,23 +42,22 @@ class MainTest {
     }
 
     @Test
-    public void testGetUnit(){
+    void testGetUnit(){
         SI testUnit = new SI("Stykker","stk","stk","");
         assertEquals(testUnit,getUnit("Stykker"));
     }
 
     @Test
-    public void testValidUnit(){
-        SI testUnit = new SI("Stykker","stk","stk","");
+    void testValidUnit(){
         assertTrue(isValidUnit("Stykker"));
     }
 
-    private String[] testQuantityUnit(String input) {
+    private String[] testQuantityUnit() {
         //mengden og enheten av varen
-        String userInput = "";
+        String userInput;
         try{
             do {
-                userInput = input;
+                userInput = "2.0 liter";
             }
             while (!isValidUnit(String.join("",userInput.split(" ")[1])));
         }

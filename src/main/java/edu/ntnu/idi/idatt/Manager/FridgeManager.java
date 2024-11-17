@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class FridgeManager {
-    final private Fridge fridge;
+    private final Fridge fridge;
 
     public FridgeManager (Fridge fridge) {
         this.fridge = fridge;
@@ -27,15 +27,6 @@ public class FridgeManager {
                 .filter(i -> fridge.getGroceryList().get(i).getGroceryID() == groceryID)
                 .findFirst()
                 .orElse(-1);
-    }
-
-    public Grocery search(final String name) {
-        for (Grocery g : fridge.getGroceryList()) {
-            if (g.getName().equals(name)) {
-                return g;
-            }
-        }
-        return null;
     }
 
     private List<Grocery> getListSortedDate(List<Grocery> list) {

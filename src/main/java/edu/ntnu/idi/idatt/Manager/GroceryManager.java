@@ -3,38 +3,31 @@ package edu.ntnu.idi.idatt.Manager;
 import edu.ntnu.idi.idatt.Modules.Grocery;
 import edu.ntnu.idi.idatt.Utils.SI;
 
-import java.util.Scanner;
 
-public class GroceryManager {
+public class GroceryManager extends Abstract_SI_manager {
     private final Grocery grocery;
     private final SI unit;
-    private final Scanner myReader;
 
-    public GroceryManager(Grocery g, Scanner reader) {
+    public GroceryManager(Grocery g) {
         this.grocery = g;
         this.unit = this.grocery.getUnit();
-        this.myReader = reader;
     }
 
-    private String getInput() {
-        if (myReader.hasNextLine()) {
-            return myReader.nextLine();
-        }
-        return "";
-    }
-
-    public String[] getAmountAndUnit() {
+    public static String[] getAmountAndUnit() {
         //mengden og enheten av varen
         String userInput = "";
         try{
             do {
                 System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
-                userInput = getInput();
+                userInput = getInputStatic();
             }
-            while (!SI_manager.isValidUnit(String.join("", userInput.split(" ")[1])));
+            while (!Abstract_SI_manager.isValidUnit(String.join("", userInput.split(" ")[1])));
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Ugyldig mengde på varen. Skriv inn et tall, mellomrom og en gyldig måleenhet.");
         }
         catch (Exception e) {
-            System.out.println("Invalid format for unit or amount.");
+            System.out.println("Ugyldig måleenhet på varen. Skriv inn et tall, mellomrom og en gyldig måleenhet.");
         }
         return userInput.split(" ");
     }
@@ -60,7 +53,7 @@ public class GroceryManager {
             String[] amountAndUnit = getAmountAndUnit();
 
             double addAmount = Double.parseDouble(amountAndUnit[0]);
-            SI addUnit = SI_manager.getUnit(amountAndUnit[1]);
+            SI addUnit = Abstract_SI_manager.getUnit(amountAndUnit[1]);
 
             assert addUnit != null;
             grocery.addAmount(addAmount, addUnit);
@@ -73,16 +66,17 @@ public class GroceryManager {
     public void removeAmountGrocery() {
         try{
             //trekk fra en mengde
+            System.out.println();
             String[] amountAndUnit = getAmountAndUnit();
 
-            SI unit = SI_manager.getUnit(amountAndUnit[1]);
+            SI newUnit = Abstract_SI_manager.getUnit(amountAndUnit[1]);
             double amount = Double.parseDouble(amountAndUnit[0]);
 
-            assert unit != null;
-            grocery.removeAmount(amount, unit);
+            assert newUnit != null;
+            grocery.removeAmount(amount, newUnit);
         }
         catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }

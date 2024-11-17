@@ -1,11 +1,12 @@
 package edu.ntnu.idi.idatt.Manager;
 
+import edu.ntnu.idi.idatt.UI.AbstractOption;
 import edu.ntnu.idi.idatt.Utils.SI;
 
-public class SI_manager {
+public abstract class Abstract_SI_manager extends AbstractOption {
 
     public static SI getUnit(String input) {
-        input = String.join("", input.split("[\\d\\s+\\W]"));
+        input = String.join("", input.split("[\\d\\W]"));
 
         String unit;
         String abrev;
@@ -50,9 +51,7 @@ public class SI_manager {
             }
             return new SI(unit,abrev,unitForPrice,prefix);
         }
-        else{
-            return null;
-        }
+        return null;
     }
 
     public static boolean isValidUnit(String userInput) {

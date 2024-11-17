@@ -4,18 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="feiljusteringer i del 1">
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="refactoring and structuring code">
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/AbstractOption.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/AbstractTerminalAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/GroceryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/GroceryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/SI_manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/SI_manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/SI_manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/Abstract_SI_manager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Modules/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Modules/Fridge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Modules/Grocery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/Table.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/SI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/DisplayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/DisplayTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/TableTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +119,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DisplayTest.printTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Foodwaste" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.DisplayTest" />
+      <option name="METHOD_NAME" value="printTable" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GroceryTest.groceryGetDate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Foodwaste" />
       <extension name="coverage">
@@ -188,34 +209,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TableTest.printTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Foodwaste" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.Client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.TableTest" />
-      <option name="METHOD_NAME" value="printTable" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Run Program" />
       <item itemvalue="JUnit.Run all Tests" />
       <item itemvalue="JUnit.MainTest.testAddToFridgeDate" />
       <item itemvalue="JUnit.MainTest.testGetUnit" />
       <item itemvalue="JUnit.MainTest.testValidUnit" />
-      <item itemvalue="JUnit.TableTest.printTable" />
+      <item itemvalue="JUnit.DisplayTest.printTable" />
       <item itemvalue="JUnit.GroceryTest.groceryGetDate" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TableTest.printTable" />
+        <item itemvalue="JUnit.DisplayTest.printTable" />
         <item itemvalue="JUnit.MainTest.testAddToFridgeDate" />
         <item itemvalue="JUnit.MainTest.testValidUnit" />
         <item itemvalue="JUnit.MainTest.testGetUnit" />
@@ -243,7 +248,7 @@
       <workItem from="1729953363495" duration="12717000" />
       <workItem from="1729971442903" duration="41672000" />
       <workItem from="1731529641583" duration="2603000" />
-      <workItem from="1731599405176" duration="20175000" />
+      <workItem from="1731599405176" duration="38412000" />
     </task>
     <task id="LOCAL−00001" summary="updaterer client og tester">
       <option name="closed" value="true" />
@@ -315,7 +320,14 @@
       <option name="presentableId" value="LOCAL−00010" />
       <updated>1731631782588</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL−00011" summary="refactoring and structuring code">
+      <option name="closed" value="true" />
+      <created>1731781279653</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1731781279653</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,7 +355,8 @@
     <MESSAGE value="Byggeklossprinsippet, dele opp, forbedre kode" />
     <MESSAGE value="Ferdigstiller del 1, mangler søkefunksjon" />
     <MESSAGE value="feiljusteringer i del 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="feiljusteringer i del 1" />
+    <MESSAGE value="refactoring and structuring code" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring and structuring code" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

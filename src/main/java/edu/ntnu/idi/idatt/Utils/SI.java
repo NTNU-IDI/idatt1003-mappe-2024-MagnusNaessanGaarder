@@ -1,36 +1,35 @@
 package edu.ntnu.idi.idatt.Utils;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SI {
     @Override
     public boolean equals(Object o) {
         try {
             Class<?> c = o.getClass();
-            if (c == SI.class) {
-                if ( ((SI) o).getUnit().equalsIgnoreCase(this.unit) &&
+            if (c == SI.class && ((SI) o).getUnit().equalsIgnoreCase(this.unit) &&
                      ((SI) o).getPrefix().equalsIgnoreCase(this.prefix) &&
                      ((SI) o).getAbrev().equalsIgnoreCase(this.unitAbrev) &&
                      ((SI) o).getUnitForPrice().equalsIgnoreCase(this.unitForPrice) &&
                      ((SI) o).getConvertionFactor() == this.convertionFactor) {
 
                     return ((SI) o).getUnit().equalsIgnoreCase(this.unit);
-                }
             }
+
             return false;
         }
-        catch (RuntimeException e) {
+        catch (NullPointerException e) {
             return false;
         }
     }
 
     //Datafelt med globale variabler innenfor SI-enhet-scopet.
-    final private String unit;
-    final private String prefix;
-    final private String unitAbrev;
-    final private String unitForPrice;
-    final private double convertionFactor;
+    private final String unit;
+    private final String prefix;
+    private final String unitAbrev;
+    private final String unitForPrice;
+    private final double convertionFactor;
 
     /*Hjelp av ChatGPT - lager et HashMap med en static block som initialiserer
     * ulike verdier til HashMap-et. I dette tilfellet er verdiene i HashMap-et
@@ -76,13 +75,8 @@ public class SI {
 
     }
 
-    public static HashMap<String,String> getValidUnit() {
+    public static Map<String,String> getValidUnit() {
         return VALID_UNIT;
-    }
-
-    //get metode for å få SI_PREFIX hashmapet
-    public static HashMap<String, Double> getSIPrefixes() {
-        return SI_PREFIXES;
     }
 
     //get metode for å få SI-enheten

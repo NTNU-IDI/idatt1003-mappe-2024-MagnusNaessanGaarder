@@ -69,10 +69,6 @@ public class Grocery {
         return this.groceryID;
     }
 
-    public Fridge getFridge() {
-        return fridge;
-    }
-
     public String getName() {
         return name;
     }
@@ -115,8 +111,10 @@ public class Grocery {
 
     public void addAmount(final double amount, final SI amountUnit) {
         final double currentQuantity = this.quantity;
+
         final String groceryUnitAbrev = this.unit.getAbrev();
         final String amountUnitAbrev = amountUnit.getAbrev();
+
         final double amount_cf = amountUnit.getConvertionFactor();
         final double grocery_cf = this.unit.getConvertionFactor();
 
@@ -127,7 +125,7 @@ public class Grocery {
             else {
                 if (groceryUnitAbrev.equals("kg")) {
                     this.setQuantity(
-                            (double) (Math.round(((currentQuantity * grocery_cf + amount * amount_cf) / grocery_cf) * 100)) / 100
+                            (double) (Math.round((currentQuantity * grocery_cf + amount * amount_cf) / grocery_cf) * 100) / 100
                     );
                 }
                 else {
