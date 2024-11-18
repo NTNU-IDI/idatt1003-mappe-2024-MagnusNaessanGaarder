@@ -13,13 +13,13 @@ public abstract class AbstractTerminalAction {
      * which is refered as {@code myReader}. The method {@code .nextLine()} returns
      * a String value of the user input in the terminal on lineseparation.
      */
-    protected String getInput () {
+    protected String getInput() {
         if(scanner.hasNextLine()) {
             return scanner.nextLine();
         }
         return "";
     }
-    protected static String getInputStatic () {
+    protected static String getInputStatic() {
         if(scannerStatic.hasNextLine()) {
             return scannerStatic.nextLine();
         }

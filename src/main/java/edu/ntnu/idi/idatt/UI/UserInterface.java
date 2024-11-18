@@ -111,7 +111,7 @@ public class UserInterface extends Abstract_SI_manager {
 
         try {
             int userInput = Integer.parseInt(getInput());
-            menuOption(userInput);
+            super.menuOption(this, userInput);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -120,37 +120,17 @@ public class UserInterface extends Abstract_SI_manager {
 
     /**
      * Determines which action to do based on the usergiven parameter.
-     * @param userInput a String element given by the user via the {@link UserInterface#getInput() getInput()}-method.
+     * @param UI a String element given by the user via the {@link UserInterface}-method.
      */
-    private void menuOption(int userInput) {
-        clearScreen();
-        switch (userInput) {
-            //legg til
-            case 1 -> addToFridge();
-
-            //Fjern
-            case 2 -> removeFromFridge();
-
-            //Oversikt over kjøleskapet
-            case 3 -> displayFridge();
-
-            //Søk etter vare
-            case 4 -> showSearchFridge();
-
-            //Samlet verdi av varer
-            case 5 -> showValue();
-
-            //avslutt program
-            case 6 -> finish();
-
-            default -> System.out.println("Input er ugyldig. Brukerinputen må være i intervallet [1,6].");
-        }
+    @Override
+    protected void menuOption(UserInterface UI, int userInput) {
+        super.menuOption(this, userInput);
     }
 
     /**
      *
      */
-    private void addToFridge() {
+    public void addToFridge() {
 
         str = new StringBuilder();
         final String title = Table.createMenuTable("LEGG TIL VARE", "Fyll ut feltene nedenfor for å legge til vare:");
@@ -227,10 +207,7 @@ public class UserInterface extends Abstract_SI_manager {
         return date;
     }
 
-    /**
-     *
-     */
-    private void removeFromFridge() {
+    private void displayRemoveList() {
         str = new StringBuilder();
         final String title = Table.createMenuTable("FJERN FRA KJØLESKAPET", "Bruk en komando nedenfor for å interagere med matvarer i kjøleskapet:");
         str.append(title);
@@ -241,46 +218,72 @@ public class UserInterface extends Abstract_SI_manager {
         else {
             str.append(Display.displayList(fridge.getGroceryList()));
         }
-        System.out.println(str);
+        str.append("\n\nKommando log:\n");
+    }
 
+    /**
+     *
+     */
+    public void removeFromFridge() {
+        displayFridge();
+        removeHandler();
+    }
+
+    private void removeHandler() {
         while (true) {
-            System.out.println("Skriv \"-e\" for å gå tilbake til menyen, eller \"-remove [Vare ID]\" for å fjerne en mengde fra en vare.\n"
-                    + "[Vare ID] skal skrives som et tall.");
+            clearScreen();
+            System.out.println(str);
+            System.out.println("""
+                    
+                    Skriv "-e" for å gå tilbake til menyen, eller "-remove [Vare ID]" for å fjerne en mengde fra en vare.
+                    [Vare ID] skal skrives som et tall.""");
             String userInput = getInput();
-            int userIndex = -1;
 
+            final int userInt;
             if (userInput.equals("-e")) {
                 break;
             }
-            else if (userInput.equals("-remove")) {
-                System.out.println("Skriv en vareID du ønsker å fjerne fra:");
-                userInput = getInput();
-                int userInt = Integer.parseInt(userInput);
-                userIndex = fm.getGroceryListIndex(userInt);
-            }
             else if (userInput.contains("-remove")) {
-                int userInt = Integer.parseInt(String.join("", userInput.split("\\D")));
-                userIndex = fm.getGroceryListIndex(userInt);
+                if (userInput.equals("-remove")) {
+                    System.out.print("Skriv en vareID du ønsker å fjerne fra: ");
+                    userInt = Integer.parseInt(getInput());
+                }
+                else {
+                    userInt = Integer.parseInt(String.join("", userInput.split("\\D")));
+                }
             }
             else {
-                System.out.println("Ugyldig kommando. Skriv enten \"-e\" eller \"-remove\".");
+                str.append(" - Ugyldig kommando. Skriv enten \"-e\" eller \"-remove\".");
+                userInt = -1;
             }
 
-            if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
-                clearScreen();
-                Grocery grocery = fm.getGrocery(userIndex);
-                final GroceryManager gm = new GroceryManager(grocery);
+            List<Integer> valid_IDs = fridge.getGroceryList().stream()
+                    .mapToInt(Grocery::getGroceryID)
+                    .boxed()
+                    .toList();
 
-                gm.removeAmountGrocery();
+            if (valid_IDs.contains(userInt)) {
+                final Grocery grocery = fridge.getGroceryList().stream()
+                        .filter(g -> g.getGroceryID() == userInt)
+                        .findFirst()
+                        .orElse(null);
+
+                if (grocery != null) {
+                    final GroceryManager gm = new GroceryManager(grocery);
+                    gm.removeAmountGrocery();
+                }
+                else {
+                    str.append(" - Vare med ID ").append(userInt).append(" finnes ikke.");
+                }
             }
             else {
-                clearScreen();
-                System.out.println("Ugyldig vareID");
+                str.append(" - Ugyldig vareID. Skriv en gyldig VareID.");
             }
+            displayRemoveList();
         }
     }
 
-    private void displayFridge() {
+    private void displayFridgeList() {
         str = new StringBuilder();
         Display display = new Display(fm);
         str.append(Table.createMenuTable("KJØLESKAP", "Her er en overikt over ulike varer i kjøleskapet:"));
@@ -289,12 +292,9 @@ public class UserInterface extends Abstract_SI_manager {
             str.append("            ---- Kjøleskapet er tomt ----\n\n");
         }
         else {
-            str.append("        Utgåtte varer:\n\n");
-            str.append(display.list(fm.getExpiredList(), "Ingen varer er gått ut på dato"));
-            str.append("        Varer som holder på å gå ut på dato:\n\n");
-            str.append(display.list(fm.getNearExpList(), "Ingen varer er nær ved å gå ut på dato"));
-            str.append("        Resterende varer:\n\n");
-            str.append(display.list(fm.getRestGroceryList(), "Ingen resterende varer")).append("\n\n");
+            str.append(display.dateList("Utgåtte varer", fm.getExpiredList(), "Ingen varer er gått ut på dato"));
+            str.append(display.dateList("Varer som holder på å gå ut på dato", fm.getNearExpList(), "Ingen varer er nær ved å gå ut på dato"));
+            str.append(display.dateList("Resterende varer", fm.getRestGroceryList(), "Ingen resterende varer")).append("\n\n");
         }
 
         if (!fm.getExpiredList().isEmpty()) {
@@ -307,15 +307,17 @@ public class UserInterface extends Abstract_SI_manager {
                     )
             );
         }
+    }
 
-        System.out.println(str);
+    public void displayFridge() {
+        displayFridgeList();
         commands();
     }
 
     /**
      *
      */
-    private void showValue() {
+    public void showValue() {
         str = new StringBuilder();
 
         str.append(Table.createMenuTable("SAMLET PRIS PÅ VARER", "Under er en oversikt over total prissum på varer:"));
@@ -338,7 +340,7 @@ public class UserInterface extends Abstract_SI_manager {
      * is determined by an usergiven input, and the {@code name} of the Grocery. In other words, the
      * user can search for Groceries by their names.
      */
-    private void showSearchFridge() {
+    public void showSearchFridge() {
         clearScreen();
         if (fridge.getGroceryList().isEmpty()) {
             System.out.println("            ---- Ingen varer i kjøleskapet, kan ikke søke etter varer ----");
@@ -346,42 +348,35 @@ public class UserInterface extends Abstract_SI_manager {
         else {
             str = new StringBuilder();
             str.append(Table.createMenuTable("VARESØK", "Søk på navnet til en vare i kjøleskapet. Skriv \"-e\" for å gå tilbake til hovedmenyen:"));
-            System.out.println(str);
+            str.append("Kommando log:\n");
             search();
         }
     }
 
     private void search () {
-        String userInput = getInput();
-        boolean checker = false;
+        String userInput;
 
         while (true) {
             clearScreen();
             System.out.println(str);
 
-            if (checker) {
-                userInput = getInput();
-            }
-            else {
-                str.append("Kommando log:\n");
-            }
+            userInput = getInput();
 
             String finalUserInput = userInput;
             int countMax = (int)fridge.getGroceryList().stream()
                     .map(Grocery::getName)
-                    .filter(name -> name.equals(finalUserInput))
+                    .filter(name -> name.equalsIgnoreCase(finalUserInput))
                     .count();
 
             if (userInput.equals("-e")) {
                 break;
             }
             else if(countMax == 0) {
-                str.append("Varen ").append(userInput).append(" finnes ikke i kjøleskapet.\n");
+                str.append("Varen \"").append(userInput).append("\" finnes ikke i kjøleskapet. Pass på å skrive varen navnet på riktig.\n");
             }
             else {
                 searchHandler(countMax, finalUserInput);
             }
-            checker = true;
         }
     }
 
@@ -420,31 +415,27 @@ public class UserInterface extends Abstract_SI_manager {
 
     }
 
+    private void displayChangeList(Grocery g) {
+        str = new StringBuilder();
+        Display display = new Display(fm);
+        str.append(Table.createMenuTable("ENDRE VARE", "Velg en handling i listen under:"));
+        str.append(display.displayGrocery(g));
+
+        str.append("           [1] Legg til en mengde til varen.\n");
+        str.append("           [2] Trekk fra en mengde fra varen.\n");
+        str.append("           [3] Sjekk om varen har gått ut på dato.\n\n");
+        str.append("Command log:\n");
+    }
+
     /**
      * @param grocery Instanse av klassen {@link Grocery}. Parameteren {@code grocery}
      *                er matvare-objektet som skal endres med metoden.
      */
     private void changeGrocery(Grocery grocery) {
-        clearScreen();
-
-        str = new StringBuilder();
-        Display display = new Display(fm);
-        str.append(Table.createMenuTable("ENDRE VARE", "Velg en handling i listen under:"));
-        str.append(display.displayGrocery(grocery));
-
-        str.append("           [1] Legg til en mengde til varen.\n");
-        str.append("           [2] Trekk fra en mengde fra varen.\n");
-        str.append("           [3] Sjekk om varen har gått ut på dato.\n");
-        System.out.println(str);
-
-        boolean checker = false;
-
+        displayChangeList(grocery);
         while (true) {
             clearScreen();
 
-            if(!checker) {
-                str.append("Command log:\n");
-            }
             System.out.println(str);
             System.out.println("""
                     Skriv "-e" for å gå tilbake til menyen, eller "tall" for å endre på en vare.
@@ -459,15 +450,20 @@ public class UserInterface extends Abstract_SI_manager {
             }
             else if (Integer.parseInt(userInput) >= 1 || Integer.parseInt(userInput) <= 3) {
                 changeOptions(grocery, fridge, userInput);
+                displayChangeList(grocery);
             }
             else {
                 str.append(" - Ugyldig kommando: \"").append(userInput).append("\"\n");
             }
-            checker = true;
         }
     }
 
-    private void finish() {
+    @Override
+    protected void changeOptions(Grocery g, Fridge f, String str) {
+        super.changeOptions(g, f, str);
+    }
+
+    public void finish() {
         char yesNoErr = 'e';
         while (yesNoErr == 'e') {
             yesNoErr = option("Vil du virkelig avslutte programmet?");
@@ -479,20 +475,16 @@ public class UserInterface extends Abstract_SI_manager {
         }
     }
 
-
     /**
      * .
      */
     private void commands() {
-        boolean checker = false;
         boolean escape = false;
-
+        str.append("Command log:\n");
         while (!escape) {
             clearScreen();
             System.out.println(str);
-            System.out.println("\n\n");
-
-            //sjekker hvilken dialog-option vi skal skrive ut
+            //sjekker hvilke komandoer vi har tilgang til
             if (fridge.getGroceryList().isEmpty()) {
                 System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
             }
@@ -508,15 +500,10 @@ public class UserInterface extends Abstract_SI_manager {
                         Skriv "-e" for å gå tilbake til menyen.""");
             }
 
-            //Sjekker om checker er sann (bare hvis while har loopet minst en gang). Henter ny brukerinput
             String userInput = getInput();
-            if(!checker) {
-                str.append("Command log:\n");
-            }
 
             //behandler brukerinput
             escape = userInputHandler(userInput);
-            checker = true;
         }
     }
 
@@ -526,17 +513,18 @@ public class UserInterface extends Abstract_SI_manager {
         }
         else if (userInput.equals("-delete") && !fm.getExpiredList().isEmpty()) {
             deleteItems();
+            displayFridgeList();
         }
         else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
             for(Grocery expiredItem : fm.getExpiredList()) {
                 fridge.removeGrocery(expiredItem);
             }
             System.out.println("Alle datovarer er nå fjernet!\n");
-            displayFridge();
+            displayFridgeList();
         }
         else if (userInput.contains("-change")) {
             changeHandler(userInput);
-            displayFridge();
+            return true;
         }
         else if (fridge.getGroceryList().isEmpty() && userInput.contains("-delete")) {
             str.append(" - Det finnes ingen datovarer. "
@@ -549,11 +537,15 @@ public class UserInterface extends Abstract_SI_manager {
     }
 
     private void changeHandler(String userInput) {
+        final int userInt;
         if (userInput.equals("-change")) {
-            System.out.println("Skriv en vareID du ønsker å fjerne fra:");
+            System.out.println("Skriv en vareID du ønsker å endre på:");
             userInput = getInput();
+            userInt = Integer.parseInt(userInput);
         }
-        final int userInt = Integer.parseInt(userInput);
+        else {
+            userInt = Integer.parseInt(String.join("", userInput.split("[\\s+\\D]")));
+        }
         final int userIndex = fm.getGroceryListIndex(userInt);
 
         if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
@@ -561,7 +553,7 @@ public class UserInterface extends Abstract_SI_manager {
             str.append(" - Endret vare ").append(userIndex+1).append("\n");
         }
         else {
-            str.append(" - Ugyldig vareID.\n");
+            str.append(" - Ugyldig vareID. Skriv en annen vareID\n");
         }
     }
 
@@ -571,9 +563,10 @@ public class UserInterface extends Abstract_SI_manager {
     private void deleteItems() {
         try {
             clearScreen();
-            Display.displayList(fm.getExpiredList());
-            System.out.println("Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet."
-                    + "Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet.");
+            System.out.println(Table.createMenuTable("FJERN VARE","Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet.\n"
+                                        + "             Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet."));
+            Display display = new Display(fm);
+            System.out.println(display.dateList("Liste over varer i kjøleskapet", fridge.getGroceryList(), "Ingen tilgjengelige varer."));
 
             String userInput = getInput();
             String[] deleteStrArr = userInput.replaceAll("\\s+", "").split(",");
@@ -581,7 +574,6 @@ public class UserInterface extends Abstract_SI_manager {
 
             for (int groceryID : deleteArr) {
                 Grocery removableGrocery = fridge.getGroceryList().stream()
-                        .filter(Grocery::hasExpired)
                         .filter(grocery -> grocery.getGroceryID() == groceryID)
                         .findFirst()
                         .orElse(null);
@@ -593,7 +585,7 @@ public class UserInterface extends Abstract_SI_manager {
                 }
             }
 
-            System.out.println("Alle gyldige valgte datovarer er nå fjernet!\n");
+            str.append("Alle gyldige valgte datovarer er nå fjernet!\n");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

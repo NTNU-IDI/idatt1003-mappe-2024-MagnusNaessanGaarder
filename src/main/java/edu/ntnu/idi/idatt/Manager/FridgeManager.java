@@ -19,7 +19,12 @@ public class FridgeManager {
         if (fridge.getGroceryList().isEmpty()) {
             return null;
         }
-        return fridge.getGroceryList().get(index);
+        else if (index < 0 || index >= fridge.getGroceryList().size()) {
+            return null;
+        }
+        else {
+            return fridge.getGroceryList().get(index);
+        }
     }
 
     public int getGroceryListIndex(final int groceryID) {

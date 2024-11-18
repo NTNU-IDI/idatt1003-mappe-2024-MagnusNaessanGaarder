@@ -18,6 +18,31 @@ public abstract class AbstractOption extends AbstractTerminalAction {
         }
     }
 
+    protected void menuOption(UserInterface UI, int userInput) {
+        clearScreen();
+        switch (userInput) {
+            //legg til
+            case 1 -> UI.addToFridge();
+
+            //Fjern
+            case 2 -> UI.removeFromFridge();
+
+            //Oversikt over kjøleskapet
+            case 3 -> UI.displayFridge();
+
+            //Søk etter vare
+            case 4 -> UI.showSearchFridge();
+
+            //Samlet verdi av varer
+            case 5 -> UI.showValue();
+
+            //avslutt program
+            case 6 -> UI.finish();
+
+            default -> System.out.println("Input er ugyldig. Brukerinputen må være i intervallet [1,6].");
+        }
+    }
+
     protected void changeOptions(Grocery g, Fridge f, String str) {
         final GroceryManager gm = new GroceryManager(g);
         switch (Integer.parseInt(str)) {
@@ -30,23 +55,27 @@ public abstract class AbstractOption extends AbstractTerminalAction {
             //sjekk om en vare er gått ut på dato
             case 3 -> {
                 if (g.hasExpired()) {
-                    System.out.println("Varen har gått ut på dato");
-                    System.out.println(str);
-                    char yesNoErr;
-                    do {
-                        yesNoErr = option("Ønsker du å slette varen?");
-                    }
-                    while (yesNoErr == 'e');
-
-                    if (yesNoErr == 'y') {
-                        f.removeGrocery(g);
-                    }
+                    getExpiredOption(g, f, str);
                 }
                 else {
                     System.out.println("Varen har ikke gått ut på dato");
                 }
             }
             default -> System.out.println(" - Ugyldig input.\n");
+        }
+    }
+
+    protected void getExpiredOption(Grocery g, Fridge f, String str) {
+        System.out.println("Varen har gått ut på dato");
+        System.out.println(str);
+        char yesNoErr;
+        do {
+            yesNoErr = option("Ønsker du å slette varen?");
+        }
+        while (yesNoErr == 'e');
+
+        if (yesNoErr == 'y') {
+            f.removeGrocery(g);
         }
     }
 }

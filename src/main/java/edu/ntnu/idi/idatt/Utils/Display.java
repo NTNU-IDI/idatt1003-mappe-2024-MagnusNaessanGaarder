@@ -130,4 +130,13 @@ public class Display extends Table {
         sb.append("\n\n");
         return sb.toString();
     }
+
+    public String dateList(String title, List<Grocery> list, String altText) {
+        if (!list.isEmpty()) {
+            return super.createDateTable(title, list);
+        }
+        else {
+            return "\n            ---- " + altText + " ----\n\n";
+        }
+    }
 }

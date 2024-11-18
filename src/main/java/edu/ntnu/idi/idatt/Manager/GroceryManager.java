@@ -2,6 +2,7 @@ package edu.ntnu.idi.idatt.Manager;
 
 import edu.ntnu.idi.idatt.Modules.Grocery;
 import edu.ntnu.idi.idatt.Utils.SI;
+import edu.ntnu.idi.idatt.Utils.Table;
 
 
 public class GroceryManager extends Abstract_SI_manager {
@@ -17,9 +18,13 @@ public class GroceryManager extends Abstract_SI_manager {
         //mengden og enheten av varen
         String userInput = "";
         try{
+            System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
             do {
-                System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
                 userInput = getInputStatic();
+
+                if (!Abstract_SI_manager.isValidUnit(String.join("", userInput.split(" ")[1]))) {
+                    System.out.println("Ugyldig måleenhet på varen. Skriv inn et tall, mellomrom og en gyldig måleenhet");
+                }
             }
             while (!Abstract_SI_manager.isValidUnit(String.join("", userInput.split(" ")[1])));
         }
@@ -27,7 +32,7 @@ public class GroceryManager extends Abstract_SI_manager {
             System.out.println("Ugyldig mengde på varen. Skriv inn et tall, mellomrom og en gyldig måleenhet.");
         }
         catch (Exception e) {
-            System.out.println("Ugyldig måleenhet på varen. Skriv inn et tall, mellomrom og en gyldig måleenhet.");
+            System.out.println("Uventet feil: \"" + e.getMessage() + "\"");
         }
         return userInput.split(" ");
     }
@@ -50,6 +55,8 @@ public class GroceryManager extends Abstract_SI_manager {
     public void addAmountGrocery() {
         try {
             //legg til en mengde
+            clearScreen();
+            System.out.println(Table.createMenuTable("LEGG TIL " + grocery.getName().toUpperCase(), "Fyll ut deltaljer om varen du skal legge til:"));
             String[] amountAndUnit = getAmountAndUnit();
 
             double addAmount = Double.parseDouble(amountAndUnit[0]);
@@ -66,7 +73,8 @@ public class GroceryManager extends Abstract_SI_manager {
     public void removeAmountGrocery() {
         try{
             //trekk fra en mengde
-            System.out.println();
+            clearScreen();
+            System.out.println(Table.createMenuTable("FJERN FRA " + grocery.getName().toUpperCase(), "Fyll ut deltaljer om varen du skal fjerne fra:"));
             String[] amountAndUnit = getAmountAndUnit();
 
             SI newUnit = Abstract_SI_manager.getUnit(amountAndUnit[1]);
