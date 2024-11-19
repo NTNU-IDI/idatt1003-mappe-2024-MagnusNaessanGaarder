@@ -39,8 +39,49 @@ import edu.ntnu.idi.idatt.Utils.SI;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+ * <strong>Description:</strong><br>
+ * A mutable class supposed to represent a {@code Grocery} which can be stored in a{@code Fridge}.
+ * While this class is mutable, the focus of this class is to keep the datafields as immutable as possible.
+ * This means that any other datafields other than datafields specified to be changeble in the exam-description,
+ * will be kept immutable within reason.<br><br>
+ *
+ * <strong>Datafields:</strong><br>
+ * {@code nextID} - A private static integer that determines the non-static groceryID via {@link #advanceID()}.<br>
+ * {@code groceryID} - A immutable and unique integer that can identify any instanticed Grocery.<br>
+ * {@code name} - A immutable String that is supposed to represent the name of the Grocery.<br>
+ * {@code unit} - A mutable object of type {@link SI} that is supposed to represent the SI-unit of the Grocery.<br>
+ * {@code quantity} - A mutable {@code double} that is supposed to represent the SI-unit of the Grocery.<br>
+ * {@code bestBefore} - A immutable object of type {@link LocalDate} that is supposed to represent the expiration
+ * date of the Grocery.<br>
+ * {@code price} - A immutable {@code double} that is supposed to represent price of the Grocery per approperiate
+ * unit for price (e.g. kg/ L / stk).<br>
+ * {@code fridge} - A immutable object of type {@link Fridge} that is supposed to represent the SI-unit of the Grocery.<br>
+ * <br>
+ *
+ * <strong>Methods:</strong>
+ * <ul>
+ *     <li>{@link #advanceID()}</li>
+ *     <li>{@link #getGroceryID()}</li>
+ *     <li>{@link #getName()}</li>
+ *     <li>{@link #getDateToStr()}</li>
+ *     <li>{@link #getDate()}</li>
+ *     <li>{@link #getPriceToStr()}</li>
+ *     <li>{@link #getPrice()}</li>
+ *     <li>{@link #getQuantity()}</li>
+ *     <li>{@link #setQuantity(double)}</li>
+ *     <li>{@link #getUnit()}</li>
+ *     <li>{@link #setUnit(SI)}</li>
+ *     <li>{@link #hasExpired()}</li>
+ *     <li>{@link #addAmount(double, SI)}</li>
+ *     <li>{@link #removeAmount(double, SI)}</li>
+ *     <li>{@link #convertUnit()}</li>
+ *     <li>{@link #toString()}</li>
+ * </ul>
+ */
 public class Grocery {
-    private static int nextID = 0;
+    private static int nextID = 1;
     private final int groceryID;
     private final String name;
     private SI unit;
@@ -49,6 +90,16 @@ public class Grocery {
     private final double price;
     private final Fridge fridge;
 
+    /**
+     * <strong>Description:</strong><br>
+     * A static method for advancing the ID statically and give unique ID's for instanticed objects.<br>
+     * @return The value of the static datafield {@code nextID}. The datafield post-increment (e.g. foo++).
+     */
+    private static int advanceID() {
+        return nextID++;
+    }
+
+    //Kovnerterer enhet ved konstruksjon for å forsikre at måleenheten er riktig
     public Grocery(String name, SI measure, double quantity, LocalDate date, double price, Fridge fridge) {
         this.name = name;
         this.unit = measure;
@@ -61,54 +112,128 @@ public class Grocery {
         convertUnit();
     }
 
-    private static int advanceID() {
-        return ++nextID;
-    }
-
+    /**
+     * <strong>Description:</strong><br>
+     * A get-method for incapsulating the datafield groceryID.<br>
+     *
+     * @return An integer with the value of groceryID.
+     */
     public int getGroceryID() {
         return this.groceryID;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A get-method for incapsulating the datafield name.<br>
+     *
+     * @return An {@link String} with the value of name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A method for formating the datafield bestBefore to the format "dd LLLL yyyy" (e.g. 11 mars 2023).<br>
+     *
+     * @return A {@link String} with the value of the formated bestBefore.
+     */
     public String getDateToStr() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         return formatter.format(bestBefore);
     }
+
+    /**
+     * <strong>Description:</strong><br>
+     * A get-method for incapsulating the datafield bestBefore.<br>
+     *
+     * @return A {@link LocalDate} with the value of bestBefore.
+     */
     public LocalDate getDate() {
         return bestBefore;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A method for formating the datafield price to "price kr/unitForPrice". The unit for price is e.g. L, kg, stk.<br>
+     *
+     * @return A {@link String} with the value of the formated price.
+     */
     public String getPriceToStr() {
         return String.format("%.2f kr/%s", this.price, this.unit.getUnitForPrice());
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A get-method for incapsulating the datafield price.<br>
+     *
+     * @return A {@code double} with the value price.
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A get-method for incapsulating the datafield quantity.<br>
+     *
+     * @return A {@code double} with the value of quantity.
+     */
     public double getQuantity() {
         return quantity;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A set-method for incapsulating and assigning a value to the datafield quantity.<br>
+     */
     private void setQuantity(double quantity){
         this.quantity = quantity;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A get-method for incapsulating the datafield unit.<br>
+     *
+     * @return An object of type {@link SI} with the value of unit.
+     */
     public SI getUnit() {
         return unit;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A set-method for incapsulating and assigning a value to the datafield unit.<br>
+     */
     private void setUnit(SI unit) {
         this.unit = unit;
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A method to check if the Grocery has expired by comparing to {@code LocalDate.now()}.<br>
+     *
+     * @return A {@code boolean} with regard to the comparison. Returns true if the bestBefore
+     * datafield is after today's date. Else, false.
+     */
     public boolean hasExpired() {
         return this.bestBefore.isBefore(LocalDate.now());
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A method for adding an amount to with a unit, to this Grocery.
+     * The unique feature of this method is that it converts two different units
+     * to a common unit, and then converts back to the grocery's original unit.<br>
+     * The only conditions of the method is that the amount must be positive.
+     * Both the grocery's unit and the unit of the addition should also be convertable to one another
+     * e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount unit and the grocery unit
+     * must be "Stykker" for it to work.<br>
+     *
+     * @param amount A {@code double} representing the amount that will be added to the Grocery.
+     * @param amountUnit An object of the type {@link SI} representing the unit of the amount that
+     *                   will be added to the Grocery.
+     */
     public void addAmount(final double amount, final SI amountUnit) {
         final double currentQuantity = this.quantity;
 
@@ -144,7 +269,20 @@ public class Grocery {
         }
     }
 
-
+    /**
+     * <strong>Description:</strong><br>
+     * A method for subtracting an amount with a unit form this Grocery.
+     * This method works simmilarly to {@link #addAmount(double, SI)} method, exept
+     * it removes itself from a {@link Fridge} if the amount is below or equal to 0 after the subtraction.<br>
+     * The only conditions of the method is that the amount must be positive.
+     * Both the grocery's unit and the unit of the addition should also be convertable to one another
+     * e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount unit and the grocery unit
+     * must be "Stykker" for it to work.<br>
+     *
+     * @param amount A {@code double} representing the amount that will be added to the Grocery.
+     * @param amountUnit An object of the type {@link SI} representing the unit of the amount that
+     *                   will be added to the Grocery.
+     */
     public void removeAmount(final double amount, SI amountUnit) {
         double currentQuantity = this.quantity;
         final String groceryUnitAbrev = this.unit.getAbrev();
@@ -184,6 +322,13 @@ public class Grocery {
         }
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * A method for conversion between convertable units in certain intervals.
+     * The quantity of the grocery will also be ajusted accordingly to the unit convertion.
+     * This method ONLY affects the object itself, so it will now convert other Grocery-objects
+     * passed as parametes.<br>
+     */
     private void convertUnit() {
         final double groceryQuantity = this.quantity;
         final String groceryUnit = this.unit.getPrefix();
@@ -218,6 +363,12 @@ public class Grocery {
         }
     }
 
+    /**
+     * <strong>Description:</strong><br>
+     * Overridden method for writing the class as a String.<br>
+     *
+     * @return The {@link StringBuilder} as a String. Effectively a {@code String} of the content of the Grocery.
+     */
     @Override
     public String toString() {
         String str = "        Klasse Grocery;" + System.lineSeparator();

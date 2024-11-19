@@ -35,13 +35,22 @@ package edu.ntnu.idi.idatt.Client;
 */
 
 import edu.ntnu.idi.idatt.UI.UserInterface;
+import edu.ntnu.idi.idatt.Modules.Grocery;
 
 
-
+/**
+ * <strong>Description</strong><br>
+ * The main client class for the application.<br><br>
+ *
+ * {@link #main} - Main method to start the application.
+ */
 public class Main {
 
     /**
-     * The main method of the application. This method always initiates at every time the program runs.
+     * <strong>Description</strong><br>
+     * The main method of the application. This method always initiates every time the program runs.
+     * Instantices the {@link UserInterface}-class and uses its methods to start the application
+     * and test some features for the {@link Grocery}.
      */
     public static void main(final String[] args) {
         final UserInterface UI = new UserInterface();

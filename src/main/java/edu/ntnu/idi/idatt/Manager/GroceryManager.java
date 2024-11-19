@@ -1,11 +1,12 @@
 package edu.ntnu.idi.idatt.Manager;
 
 import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.UI.AbstractTerminalAction;
 import edu.ntnu.idi.idatt.Utils.SI;
 import edu.ntnu.idi.idatt.Utils.Table;
 
 
-public class GroceryManager extends Abstract_SI_manager {
+public class GroceryManager extends AbstractTerminalAction {
     private final Grocery grocery;
     private final SI unit;
 

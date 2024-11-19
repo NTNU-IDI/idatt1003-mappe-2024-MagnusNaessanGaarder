@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserInterface extends Abstract_SI_manager {
+public class UserInterface extends AbstractOption {
     private StringBuilder str;
     private boolean running;
 
