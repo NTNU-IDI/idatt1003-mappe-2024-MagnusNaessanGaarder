@@ -1,25 +1,17 @@
-package edu.ntnu.idi.idatt.UI;
+package edu.ntnu.idi.idatt.utils;
 
-import edu.ntnu.idi.idatt.Manager.GroceryManager;
-import edu.ntnu.idi.idatt.Modules.Fridge;
-import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.manager.GroceryManager;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
+
+import static edu.ntnu.idi.idatt.manager.GroceryManager.getAmountAndUnit;
 
 /**
  * <strong>Heritage</strong><br>
  * This abstract class inherits from the super class {@link AbstractTerminalAction}.<br><br>
  *
  * <strong>Description:</strong><br>
- * An abstract class for terminal actions. The idea here is that approperiate classes will
- * inherit this abstract class to create abtraction layers, and hide information.<br><br>
- *
- * <Strong>Methods:</Strong><br>
- * {@link #option(String) option(String question)} - Displays a Yes/No dialogue and returns a {@code char}.<br>
- * {@link #menuOption(UserInterface, int) menuOption(UserInterface UI, int userInput)} - Regulates available actions
- * from the UserInterface-object with a switch-statment.<br>
- * {@link #changeOptions(Grocery, Fridge, String) changeOptions(Grocery g, Fridge f, String str)} - Regulates available
- * "grocery-changing" actions.<br>
- * {@link #getExpiredOption(Grocery, Fridge, String) getExpiredOption(Grocery g, Fridge f, String str)} - Displays a
- * Yes/No dialogue for an expired Grocery.<br>
+ * An abstract class for terminal actions to create abtraction layers, and hide information.<br><br>
  */
 public abstract class AbstractOption extends AbstractTerminalAction {
     /**
@@ -27,9 +19,8 @@ public abstract class AbstractOption extends AbstractTerminalAction {
      * A method for creating option dialogues.<br><br>
      *
      * @param question A {@link String} containing a question for the Yes/No dialogue.
-     * @return A {@code char} of either 'y', 'n' or 'e'. In this case 'y' is ment to
-     * represent a Yes form the user, 'n' a No and 'e', error. The Character 'e' can be
-     * caught and handled, so we can write an appropriate message without creating a breakpoint.
+     * @return A {@code char} of either 'y', 'n' or 'e'. The 'y' and 'n' is treated as YES and NO options.
+     * The Character 'e' can be handled to write an appropriate message without creating a breakpoint.
      */
     public char option(String question) {
         System.out.println(question + " Skriv \"y\" for JA og \"n\" for NEI.");
@@ -45,8 +36,8 @@ public abstract class AbstractOption extends AbstractTerminalAction {
 
     /**
      * <strong>Description</strong><br>
-     * A method for choosing an appropriate action from a userInput in the main menu.<br>
-     * Options:
+     * A method for choosing an appropriate action from a userInput in the main menu.<br><br>
+     * <i>Options:</i>
      * <ul>
      *     <li>Add a Grocery to a Fridge</li>
      *     <li>Remove a Grocery from a Fridge</li>
@@ -87,8 +78,8 @@ public abstract class AbstractOption extends AbstractTerminalAction {
 
     /**
      * <strong>Description</strong><br>
-     * A method for choosing an appropriate action from a userInput in the change-menu.<br>
-     * Options:
+     * A method for choosing an appropriate action from a userInput in the change-menu.<br><br>
+     * <i>Options:</i>
      * <ul>
      *     <li>Add a amount to a Grocery.</li>
      *     <li>Remove amount from a Grocery.</li>
@@ -100,19 +91,40 @@ public abstract class AbstractOption extends AbstractTerminalAction {
      * @param f An object of type {@link Fridge}.
      * @param str An object of type {@link String}
      */
-    protected void changeOptions(Grocery g, Fridge f, String str) {
+    protected void changeOptions(Grocery g, Fridge f, String str, UserInterface UI) {
         final GroceryManager gm = new GroceryManager(g);
         switch (Integer.parseInt(str)) {
             //legg til mengde til varen
-            case 1 -> gm.addAmountGrocery();
+            case 1 ->  {
+                try {
+                    clearScreen();
+                    System.out.println(Table.createMenuTable("LEGG TIL " + g.getName().toUpperCase(), "Fyll ut deltaljer om varen du skal legge til:"));
+                    String[] amountAndUnit = getAmountAndUnit(getInput());
+
+                    gm.addAmountGrocery(amountAndUnit);
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
 
             //fjern mengde fra varen
-            case 2 -> gm.removeAmountGrocery();
+            case 2 -> {
+                try{
+                    clearScreen();
+                    System.out.println(Table.createMenuTable("FJERN FRA " + g.getName().toUpperCase(), "Fyll ut deltaljer om varen du skal fjerne fra:"));
+                    String[] amountAndUnit = getAmountAndUnit(getInput());
+                    gm.removeAmountGrocery(amountAndUnit);
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
 
             //sjekk om en vare er gått ut på dato
             case 3 -> {
                 if (g.hasExpired()) {
-                    getExpiredOption(g, f, str);
+                    UI.getExpiredOption(g, f, str);
                 }
                 else {
                     System.out.println("Varen har ikke gått ut på dato");
@@ -125,22 +137,10 @@ public abstract class AbstractOption extends AbstractTerminalAction {
     /**
      * <strong>Description</strong><br>
      * A method for creating option dialogues for the "expired-check" in {@link #changeOptions}<br>
-     *
-     * @param g An object of type {@link Grocery}.
-     * @param f An object of type {@link Fridge}.
-     * @param str An object of type {@link String}
+     * @return A {@code String}
      */
-    protected void getExpiredOption(Grocery g, Fridge f, String str) {
-        System.out.println("Varen har gått ut på dato");
-        System.out.println(str);
-        char yesNoErr;
-        do {
-            yesNoErr = option("Ønsker du å slette varen?");
-        }
-        while (yesNoErr == 'e');
-
-        if (yesNoErr == 'y') {
-            f.removeGrocery(g);
-        }
+    @Override
+    public String getInput(){
+        return super.getInput();
     }
 }

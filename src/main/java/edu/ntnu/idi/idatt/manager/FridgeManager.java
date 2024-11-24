@@ -1,13 +1,16 @@
-package edu.ntnu.idi.idatt.Manager;
+package edu.ntnu.idi.idatt.manager;
 
-import edu.ntnu.idi.idatt.Modules.Fridge;
-import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
 
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ *
+ */
 public class FridgeManager {
     private final Fridge fridge;
 
@@ -57,7 +60,7 @@ public class FridgeManager {
     public List<Grocery> getNearExpList() {
         return this.getListSortedDate(
                 fridge.getGroceryList().stream()
-                        .filter(g -> g.getDate().isAfter(LocalDate.now()) && g.getDate().isBefore(LocalDate.now().plusDays(4)))
+                        .filter(g -> g.getDate().isAfter(LocalDate.now().minusDays(1)) && g.getDate().isBefore(LocalDate.now().plusDays(4)))
                         .toList());
     }
 

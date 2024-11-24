@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.Modules;
+package edu.ntnu.idi.idatt.modules;
 
 /*
  # Nivå 1:
@@ -33,8 +33,6 @@ package edu.ntnu.idi.idatt.Modules;
      java.text.SimpleDateFormater)
      • Pris/kostnad i norske kroner pr enhet.
 */
-
-import edu.ntnu.idi.idatt.Utils.SI;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

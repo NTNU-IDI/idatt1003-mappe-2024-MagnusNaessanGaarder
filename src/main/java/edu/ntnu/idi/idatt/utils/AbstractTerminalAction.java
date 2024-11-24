@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.UI;
+package edu.ntnu.idi.idatt.utils;
 
 import java.util.Scanner;
 

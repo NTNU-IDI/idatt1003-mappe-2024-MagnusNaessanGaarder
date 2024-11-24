@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.Client;
+package edu.ntnu.idi.idatt;
 
 /*
  # Nivå 1:
@@ -34,8 +34,7 @@ package edu.ntnu.idi.idatt.Client;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
-import edu.ntnu.idi.idatt.UI.UserInterface;
-import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.utils.UserInterface;
 
 
 /**
@@ -44,18 +43,17 @@ import edu.ntnu.idi.idatt.Modules.Grocery;
  *
  * {@link #main} - Main method to start the application.
  */
-public class Main {
+public class StorageApplication {
 
     /**
      * <strong>Description</strong><br>
-     * The main method of the application. This method always initiates every time the program runs.
-     * Instantices the {@link UserInterface}-class and uses its methods to start the application
-     * and test some features for the {@link Grocery}.
+     * The main method of the application. This method always initiates every time the program runs
+     * and starts the application.
      */
     public static void main(final String[] args) {
         final UserInterface UI = new UserInterface();
 
-        UI.start();
         UI.init();
+        UI.start();
     }
 }

@@ -1,13 +1,15 @@
-package edu.ntnu.idi.idatt.Utils;
+package edu.ntnu.idi.idatt.utils;
 
-import edu.ntnu.idi.idatt.Manager.FridgeManager;
-import edu.ntnu.idi.idatt.Manager.GroceryManager;
-import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.manager.FridgeManager;
+import edu.ntnu.idi.idatt.manager.GroceryManager;
+import edu.ntnu.idi.idatt.modules.Grocery;
 
 import java.util.List;
 
 public class Display extends Table {
     private final FridgeManager fm;
+    private static final String START = "\n            ---- ";
+    private static final String END = " ----\n\n";
 
     public Display(FridgeManager fm) {
         this.fm = fm;
@@ -16,7 +18,7 @@ public class Display extends Table {
     public String displayPrice (List<Grocery> list, String title, String colomnTitle, String colomnData) {
         StringBuilder str = new StringBuilder();
         if(list.isEmpty()) {
-            str.append("\n         ---- Ingen varer er lagt til i kjøleskap ----\n");
+            str.append(START).append("Ingen varer er lagt til i kjøleskap").append(END);
             str.append("         Legg til varer for å se total prissum\n\n");
         }
         else {
@@ -43,7 +45,7 @@ public class Display extends Table {
     public String displayPriceUnique(List<Grocery> list, String title,  String colomnTitle, String colomnData) {
         StringBuilder str = new StringBuilder();
         if(list.isEmpty()) {
-            str.append("         ---- Ingen varer er lagt til i kjøleskap ----\n");
+            str.append(START).append("Ingen varer er lagt til i kjøleskap").append(END);
         }
         else {
             str.append(buildTable(list, title, colomnTitle, colomnData));
@@ -56,7 +58,7 @@ public class Display extends Table {
     public String list(List<Grocery> list, String altText){
         StringBuilder str = new StringBuilder();
         if (list.isEmpty()) {
-            str.append("            ---- ").append(altText).append(" ----\n\n");
+            str.append(START).append(altText).append(END);
         }
         else {
             str.append(displayList(list));
@@ -67,7 +69,7 @@ public class Display extends Table {
     public static String menuList(List<Grocery> list, String altText){
         StringBuilder str = new StringBuilder();
         if (list.isEmpty()) {
-            str.append("\n            ---- ").append(altText).append(" ----\n\n");
+            str.append(START).append(altText).append(END);
         }
         else {
             str.append(displayMenuList(list));
@@ -119,14 +121,14 @@ public class Display extends Table {
 
     public static String displaySearchList(List<Grocery> list) {
         StringBuilder sb = new StringBuilder();
-        for (Grocery grocery : list) {
-            sb.append("         ")
-                    .append(grocery.getName())
+        list.forEach(g -> sb.append("         ")
+                    .append(g.getName())
                     .append(", ")
-                    .append(grocery.getDateToStr()).append(", ")
-                    .append("vareID: ").append(grocery.getGroceryID())
-                    .append("\n");
-        }
+                    .append(g.getDateToStr()).append(", ")
+                    .append("vareID: ").append(g.getGroceryID())
+                    .append("\n")
+        );
+
         sb.append("\n\n");
         return sb.toString();
     }
@@ -136,7 +138,7 @@ public class Display extends Table {
             return super.createDateTable(title, list);
         }
         else {
-            return "\n            ---- " + altText + " ----\n\n";
+            return START + altText + END;
         }
     }
 }

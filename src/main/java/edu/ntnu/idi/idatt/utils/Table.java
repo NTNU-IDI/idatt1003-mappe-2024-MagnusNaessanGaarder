@@ -1,6 +1,6 @@
-package edu.ntnu.idi.idatt.Utils;
+package edu.ntnu.idi.idatt.utils;
 
-import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.modules.Grocery;
 
 import java.util.List;
 

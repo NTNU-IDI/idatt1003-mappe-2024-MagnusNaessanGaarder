@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.Modules;
+package edu.ntnu.idi.idatt.modules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * <strong>Description:</strong><br>
  * A mutable class that is supposed to act as a Fridge. This Fridge-class
- * stores Grocery-objects in an {@code ArrayList} of type {@link Grocery}.<br><br>
+ * stores Grocery-objects.<br><br>
  *
  * <strong>Datafields:</strong><br>
  * {@code groceryList} - An {@link ArrayList} with content of type {@link Grocery}.<br><br>

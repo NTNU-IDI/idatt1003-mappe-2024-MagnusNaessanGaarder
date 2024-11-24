@@ -1,25 +1,25 @@
-package edu.ntnu.idi.idatt.Utils;
+package edu.ntnu.idi.idatt.modules;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SI {
     @Override
     public boolean equals(Object o) {
         try {
+            SI s = (SI) o;
             Class<?> c = o.getClass();
-            if (c == SI.class && ((SI) o).getUnit().equalsIgnoreCase(this.unit) &&
-                     ((SI) o).getPrefix().equalsIgnoreCase(this.prefix) &&
-                     ((SI) o).getAbrev().equalsIgnoreCase(this.unitAbrev) &&
-                     ((SI) o).getUnitForPrice().equalsIgnoreCase(this.unitForPrice) &&
-                     ((SI) o).getConvertionFactor() == this.convertionFactor) {
+            if (c == SI.class && s.getUnit().equalsIgnoreCase(this.unit) &&
+                     s.getPrefix().equalsIgnoreCase(this.prefix) &&
+                     s.getAbrev().equalsIgnoreCase(this.unitAbrev) &&
+                     s.getUnitForPrice().equalsIgnoreCase(this.unitForPrice) &&
+                     s.getConvertionFactor() == this.convertionFactor) {
 
-                    return ((SI) o).getUnit().equalsIgnoreCase(this.unit);
+                    return s.getUnit().equalsIgnoreCase(this.unit);
             }
 
             return false;
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | ClassCastException e) {
             return false;
         }
     }
@@ -35,6 +35,10 @@ public class SI {
     * ulike verdier til HashMap-et. I dette tilfellet er verdiene i HashMap-et
     * ment å brukes til konvertering mellom ulike målinger ved hjelp av prefiksen.
     */
+
+    /**
+     * HashMap with values of prefixes and unit conversion factors.
+     */
     private static final HashMap<String, Double> SI_PREFIXES = new HashMap<>();
     static {
         SI_PREFIXES.put("", 1.0);         // uten prefix = base unit
@@ -46,17 +50,28 @@ public class SI {
         SI_PREFIXES.put("Spiseskje", 0.005);  // 1 basisenhet = 200 centienheter
     }
 
-    private static final HashMap<String,String> VALID_UNIT = new HashMap<>();
+    /**
+     * HashMap with ArrayLists of valid units
+     */
+    private static final ArrayList<String> VALID_NAME = new ArrayList<>();
     static {
-        VALID_UNIT.put("Stykker","stk");
-        VALID_UNIT.put("Desiliter", "dL");
-        VALID_UNIT.put("Milliliter", "mL");
-        VALID_UNIT.put("Centiliter", "cL");
-        VALID_UNIT.put("Liter", "");
-        VALID_UNIT.put("Gram", "g");
-        VALID_UNIT.put("Kilogram", "kg");
+        VALID_NAME.add("Stykker");
+        VALID_NAME.add("Milliliter");
+        VALID_NAME.add("Centiliter");
+        VALID_NAME.add("Liter");
+        VALID_NAME.add("Gram");
+        VALID_NAME.add("Kilogram");
     }
 
+    private static final ArrayList<String> VALID_ABREV = new ArrayList<>();
+    static {
+        VALID_ABREV.add("stk");
+        VALID_ABREV.add("mL");
+        VALID_ABREV.add("cL");
+        VALID_ABREV.add("");
+        VALID_ABREV.add("g");
+        VALID_ABREV.add("kg");
+    }
 
 
     //konstruktør for klassen SI
@@ -75,8 +90,12 @@ public class SI {
 
     }
 
-    public static Map<String,String> getValidUnit() {
-        return VALID_UNIT;
+    public static ArrayList<String> getValidName() {
+        return VALID_NAME;
+    }
+
+    public static ArrayList<String> getValidAbrev() {
+        return VALID_ABREV;
     }
 
     //get metode for å få SI-enheten
@@ -99,8 +118,22 @@ public class SI {
         return this.prefix;
     }
 
-    //
+    /**
+     * Get-method for convertionfactor
+     * @return the conversion factor.
+     */
     public double getConvertionFactor() {
         return this.convertionFactor;
+    }
+
+    @Override
+    public String toString() {
+        String str = "Klasse SI;\n";
+        str += "Name: " + this.unit + "\n";
+        str += "Abreviation: " + this.unitAbrev + "\n";
+        str += "Unit for Price: " + this.unitForPrice + "\n";
+        str += "Prefix: " + this.prefix + "\n";
+        str += "Convertion Factor: " + this.convertionFactor + "\n";
+        return str;
     }
 }

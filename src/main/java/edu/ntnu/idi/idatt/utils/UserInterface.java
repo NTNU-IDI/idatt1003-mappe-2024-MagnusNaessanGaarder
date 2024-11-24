@@ -1,35 +1,47 @@
-package edu.ntnu.idi.idatt.UI;
+package edu.ntnu.idi.idatt.utils;
 
-
-import edu.ntnu.idi.idatt.Manager.*;
-import edu.ntnu.idi.idatt.Modules.*;
-import edu.ntnu.idi.idatt.Utils.*;
+import edu.ntnu.idi.idatt.manager.*;
+import edu.ntnu.idi.idatt.modules.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <strong>Heritage</strong><br>
+ * This class inherits traits from the super class {@link AbstractOption}.<br><br>
+ *
+ * <strong>Description</strong><br>
+ * A class that handles the Text-based User Interface(TUI) of the application. <br><br>
+ *
+ * <strong>Datafields</strong><br>
+ * {@code str} - A private object of type {@link StringBuilder}, for large and structured Strings.<br>
+ * {@code running} - A private boolean determining if the application continues.<br>
+ * {@code fridge} - An object of type {@link Fridge} acting as the foodstorage for the application.<br>
+ * {@code fm} - An object of type {@link FridgeManager}. Helps managing the Fridge.<br>
+ */
 public class UserInterface extends AbstractOption {
+    //global variables
     private StringBuilder str;
     private boolean running;
-
     private final Fridge fridge;
     private final FridgeManager fm;
 
-    public UserInterface () {
-        this.str = new StringBuilder();
-        this.running = true;
+    /**
+     *<strong>Description</strong><br>
+     * A constructor initalizing the food storage({@link Fridge}) and the {@link FridgeManager} to manage the food storage.
+     */
+    public UserInterface() {
         this.fridge = new Fridge();
         this.fm = new FridgeManager(fridge);
     }
 
-
     /**
+     * <strong>Description</strong><br>
      * A method used to test four different instances of a grocery.
      */
-    public void start() {
-
+    public void init() {
         //test av Grocery-objekt
         final SI G = new SI("Gram","g","kg","");
         final SI STK = new SI("Stykker","stk","stk","");
@@ -46,44 +58,14 @@ public class UserInterface extends AbstractOption {
         this.fridge.addGrocery(grocery4);
         this.fridge.addGrocery(grocery4);
 
-        grocery1.addAmount(500, G);
-        grocery2.removeAmount(18, STK);
-
-        //Hvis metodene gjør det rett bør utskriften være noe liknende dette:
-        /*
-        *
-        * Klasse Fridge;
-        *   Innhold:
-        *       Klasse Grocery;
-        *           VareID: 1;
-        *           Navn på varen: Mel;
-        *           Mengde av varen: 2,5kg;
-        *           Best-før dato: {LocalDate.now().minusDays(2)};
-        *           Pris per måleenhet: 200 kr/kg;
-        *
-        *       Klasse Grocery;
-        *           VareID: 3;
-        *           Navn på varen: Mel;
-        *           Mengde av varen: 500g;
-        *           Best-før dato: {LocalDate.now().plusDays(4)};
-        *           Pris per måleenhet: 200 kr/kg;
-        *
-        *       Klasse Grocery;
-        *           VareID: 4;
-        *           Navn på varen: Kraft;
-        *           Mengde av varen: 5dL;
-        *           Best-før dato: {LocalDate.now().plusDays(1)};
-        *           Pris per måleenhet: 259,99 kr/L;
-        *
-        */
-
-        System.out.println(this.fridge);
+        this.running = true;
+        this.str = new StringBuilder();
     }
 
     /**
      * A method used to start the actual application.
      */
-    public void init() {
+    public void start() {
         while(running) {
             showMenu();
         }
@@ -131,7 +113,6 @@ public class UserInterface extends AbstractOption {
      *
      */
     public void addToFridge() {
-
         str = new StringBuilder();
         final String title = Table.createMenuTable("LEGG TIL VARE", "Fyll ut feltene nedenfor for å legge til vare:");
         str.append(title);
@@ -139,8 +120,8 @@ public class UserInterface extends AbstractOption {
 
         //local variables
         String name;
-        SI measure;
-        double quantity;
+        SI measure = null;
+        double quantity = 0;
         LocalDate date;
         double price;
 
@@ -149,19 +130,24 @@ public class UserInterface extends AbstractOption {
         name = getInput();
 
         //mengden og enheten av varen
-        String[] amountAndUnit = GroceryManager.getAmountAndUnit();
-        measure = Abstract_SI_manager.getUnit(amountAndUnit[1]);
-        quantity = Double.parseDouble(amountAndUnit[0]);
+        boolean retry = true;
+        while(retry) {
+            try{
+                String[] amountAndUnit = fetchAmountAndUnit();
+                measure = SI_manager.getUnit(amountAndUnit[1]);
+                quantity = Double.parseDouble(amountAndUnit[0]);
+                retry = false;
+            }
+            catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
         //Best-før dato
         date = fetchDate();
 
         //pris
-        assert measure != null;
-        System.out.printf("          Skriv pris. Oppgi pris i kr/%s f.eks (20 kr/%s): ", measure.getUnitForPrice(), measure.getUnitForPrice());
-        final String userInput = getInput();
-        String priceStr = String.join("", userInput.split("[^,.\\d]"));
-        price = Double.parseDouble(String.join(".", priceStr.split("[,.]")));
+        price = fetchPrice(measure);
 
         //sjekker om brukeren ønsker å legge til varen
         clearScreen();
@@ -173,7 +159,6 @@ public class UserInterface extends AbstractOption {
                 new String[]{quantity +  " " + measure.getAbrev(), date + "", price + " kr/" + measure.getUnitForPrice()}
         );
         str.append(table);
-
         System.out.println(str);
 
         char yesNoErr = 'e';
@@ -188,23 +173,80 @@ public class UserInterface extends AbstractOption {
         }
     }
 
-    private LocalDate fetchDate() {
+    private String[] fetchAmountAndUnit() {
         String userInput;
+        String[] amountAndUnit = new String[0];
+        boolean retry = true;
+        while (retry) {
+            try {
+                System.out.print("          Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
+                userInput = getInputStatic();
+                amountAndUnit = GroceryManager.getAmountAndUnit(userInput);
+                retry = false;
+            }
+            catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return amountAndUnit;
+    }
 
-        LocalDate date;
-        while(true) {
-            System.out.print("          Skriv en Best-før dato på formen DD-MM-YYYY: ");
-            userInput = getInput();
+    private double fetchPrice(SI measure) {
+        boolean retry = true;
+        double price = 0;
+        while(retry) {
             try{
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                date = LocalDate.parse(userInput, formatter);
-                break;
+                    price = priceFetcher(measure);
+                    retry = false;
             }
             catch (Exception e) {
-                System.out.println("Ugyldig format - Skriv datoen på formen DD-MM-YYYY.");
+                System.out.println(e.getMessage());
+            }
+        }
+        return price;
+    }
+
+    private double priceFetcher(SI measure) throws Exception {
+        try{
+            System.out.printf("          Skriv pris. Oppgi pris i kr/%s f.eks (20 kr/%s): ", measure.getUnitForPrice(), measure.getUnitForPrice());
+            final String userInput = getInput();
+            String priceStr = String.join("", userInput.split("[^,.\\d]"));
+            return Double.parseDouble(String.join(".", priceStr.split("[,.]")));
+        }
+        catch (NumberFormatException e) {
+            throw new NumberFormatException("The given price cannot be parsed to a Double. Please write a valid decimal number.");
+        }
+        catch(Exception e) {
+            throw new Exception("Unexpected error while fetching price: " + e.getMessage());
+        }
+    }
+
+    private LocalDate fetchDate() {
+        boolean retry = true;
+        LocalDate date = null;
+        while (retry) {
+            try {
+                System.out.print("          Skriv en Best-før dato på formen DD-MM-YYYY: ");
+                date = dateFetcher(getInput());
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            if (date != null) {
+                retry = false;
             }
         }
         return date;
+    }
+
+    private LocalDate dateFetcher(String userInput) throws Exception {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            return LocalDate.parse(userInput, formatter);
+        }
+        catch (Exception e) {
+            throw new Exception("Ugyldig format - Skriv datoen på formen DD-MM-YYYY.");
+        }
     }
 
     private void displayRemoveList() {
@@ -225,68 +267,100 @@ public class UserInterface extends AbstractOption {
      *
      */
     public void removeFromFridge() {
-        displayFridge();
-        removeHandler();
+        try {
+            displayRemoveList();
+            removeHandler();
+        }
+        catch (Exception e) {
+            str.append(e.getMessage());
+        }
     }
 
     private void removeHandler() {
-        while (true) {
+        boolean retry = true;
+        while (retry) {
             clearScreen();
-            System.out.println(str);
-            System.out.println("""
-                    
-                    Skriv "-e" for å gå tilbake til menyen, eller "-remove [Vare ID]" for å fjerne en mengde fra en vare.
-                    [Vare ID] skal skrives som et tall.""");
-            String userInput = getInput();
-
-            final int userInt;
-            if (userInput.equals("-e")) {
-                break;
-            }
-            else if (userInput.contains("-remove")) {
-                if (userInput.equals("-remove")) {
-                    System.out.print("Skriv en vareID du ønsker å fjerne fra: ");
-                    userInt = Integer.parseInt(getInput());
-                }
-                else {
-                    userInt = Integer.parseInt(String.join("", userInput.split("\\D")));
+            try {
+                System.out.println(str);
+                System.out.println("""
+                        
+                        Skriv "-e" for å gå tilbake til menyen, eller "-remove [Vare ID]" for å fjerne en mengde fra en vare.
+                        [Vare ID] skal skrives som et tall.""");
+                String userInput = getInput();
+                retry = removeInputHandler(userInput);
+                if (retry) {
+                    displayRemoveList();
                 }
             }
-            else {
-                str.append(" - Ugyldig kommando. Skriv enten \"-e\" eller \"-remove\".");
-                userInt = -1;
+            catch(Exception e) {
+                System.out.println(e.getMessage());
             }
+        }
+    }
 
-            List<Integer> valid_IDs = fridge.getGroceryList().stream()
-                    .mapToInt(Grocery::getGroceryID)
-                    .boxed()
-                    .toList();
+    private boolean removeInputHandler(String userInput) throws Exception {
+        if (userInput.equals("-e")) {
+            return false;
+        }
+        else if (userInput.contains("-remove") && !fm.getExpiredList().isEmpty()) {
+            int userInt;
+            boolean retry = true;
+            while (retry) {
+                try {
+                    if (userInput.equals("-remove")) {
+                        System.out.print("Skriv en vareID du ønsker å fjerne fra: ");
+                        String input = getInput();
+                        userInt = Integer.parseInt(input);
+                    }
+                    else {
+                        userInt = Integer.parseInt(String.join("", userInput.split("\\D")));
+                    }
 
-            if (valid_IDs.contains(userInt)) {
-                final Grocery grocery = fridge.getGroceryList().stream()
-                        .filter(g -> g.getGroceryID() == userInt)
-                        .findFirst()
-                        .orElse(null);
+                    final int finalUserInt = userInt;
+                    final Grocery grocery = fridge.getGroceryList().stream()
+                            .filter(g -> g.getGroceryID() == finalUserInt)
+                            .findFirst()
+                            .orElse(null);
 
-                if (grocery != null) {
-                    final GroceryManager gm = new GroceryManager(grocery);
-                    gm.removeAmountGrocery();
+                    System.out.print("          Skriv en mengde som skal fjernes fra varen (f.eks 2 gram / desiliter / stykker): ");
+                    fetchRemoveAmountAndUnit(grocery);
+                    retry = false;
                 }
-                else {
-                    str.append(" - Vare med ID ").append(userInt).append(" finnes ikke.");
+                catch(NumberFormatException e) {
+                    throw new NumberFormatException("Cannot remove from non-digit groceryID. Please enter a valid GroceryID");
+                }
+                catch(Exception e) {
+                    throw new Exception("Unexpected error: " + e.getMessage());
                 }
             }
-            else {
-                str.append(" - Ugyldig vareID. Skriv en gyldig VareID.");
+        }
+        else {
+            str.append(" - Ugyldig kommando. Skriv enten \"-e\" eller \"-remove\".");
+        }
+        return true;
+    }
+
+    private void fetchRemoveAmountAndUnit(Grocery g) {
+        boolean retry = true;
+        final GroceryManager gm = new GroceryManager(g);
+        while (retry) {
+            try{
+                System.out.print("          Skriv en mengde som skal fjernes fra varen (f.eks 2 gram / desiliter / stykker): ");
+                String staticInput = getInputStatic();
+
+                gm.removeAmountGrocery(GroceryManager.getAmountAndUnit(staticInput));
+                retry = false;
             }
-            displayRemoveList();
+            catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
     private void displayFridgeList() {
         str = new StringBuilder();
         Display display = new Display(fm);
-        str.append(Table.createMenuTable("KJØLESKAP", "Her er en overikt over ulike varer i kjøleskapet:"));
+        str.append(Table.createMenuTable("KJØLESKAP", "Her er en overikt over ulike varer i kjøleskapet sortert etter dato:"));
 
         if (fridge.getGroceryList().isEmpty()) {
             str.append("            ---- Kjøleskapet er tomt ----\n\n");
@@ -326,12 +400,10 @@ public class UserInterface extends AbstractOption {
         str.append(display.displayPrice(fridge.getGroceryList(), "Prisoversikt", "Vare", "Pris på mengde"));
         System.out.println(str);
 
-        System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
-        while (true) {
-            String userInput = getInput();
-            if (userInput.equals("-e")) {
-                break;
-            }
+        String userInput = "";
+        while (!userInput.equals("-e")) {
+            System.out.println("Skriv \"-e\" for å gå tilbake til menyen");
+            userInput = getInput();
         }
     }
 
@@ -449,7 +521,7 @@ public class UserInterface extends AbstractOption {
                 break;
             }
             else if (Integer.parseInt(userInput) >= 1 || Integer.parseInt(userInput) <= 3) {
-                changeOptions(grocery, fridge, userInput);
+                changeOptions(grocery, fridge, userInput, this);
                 displayChangeList(grocery);
             }
             else {
@@ -458,9 +530,31 @@ public class UserInterface extends AbstractOption {
         }
     }
 
+    /**
+     * <strong>Description</strong><br>
+     * A method for creating option dialogues for the "expired-check" in {@link #changeOptions}<br>
+     *
+     * @param g An object of type {@link Grocery}.
+     * @param f An object of type {@link Fridge}.
+     * @param str An object of type {@link String}
+     */
+    protected void getExpiredOption(Grocery g, Fridge f, String str) {
+        System.out.println("Varen har gått ut på dato");
+        System.out.println(str);
+        char yesNoErr;
+        do {
+            yesNoErr = option("Ønsker du å slette varen?");
+        }
+        while (yesNoErr == 'e');
+
+        if (yesNoErr == 'y') {
+            f.removeGrocery(g);
+        }
+    }
+
     @Override
-    protected void changeOptions(Grocery g, Fridge f, String str) {
-        super.changeOptions(g, f, str);
+    protected void changeOptions(Grocery g, Fridge f, String str, UserInterface UI) {
+        super.changeOptions(g, f, str, this);
     }
 
     public void finish() {
@@ -470,7 +564,7 @@ public class UserInterface extends AbstractOption {
         }
 
         if (yesNoErr == 'y') {
-            close();
+            super.close();
             running = false;
         }
     }
@@ -503,16 +597,26 @@ public class UserInterface extends AbstractOption {
             String userInput = getInput();
 
             //behandler brukerinput
-            escape = userInputHandler(userInput);
+            try {
+                escape = userInputHandler(userInput);
+            }
+            catch (Exception e) {
+                str.append(e.getMessage());
+            }
         }
     }
 
-    private boolean userInputHandler(String userInput) {
+    private boolean userInputHandler(String userInput) throws Exception {
         if (userInput.equals("-e")) {
             return true;
         }
         else if (userInput.equals("-delete") && !fm.getExpiredList().isEmpty()) {
-            deleteItems();
+            try {
+                deleteItems();
+            }
+            catch(Exception e) {
+                throw new Exception(e.getMessage());
+            }
             displayFridgeList();
         }
         else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
@@ -527,11 +631,11 @@ public class UserInterface extends AbstractOption {
             return true;
         }
         else if (fridge.getGroceryList().isEmpty() && userInput.contains("-delete")) {
-            str.append(" - Det finnes ingen datovarer. "
+            throw new IllegalArgumentException(" - Det finnes ingen datovarer. "
                     + "Kan ikke fjerne datovarer fra kjøleskapet.\n");
         }
         else {
-            str.append(" - Ugyldig kommando. \"").append(userInput).append("\"\n");
+            throw new Exception(" - Ugyldig kommando. \"" + userInput + "\"\n");
         }
         return false;
     }
@@ -544,7 +648,7 @@ public class UserInterface extends AbstractOption {
             userInt = Integer.parseInt(userInput);
         }
         else {
-            userInt = Integer.parseInt(String.join("", userInput.split("[\\s+\\D]")));
+            userInt = Integer.parseInt(String.join("", userInput.split("\\D")));
         }
         final int userIndex = fm.getGroceryListIndex(userInt);
 
@@ -560,7 +664,7 @@ public class UserInterface extends AbstractOption {
     /**
      *
      */
-    private void deleteItems() {
+    private void deleteItems() throws Exception {
         try {
             clearScreen();
             System.out.println(Table.createMenuTable("FJERN VARE","Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet.\n"
@@ -588,7 +692,7 @@ public class UserInterface extends AbstractOption {
             str.append("Alle gyldige valgte datovarer er nå fjernet!\n");
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new Exception("Unexpected error: " + e.getMessage());
         }
     }
 }
