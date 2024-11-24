@@ -1,39 +1,47 @@
 package edu.ntnu.idi.idatt;
 
-import edu.ntnu.idi.idatt.Utils.SI;
+import edu.ntnu.idi.idatt.modules.SI;
+import edu.ntnu.idi.idatt.manager.SI_manager;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static edu.ntnu.idi.idatt.Manager.Abstract_SI_manager.getUnit;
-import static edu.ntnu.idi.idatt.Manager.Abstract_SI_manager.isValidUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
+    private static SI testUnit;
+    @BeforeAll
+    static void instantice() {
+        testUnit = new SI("Liter","L","L","");
+    }
+
     @Test
     void testAddToFridgeDate() {
         //enhet og mengde test
         SI meassure;
         double quantity;
 
-        String[] testRes = testQuantityUnit();
+        String[] testRes = {"Liter", "2.0"};
 
-        meassure = getUnit(String.join("",testRes[0].split(" ")));
+        meassure = SI_manager.getUnit(String.join("",testRes[0].split(" ")));
         String quantityStr = String.join("", testRes[1].split(" "));
         quantity = Double.parseDouble(String.join(",", quantityStr.split("/[,.]/gm")));
 
-
-        SI testUnit = new SI("Liter","L","L","");
-
         assertEquals(testUnit,meassure);
         assertEquals(2.0, quantity);
+    }
 
-
+    @Test
+    void testDate() {
         //Best-før dato-test
         assertEquals(LocalDate.of(2025,1,1), testDate("01-01-2025"), "Expected Date of 21-03-2003, but got a different value.");
         assertThrows(RuntimeException.class, () -> testDate("11-02-20033\n"), "Expected an RuntimeException, but got something else.");
+    }
 
+    @Test
+    void testPrice() {
         //Pris
         String userInput = "20,0 kr";
         String priceStr = String.join("", userInput.split("[^,.\\d]"));
@@ -44,29 +52,12 @@ class MainTest {
     @Test
     void testGetUnit(){
         SI testUnit = new SI("Stykker","stk","stk","");
-        assertEquals(testUnit,getUnit("Stykker"));
+        assertEquals(testUnit, SI_manager.getUnit("Stykker"));
     }
 
     @Test
     void testValidUnit(){
-        assertTrue(isValidUnit("Stykker"));
-    }
-
-    private String[] testQuantityUnit() {
-        //mengden og enheten av varen
-        String userInput;
-        try{
-            do {
-                userInput = "2.0 liter";
-            }
-            while (!isValidUnit(String.join("",userInput.split(" ")[1])));
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        String[] res = userInput.split(" ");
-
-        return new String[]{res[1], res[0]};
+        assertThrows(IllegalArgumentException.class, () -> SI_manager.getUnit("sdfkjsdkjfhs"));
     }
 
     private LocalDate testDate(String input) {

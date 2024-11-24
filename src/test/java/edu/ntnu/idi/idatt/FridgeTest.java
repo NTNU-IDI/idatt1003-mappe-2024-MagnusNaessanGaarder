@@ -1,9 +1,9 @@
 package edu.ntnu.idi.idatt;
 
-import edu.ntnu.idi.idatt.Manager.FridgeManager;
-import edu.ntnu.idi.idatt.Utils.SI;
-import edu.ntnu.idi.idatt.Modules.Fridge;
-import edu.ntnu.idi.idatt.Modules.Grocery;
+import edu.ntnu.idi.idatt.manager.FridgeManager;
+import edu.ntnu.idi.idatt.modules.SI;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;

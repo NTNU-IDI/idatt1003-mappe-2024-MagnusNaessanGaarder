@@ -1,8 +1,8 @@
 package edu.ntnu.idi.idatt;
 
-import edu.ntnu.idi.idatt.Manager.FridgeManager;
-import edu.ntnu.idi.idatt.Modules.Fridge;
-import edu.ntnu.idi.idatt.Utils.Display;
+import edu.ntnu.idi.idatt.manager.FridgeManager;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.utils.Display;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
