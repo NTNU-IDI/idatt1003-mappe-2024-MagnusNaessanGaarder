@@ -21,13 +21,14 @@ class DisplayTest {
                 """
                         
                         ------------------------Title------------------------
-                        |       testTittel1       |          data1          |
-                        |       testTittel2       |          data2          |
+                        |       testTittel1       |       testTittel2       |
+                        -----------------------------------------------------
+                        |          data1          |          data2          |
                         -----------------------------------------------------
                         
                         """;
 
 
-        assertEquals(expectedStr, testTable.createTable(title,colTitle,colData));
+        assertEquals(expectedStr, testTable.createGroceryTable(title,colTitle,colData, 53));
     }
 }
