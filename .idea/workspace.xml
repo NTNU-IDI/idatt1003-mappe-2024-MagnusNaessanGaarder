@@ -4,23 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Reworked some issues with last commit">
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="update workspace">
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/Abstract_SI_manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Manager/GroceryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Modules/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/AbstractOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/AbstractOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/UI/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Utils/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTerminalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTerminalAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Table.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/UserInterface.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/DisplayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/DisplayTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,50 +65,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Client.executor": "Run",
-    "Application.Run Program.executor": "Run",
-    "JUnit.ClientTest.executor": "Run",
-    "JUnit.ClientTest.testAddToFridgeDate.executor": "Run",
-    "JUnit.ClientTest.testGetUnit.executor": "Run",
-    "JUnit.ClientTest.testValidUnit.executor": "Run",
-    "JUnit.FridgeTest.addGrocery.executor": "Run",
-    "JUnit.FridgeTest.fridgeAddGrocery.executor": "Debug",
-    "JUnit.FridgeTest.fridgeGetMoneyLoss.executor": "Debug",
-    "JUnit.FridgeTest.removeGrocery.executor": "Run",
-    "JUnit.GroceryTest.groceryConvertUnit.executor": "Run",
-    "JUnit.GroceryTest.groceryFailRemoveAmount.executor": "Run",
-    "JUnit.GroceryTest.groceryGetDate.executor": "Run",
-    "JUnit.GroceryTest.groceryRemoveAmount.executor": "Run",
-    "JUnit.MainTest.testAddToFridgeDate.executor": "Debug",
-    "JUnit.MainTest.testValidUnit.executor": "Run",
-    "JUnit.Run all Tests.executor": "Run",
-    "JUnit.TableTest.printTable.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "#1 on main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/magnu/OneDrive/BIDATA/Programmering/Programmering1/Java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.sourceCode.Java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run Program.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.testAddToFridgeDate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.testGetUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.testValidUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FridgeTest.addGrocery.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FridgeTest.fridgeAddGrocery.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.FridgeTest.fridgeGetMoneyLoss.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.FridgeTest.removeGrocery.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryConvertUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryFailRemoveAmount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryGetDate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryRemoveAmount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MainTest.testAddToFridgeDate.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.MainTest.testValidUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Run all Tests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TableTest.printTable.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#1 on main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/magnu/OneDrive/BIDATA/Programmering/Programmering1/Java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="edu.ntnu.idi.idatt" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="edu.ntnu.idi.idatt" />
@@ -254,7 +257,10 @@
       <workItem from="1731599405176" duration="71564000" />
       <workItem from="1731935528417" duration="15966000" />
       <workItem from="1732180078962" duration="27082000" />
-      <workItem from="1732239714026" duration="14060000" />
+      <workItem from="1732239714026" duration="14342000" />
+      <workItem from="1732488803225" duration="57000" />
+      <workItem from="1732488959827" duration="14688000" />
+      <workItem from="1732559648640" duration="35235000" />
     </task>
     <task id="LOCAL−00001" summary="updaterer client og tester">
       <option name="closed" value="true" />
@@ -347,7 +353,28 @@
       <option name="presentableId" value="LOCAL−00013" />
       <updated>1731930421011</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL−00014" summary="refactoring">
+      <option name="closed" value="true" />
+      <created>1732488659261</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1732488659261</updated>
+    </task>
+    <task id="LOCAL−00015" summary="bugfixing">
+      <option name="closed" value="true" />
+      <created>1732488695749</created>
+      <option name="number" value="LOCAL−00015" />
+      <option name="presentableId" value="LOCAL−00015" />
+      <updated>1732488695749</updated>
+    </task>
+    <task id="LOCAL−00016" summary="update workspace">
+      <option name="closed" value="true" />
+      <created>1732488722165</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1732488722165</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -378,7 +405,10 @@
     <MESSAGE value="refactoring and structuring code" />
     <MESSAGE value="refactoring and bugfixing. Done with part 1 level 1" />
     <MESSAGE value="Reworked some issues with last commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reworked some issues with last commit" />
+    <MESSAGE value="refactoring" />
+    <MESSAGE value="bugfixing" />
+    <MESSAGE value="update workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="update workspace" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
