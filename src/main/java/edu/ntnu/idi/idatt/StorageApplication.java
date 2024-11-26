@@ -34,26 +34,25 @@ package edu.ntnu.idi.idatt;
      • Pris/kostnad i norske kroner pr enhet.
 */
 
-import edu.ntnu.idi.idatt.utils.UserInterface;
-
+import edu.ntnu.idi.idatt.modules.UserInterface;
 
 /**
  * <strong>Description</strong><br>
  * The main client class for the application.<br><br>
- *
+ * <p>
  * {@link #main} - Main method to start the application.
  */
 public class StorageApplication {
 
-    /**
-     * <strong>Description</strong><br>
-     * The main method of the application. This method always initiates every time the program runs
-     * and starts the application.
-     */
-    public static void main(final String[] args) {
-        final UserInterface UI = new UserInterface();
+  /**
+   * <strong>Description</strong><br>
+   * The main method of the application. This method always initiates every time the program runs
+   * and starts the application.
+   */
+  public static void main(final String[] args) {
+    final UserInterface UI = new UserInterface();
 
-        UI.init();
-        UI.start();
-    }
+    UI.init();
+    UI.start();
+  }
 }
