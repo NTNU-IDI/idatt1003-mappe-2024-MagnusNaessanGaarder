@@ -2,7 +2,7 @@ package edu.ntnu.idi.idatt.modules;
 
 import edu.ntnu.idi.idatt.manager.FridgeManager;
 import edu.ntnu.idi.idatt.manager.GroceryManager;
-import edu.ntnu.idi.idatt.manager.SI_manager;
+import edu.ntnu.idi.idatt.manager.SI_Manager;
 import edu.ntnu.idi.idatt.utils.AbstractOption;
 import edu.ntnu.idi.idatt.utils.AbstractTable;
 import edu.ntnu.idi.idatt.utils.Display;
@@ -20,11 +20,11 @@ import java.util.List;
  *
  * <strong>Datafields</strong><br>
  * {@code str} - A private object of type {@link StringBuilder}, for large
- and structured Strings.<br>
+ * and structured Strings.<br>
  * {@code running} - A private boolean determining if the application
- continues.<br>
+ * continues.<br>
  * {@code fridge} - An object of type {@link Fridge} acting as the
- foodstorage for the application.<br>
+ * foodstorage for the application.<br>
  * {@code fm} - An object of type {@link FridgeManager}. Helps managing the Fridge.<br>
  */
 public class UserInterface extends AbstractOption {
@@ -97,7 +97,7 @@ public class UserInterface extends AbstractOption {
     str.append("            Velg fra listen nedenfor:").append("\n\n");
 
     str.append("                   [1] Legg til vare.\n");
-    str.append("                   [2] Fjern vare.\n");
+    str.append("                   [2] Fjern fra vare.\n");
     str.append("                   [3] Oversikt over kjøleskapet.\n");
     str.append("                   [4] Søk etter vare.\n");
     str.append("                   [5] Samlet verdi av varer.\n");
@@ -125,32 +125,31 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method for fetching user input and ultimatly adding a new {@link Grocery}
-   based on the user inputs.<br>
+   * based on the user inputs.<br>
    */
   public void addToFridge() {
     str = new StringBuilder();
     final String title =
-        AbstractTable.createMenuTable("LEGG TIL VARE", "Fyll ut feltene nedenfor for å legge til vare:");
+        AbstractTable.createMenuTable("LEGG TIL VARE", "Fyll ut feltene nedenfor "
+            + "for å legge til vare:");
     str.append(title);
     System.out.println(str);
 
-    //local variables
-    String name;
-    SI measure = null;
-    double quantity = 0;
-    LocalDate date;
-    double price;
 
     //navn på varen
+    String name;
     System.out.print("          Skriv navnet på varen: ");
     name = getInput();
 
     //mengden og enheten av varen
+    SI measure = null;
+    double quantity = 0;
+
     boolean retry = true;
     while (retry) {
       try {
         String[] amountAndUnit = fetchAmountAndUnit();
-        measure = SI_manager.getUnit(amountAndUnit[1]);
+        measure = SI_Manager.getUnit(amountAndUnit[1]);
         quantity = Double.parseDouble(amountAndUnit[0]);
         retry = false;
       } catch (Exception e) {
@@ -159,9 +158,11 @@ public class UserInterface extends AbstractOption {
     }
 
     //Best-før dato
+    LocalDate date;
     date = fetchDate();
 
     //pris
+    double price;
     price = fetchPrice(measure);
 
     //sjekker om brukeren ønsker å legge til varen
@@ -189,9 +190,8 @@ public class UserInterface extends AbstractOption {
       //sjekker om varen allerede er i kjøleskapet
       Grocery grocery = new Grocery(name, measure, quantity, date, price, fridge);
       fridge.addGrocery(grocery);
-    }
-    //fortesetter med ny laging av vare hvis brukeren ikke ønsker å beholde forrige vare
-    else {
+    } else {
+      //fortesetter med ny laging av vare hvis brukeren ikke ønsker å beholde forrige vare
       addToFridge();
     }
   }
@@ -226,7 +226,7 @@ public class UserInterface extends AbstractOption {
    * <strong>Description</strong><br>
    * A method for fetching a price of a Grocery from a user input.<br>
    * Important! The price is given in price-amount per main pricepoint unit,
-   and not in price per unit. E.g. 100kr / kg, and not 100kr / g.<br>
+   * and not in price per unit. E.g. 100kr / kg, and not 100kr / g.<br>
    *
    * @param measure An object of type {@link SI} used to get the main
    *                price point unit.
@@ -310,13 +310,13 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description</strong><br>
    * A method fetching and formating user input for an expiration date
-   from {@link #fetchDate()}.<br>
+   * from {@link #fetchDate()}.<br>
    *
    * @param userInput A user input of type String representing an unformated
    *                  date.
    * @return A {@code LocalDate} representing the expiration date of a Grocery.
    * @throws Exception for handling exceptions with parsing the string or other
-   unforseen exceptions.
+   *                   unforseen exceptions.
    */
   private LocalDate dateFetcher(String userInput) throws Exception {
     try {
@@ -330,7 +330,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong>
    * A method for displaying a list of available groceries and handling
-   commands from the user, as well as handeling Exceptions.
+   * commands from the user, as well as handeling Exceptions.
    */
   public void removeFromFridge() {
     try {
@@ -344,7 +344,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method for displaying groceries to chose from, then remove an
-   amount from that grocery.
+   * amount from that grocery.
    */
   private void displayRemoveList() {
     str = new StringBuilder();
@@ -355,9 +355,8 @@ public class UserInterface extends AbstractOption {
     if (fridge.getGroceryList().isEmpty()) {
       str.append("            ---- Ingen varer er lagt til i kjøleskapet ----");
     } else {
-      str.append(Display.displayList(fridge.getGroceryList(), 60));
+      str.append(Display.displayList(fridge.getGroceryList(), 81));
     }
-    str.append("\n\nKommando log:\n");
   }
 
   /**
@@ -372,7 +371,8 @@ public class UserInterface extends AbstractOption {
         System.out.println(str);
         System.out.println("""
             
-            Skriv "-e" for å gå tilbake til menyen, eller "-remove [Vare ID]" for å fjerne en mengde fra en vare.
+            Skriv "-e" for å gå tilbake til menyen, eller "-remove [Vare ID]" for å fjerne en \
+            mengde fra en vare.
             [Vare ID] skal skrives som et tall.""");
         String userInput = getInput();
         retry = removeInputHandler(userInput);
@@ -388,12 +388,12 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method for interpreting a userinput and play a corresponding command
-   from {@link #removeHandler()}.<br>
+   * from {@link #removeHandler()}.<br>
    *
    * @param userInput A String representing an usergiven command.
    * @return A boolean determening if the {@link #removeHandler()} should repeat.
    * @throws Exception for handling exceptions with parsing the string or other
-   unforseen exceptions.
+   *                   unforseen exceptions.
    */
   private boolean removeInputHandler(String userInput) throws Exception {
     if (userInput.equals("-e")) {
@@ -417,8 +417,6 @@ public class UserInterface extends AbstractOption {
               .findFirst()
               .orElse(null);
 
-          System.out.print(
-              "          Skriv en mengde som skal fjernes fra varen (f.eks 2 gram / desiliter / stykker): ");
           fetchRemove(grocery);
           retry = false;
         } catch (NumberFormatException e) {
@@ -437,7 +435,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method fetching a amount and unit name to remove from a Grocery
-   based on a userinput.<br>
+   * based on a userinput.<br>
    *
    * @param g An object of type {@link Grocery} to remove from.
    */
@@ -447,8 +445,8 @@ public class UserInterface extends AbstractOption {
     //Går i loop så lenge brukerinput gir feilmelding
     while (retry) {
       try {
-        System.out.print(
-            "          Skriv en mengde som skal fjernes fra varen (f.eks 2 gram / desiliter / stykker): ");
+        System.out.print("          Skriv en mengde som skal fjernes fra varen (f.eks 2 gram "
+            + "/ desiliter / stykker): ");
         String staticInput = getInputStatic();
 
         gm.removeAmountGrocery(GroceryManager.getAmountAndUnit(staticInput));
@@ -481,7 +479,9 @@ public class UserInterface extends AbstractOption {
           "Ingen varer er nær ved å gå ut på dato"));
       //Viser alle resterende varer med lenger dato
       str.append(
-              display.dateList("Resterende varer", fm.getRestGroceryList(), "Ingen resterende varer"))
+              display.dateList("Resterende varer",
+                  fm.getRestGroceryList(),
+                  "Ingen resterende varer"))
           .append("\n\n");
     }
 
@@ -501,7 +501,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method displaying a given list of Groceries with expiration dates
-   before the given date.<br>
+   * before the given date.<br>
    *
    * @param date A LocalDate determaining the list of Groceries.
    * @param list A List of Groceries with expiration dates before
@@ -553,7 +553,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method both displaying a the content of a Fridge and
-   handeling commands from user input.<br>
+   * handeling commands from user input.<br>
    */
   public void displayFridge() {
     displayFridgeList();
@@ -572,7 +572,14 @@ public class UserInterface extends AbstractOption {
 
     final Display display = new Display(fm);
     str.append(
-        display.displayPrice(fridge.getGroceryList(), "Prisoversikt", "Vare", "Pris på mengde", 80));
+        display.displayPrice(
+            fridge.getGroceryList(),
+            "Prisoversikt",
+            "Vare",
+            "Pris på mengde",
+            80
+        )
+    );
     System.out.println(str);
 
     String userInput = "";
@@ -585,7 +592,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method searching through a Fridge for a Grocery. The search is
-   determained by the Grocery's name.
+   * determained by the Grocery's name.
    */
   public void showSearchFridge() {
     clearScreen();
@@ -594,8 +601,13 @@ public class UserInterface extends AbstractOption {
           "            ---- Ingen varer i kjøleskapet, kan ikke søke etter varer ----");
     } else {
       str = new StringBuilder();
-      str.append(AbstractTable.createMenuTable("VARESØK",
-          "Søk på navnet til en vare i kjøleskapet. Skriv \"-e\" for å gå tilbake til hovedmenyen:"));
+      str.append(
+          AbstractTable.createMenuTable(
+              "VARESØK",
+              "Søk på navnet til en vare i kjøleskapet. Skriv \"-e\" for å gå tilbake "
+                  + "til hovedmenyen:"
+          )
+      );
       search();
     }
   }
@@ -603,7 +615,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method fetching a name of a supposed Grocery in the Fridge,
-   which then will be searched for.
+   * which then will be searched for.
    */
   private void search() {
     String userInput;
@@ -624,10 +636,9 @@ public class UserInterface extends AbstractOption {
       if (userInput.equals("-e")) {
         retry = false;
       } else {
-        try{
+        try {
           searchHandler(countMax, finalUserInput);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
           System.out.println(e.getMessage());
         }
       }
@@ -647,8 +658,7 @@ public class UserInterface extends AbstractOption {
       throw new IllegalArgumentException("Varen \""
           + input
           + "\" finnes ikke i kjøleskapet. Pass på å skrive varen navnet på riktig.\n");
-    }
-    else if (count == 1) {
+    } else if (count == 1) {
       Grocery searchedGrocery = fridge.getGroceryList().stream()
           .filter(g -> g.getName().equalsIgnoreCase(input))
           .findFirst()
@@ -672,7 +682,7 @@ public class UserInterface extends AbstractOption {
       if (chosenGrocery != null) {
         changeGrocery(chosenGrocery);
       } else {
-        throw new Exception("Fant ingen varer kalt " +  input + " i Kjøleskapet.");
+        throw new Exception("Fant ingen varer kalt " + input + " i Kjøleskapet.");
       }
     }
   }
@@ -708,14 +718,13 @@ public class UserInterface extends AbstractOption {
       try {
         System.out.println(str);
         System.out.println("""
-          Skriv "-e" for å gå tilbake til menyen, eller "tall" for å endre på en vare.
-          "tall" skal skrives som et heltall i intervallet [1,3].
-          
-          """);
+            Skriv "-e" for å gå tilbake til menyen, eller "tall" for å endre på en vare.
+            "tall" skal skrives som et heltall i intervallet [1,3].
+            
+            """);
 
         retry = changeInputHandler(grocery);
-      }
-      catch (IllegalArgumentException e) {
+      } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
       }
     }
@@ -747,7 +756,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description</strong><br>
-   * A method for creating option dialogues for the "expired-check" in {@link #changeOptions}<br>
+   * A method for creating option dialogues for the "expired-check" in {@link #changeOptions}.<br>
    *
    * @param g   An object of type {@link Grocery} being the grocery being checked.
    * @param f   An object of type {@link Fridge} being the fridge
@@ -760,8 +769,7 @@ public class UserInterface extends AbstractOption {
     char yesNoErr;
     do {
       yesNoErr = option("Ønsker du å slette varen?");
-    }
-    while (yesNoErr == 'e');
+    } while (yesNoErr == 'e');
 
     if (yesNoErr == 'y') {
       f.removeGrocery(g);
@@ -771,13 +779,13 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A override of the
-   {@link AbstractOption#changeOptions(Grocery, Fridge, String, UserInterface) changeOption()}
-   from the abstract class {@link AbstractOption}.<br>
+   * {@link AbstractOption#changeOptions(Grocery, Fridge, String, UserInterface) changeOption()}
+   * from the abstract class {@link AbstractOption}.<br>
    *
    * @param g   An object of type {@link Grocery}.
    * @param f   An object of type {@link Fridge}.
    * @param str An object of type {@link String}.
-   * @param ui An object of the type {@link UserInterface}.
+   * @param ui  An object of the type {@link UserInterface}.
    */
   @Override
   protected void changeOptions(Grocery g, Fridge f, String str, UserInterface ui) {
@@ -787,8 +795,8 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method checking if the user wants to actually quit,
-   then closeing the Scanners and ending the main loop in
-   {@link #start()}.
+   * then closeing the Scanners and ending the main loop in
+   * {@link #start()}.
    */
   public void finish() {
     char yesNoErr = 'e';
@@ -805,7 +813,7 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Descriptions:</strong><br>
    * A method displaying available commands and handling an user input
-   according to the available commands.
+   * according to the available commands.
    */
   private void commands() {
     boolean escape = false;
@@ -819,9 +827,10 @@ public class UserInterface extends AbstractOption {
       } else {
         System.out.println("""
             Skriv "-delete" for å slette en vare. Kommandoen "-delete all" vil slette alle varer.
-            Skriv "-change" eller "-change [vareID]" for å endre på en vare. "[vareID]" skrives som et tall.
-            Skriv "-date [dato]" for å hente alle varer med Best-Før dato før angitte dato. Datoen [dato]
-            er ment å skrives på formatet "DD-YY-YYYY" vil slette alle utgåtte varer.
+            Skriv "-change" eller "-change [vareID]" for å endre på en vare. "[vareID]" skrives \
+            som et tall.
+            Skriv "-date [dato]" for å hente alle varer med Best-Før dato før angitte dato.
+                Datoen [dato] er ment å skrives på formatet "DD-YY-YYYY".
             Skriv "-e" for å gå tilbake til menyen.""");
       }
 
@@ -839,12 +848,12 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method purely for handling the a user input according
-   to available commands.<br>
+   * to available commands.<br>
    *
    * @param userInput A String representing the users
    * @return A boolean determaining the continuation of the {@link #commands()}-method.
    * @throws Exception Exceptions for failed commands or failed
-   execution of methods.
+   *                   execution of methods.
    */
   private boolean userInputHandler(String userInput) throws Exception {
     if (userInput.equals("-e")) {
@@ -893,7 +902,8 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method for handeling a user-given command according to
-   available commands.<br>
+   * available commands.<br>
+   *
    * @param userInput A string representing given command from the user.
    */
   private void changeHandler(String userInput) {
@@ -918,15 +928,22 @@ public class UserInterface extends AbstractOption {
   /**
    * <strong>Description:</strong><br>
    * A method for displaying a menu for removing a grocery,
-   as well as deleting multiple groceries based on userinput.
+   * as well as deleting multiple groceries based on userinput.
    */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   private void deleteItems() throws Exception {
     try {
       clearScreen();
-      System.out.println(AbstractTable.createMenuTable("FJERN VARE",
-          "Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet.\n"
-              +
-              "             Skriv flere vareID-er separert av \",\"(comma) for å fjerne flere varer fra kjøleskapet."));
+      System.out.println(
+          AbstractTable.createMenuTable(
+          "FJERN VARE",
+          """
+              Skriv inn en vareID fra listen ovenfor for å fjerne en vare fra kjøleskapet.
+              
+                           Skriv flere vareID-er separert av ","(comma) for å fjerne flere varer\
+               fra kjøleskapet."""
+          )
+      );
       Display display = new Display(fm);
       System.out.println(display.dateList("Liste over varer i kjøleskapet", fridge.getGroceryList(),
           "Ingen tilgjengelige varer."));

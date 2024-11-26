@@ -143,7 +143,7 @@ public abstract class AbstractOption extends AbstractTerminalAction {
    * <strong>Description</strong><br>
    * A method for creating option dialogues for the "expired-check" in {@link #changeOptions}.<br>
    *
-   * @return A {@code String} of a userinput from a scanner in the
+   * @return A {@code String} of an userinput from a scanner in the
    {@link AbstractTerminalAction} class.
    */
   @Override

@@ -36,8 +36,11 @@ public abstract class AbstractTable {
    * @return A String containing the menu table.
    */
   public static String createMenuTable(String title, String subTitle) {
-    String longBar =
-        "\n\n------------------------------------------------------------------------------------------------";
+    String longBar = """
+        
+        
+        --------------------------------------------\
+        ----------------------------------------------------""";
     return longBar + "\n\n"
         + createWhitespaceTitle(longBar.length(), title.length())
         + title
@@ -76,7 +79,10 @@ public abstract class AbstractTable {
    * @param rowDataArr  An array of type String containing the data of the table.
    * @return A String containing the table.
    */
-  public static String createTableStatic(String title, String[] rowTitleArr, String[][] rowDataArr, final int width) {
+  public static String createTableStatic(String title,
+                                         String[] rowTitleArr,
+                                         String[][] rowDataArr,
+                                         final int width) {
     StringBuilder sb = new StringBuilder();
     String bottomBar = "-".repeat(width);
     sb.append(tableTitle(title, width, bottomBar));
@@ -95,7 +101,10 @@ public abstract class AbstractTable {
    * @param rowDataArr  An array of type String containing the data of the table.
    * @return A String containing the table.
    */
-  public static String createGroceryTableStatic(String title, String[] rowTitleArr, String[] rowDataArr, final int width) {
+  public static String createGroceryTableStatic(String title,
+                                                String[] rowTitleArr,
+                                                String[] rowDataArr,
+                                                final int width) {
     StringBuilder sb = new StringBuilder();
     String bottomBar = "-".repeat(width);
     sb.append(tableTitle(title, width, bottomBar));
@@ -146,13 +155,46 @@ public abstract class AbstractTable {
 
     tableData.append("|");
     Arrays.asList(rowTitleArr).forEach(r -> tableData.append(center(r, width - 1)).append("|"));
-    tableData.append("\n").append(bottomBar);
+    tableData.append("\n").append(bottomBar).append("\n");
     Arrays.asList(rowDataArr).forEach(r -> {
-      tableData.append("\n|");
+      tableData.append("|");
       Arrays.asList(r).forEach(rr -> tableData.append(center(rr, width - 1)).append("|"));
       tableData.append("\n");
     });
 
+    return tableData.toString();
+  }
+
+  /**
+   * <strong>Description:</strong><br>
+   * Creating the structure and content of a unique table for
+   displaying a list of Groceries based on date.
+   *
+   * @param lengths An array of integers containing the
+   *                lengths of column sections.
+   * @param list A List of Groceries being displayed in a table.
+   * @return A string of the structured table of the groceries.
+   */
+  private String getTableData(int[] lengths, List<Grocery> list) {
+    StringBuilder tableData = new StringBuilder();
+    for (Grocery g : list) {
+      String idStr = center(g.getGroceryID() + "", lengths[0]);
+      String nameStr = center(g.getName(), lengths[1]);
+      String quantityStr = center(g.getQuantity() + " " + g.getUnit().getAbrev(), lengths[2]);
+      String priceStr = center(g.getPriceToStr(), lengths[3]);
+      String bestBeforeStr = center(g.getDateToStr(), lengths[4]);
+
+      String str = "|%s|%s|%s|%s|%s|";
+      String rowData = String.format(
+          str,
+          idStr,
+          nameStr,
+          quantityStr,
+          priceStr,
+          bestBeforeStr
+      );
+      tableData.append(rowData).append("\n");
+    }
     return tableData.toString();
   }
 
@@ -202,7 +244,10 @@ public abstract class AbstractTable {
    * @param colDataArr An array of type String containing the data of the table.
    * @return A String containing the structured table data.
    */
-  public String createGroceryTable(String title, String[] colTitleArr, String[] colDataArr, int width) {
+  public String createGroceryTable(String title,
+                                   String[] colTitleArr,
+                                   String[] colDataArr,
+                                   int width) {
     return createGroceryTableStatic(title, colTitleArr, colDataArr, width);
   }
 
@@ -229,28 +274,28 @@ public abstract class AbstractTable {
     sb.append("\n");
 
     //| ID | name | quantity unit | price / unit | Best-before |
-    String ID_str = center("ID", (bottomBar.length() * 5 / 100));
-    String name_str = center("Navn", (bottomBar.length() * 20 / 100));
-    String quantity_str = center("Mengde", (bottomBar.length() * 20 / 100));
-    String price_str = center("Pris", (bottomBar.length() * 25 / 100));
-    String best_before_str = center("Best-før", (bottomBar.length() * 30 / 100 - 4));
+    String idStr = center("ID", (bottomBar.length() * 5 / 100));
+    String nameStr = center("Navn", (bottomBar.length() * 20 / 100));
+    String quantityStr = center("Mengde", (bottomBar.length() * 20 / 100));
+    String priceStr = center("Pris", (bottomBar.length() * 25 / 100));
+    String bestBeforeStr = center("Best-før", (bottomBar.length() * 30 / 100 - 4));
 
     int[] lengths = new int[] {
-        ID_str.length(),
-        name_str.length(),
-        quantity_str.length(),
-        price_str.length(),
-        best_before_str.length()
+        idStr.length(),
+        nameStr.length(),
+        quantityStr.length(),
+        priceStr.length(),
+        bestBeforeStr.length()
     };
 
     //formatering av streng
     String str = "|%s|%s|%s|%s|%s|";
     sb.append(String.format(str,
-        ID_str,
-        name_str,
-        quantity_str,
-        price_str,
-        best_before_str
+        idStr,
+        nameStr,
+        quantityStr,
+        priceStr,
+        bestBeforeStr
     ));
     sb.append("\n").append(bottomBar).append("\n");
 
@@ -258,38 +303,5 @@ public abstract class AbstractTable {
     sb.append(bottomBar).append("\n\n");
 
     return sb.toString();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * Creating the structure and content of a unique table for
-   displaying a list of Groceries based on date.
-   *
-   * @param lengths An array of integers containing the
-   *                lengths of column sections.
-   * @param list A List of Groceries being displayed in a table.
-   * @return A string of the structured table of the groceries.
-   */
-  private String getTableData(int[] lengths, List<Grocery> list) {
-    StringBuilder tableData = new StringBuilder();
-    for (Grocery g : list) {
-      String ID_str = center(g.getGroceryID() + "", lengths[0]);
-      String name_str = center(g.getName(), lengths[1]);
-      String quantity_str = center(g.getQuantity() + " " + g.getUnit().getAbrev(), lengths[2]);
-      String price_str = center(g.getPriceToStr(), lengths[3]);
-      String best_before_str = center(g.getDateToStr(), lengths[4]);
-
-      String str = "|%s|%s|%s|%s|%s|";
-      String rowData = String.format(
-          str,
-          ID_str,
-          name_str,
-          quantity_str,
-          price_str,
-          best_before_str
-      );
-      tableData.append(rowData).append("\n");
-    }
-    return tableData.toString();
   }
 }

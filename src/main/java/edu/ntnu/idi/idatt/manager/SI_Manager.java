@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.manager;
 
-import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.SI;
 import java.util.List;
 
@@ -11,7 +10,8 @@ import java.util.List;
  Rather, this manager class is a bridge between the
  functionalities needed for the application and the SI class itself.
  */
-public class SI_manager {
+@SuppressWarnings({"checkstyle:AbbreviationAsWordInName", "checkstyle:TypeName"})
+public class SI_Manager {
 
   /**
    * <strong>Description:</strong><br>
@@ -139,10 +139,13 @@ public class SI_manager {
 
   /**
    * <strong>Description:</strong><br>
-   * A static method checkin the validity of a given userInput supposed to represent a units name.<br>
+   * A static method checkin the validity of a given userInput supposed to represent a
+   units name.<br>
    *
-   * @param userInput A {@link String} that in this case is supposed to represent the name of the unit.
-   * @return A {@code boolean} based on whether the userInput matches values or keys of the HashMap or not.
+   * @param userInput A {@link String} that in this case is supposed to represent the name
+   *                  of the unit.
+   * @return A {@code boolean} based on whether the userInput matches values or keys of the
+   HashMap or not.
    */
   private static boolean hasValidName(String userInput) {
     List<String> validUnit = SI.getValidName().stream()
@@ -154,10 +157,13 @@ public class SI_manager {
 
   /**
    * <strong>Description:</strong><br>
-   * A static method checkin the validity of a given userInput supposed to represent a units abreviation.<br>
+   * A static method checkin the validity of a given userInput supposed to represent a units
+   abreviation.<br>
    *
-   * @param userInput A {@link String} that in this case is supposed to represent the name of the unit.
-   * @return A {@code boolean} based on whether the userInput matches values or keys of the HashMap or not.
+   * @param userInput A {@link String} that in this case is supposed to represent the name of
+   *                  the unit.
+   * @return A {@code boolean} based on whether the userInput matches values or keys of the
+   HashMap or not.
    */
   private static boolean hasValidAbrev(String userInput) {
     List<String> validUnit = SI.getValidAbrev().stream()

@@ -38,9 +38,11 @@ import edu.ntnu.idi.idatt.modules.UserInterface;
 
 /**
  * <strong>Description</strong><br>
- * The main client class for the application.<br><br>
- * <p>
- * {@link #main} - Main method to start the application.
+ * The main client class for the application.
+ This application keeps track of Groceries in a Fridge / Food Storage<br>
+ *
+ * @author Magnus Naessan Gaarder.
+ * @version 1.0
  */
 public class StorageApplication {
 
@@ -50,9 +52,9 @@ public class StorageApplication {
    * and starts the application.
    */
   public static void main(final String[] args) {
-    final UserInterface UI = new UserInterface();
+    final UserInterface ui = new UserInterface();
 
-    UI.init();
-    UI.start();
+    ui.init();
+    ui.start();
   }
 }

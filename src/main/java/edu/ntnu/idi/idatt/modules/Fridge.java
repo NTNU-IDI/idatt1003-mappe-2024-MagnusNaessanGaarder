@@ -38,8 +38,8 @@ public class Fridge {
    * get- and set-methods should be used to access datafields of other classes. Datafields such
    * as{@code #groceryList} should also be private and final if possible.
    *
-   * @return An object of type {@link List}, which is more accessable and abstract through polymorpism
-   * than an ArrayList would be.
+   * @return An object of type {@link List}, which is more accessable and abstract
+   through polymorpism than an ArrayList would be.
    */
   public List<Grocery> getGroceryList() {
     return this.groceryList.stream().toList();
@@ -47,18 +47,19 @@ public class Fridge {
 
   /**
    * <strong>Description:</strong><br>
-   * A method that effectively adds a {@link Grocery} to the {@code Fridge}. If the {@code groceryList}
-   * is empty or does not contain a matching Grocery, the Grocery is added to the Fridge. If the groceryList
-   * has a matching Grocery, the Grocerys amount and unit is added to the existing Grocery via the
-   * {@link Grocery#addAmount addAmount()} method.
+   * A method that effectively adds a {@link Grocery} to the {@code Fridge}.
+   * If the {@code groceryList} is empty or does not contain a matching Grocery,
+   the Grocery is added to the Fridge. If the groceryList
+   has a matching Grocery, the Grocerys amount and unit is added to the existing Grocery via the
+   {@link Grocery#addAmount addAmount()} method.
    *
    * @param grocery An Object of type {@link Grocery} that is going to be added to the list.
    */
   public void addGrocery(final Grocery grocery) {
     if (!groceryList.isEmpty()) {
       final Grocery matchingGrocery = this.groceryList.stream()
-          .filter(g -> g.equals(grocery) || (g.getName().equalsIgnoreCase(grocery.getName()) &&
-              g.getDate().equals(grocery.getDate())))
+          .filter(g -> g.equals(grocery) || (g.getName().equalsIgnoreCase(grocery.getName())
+              && g.getDate().equals(grocery.getDate())))
           .findFirst()
           .orElse(null);
 
@@ -97,7 +98,8 @@ public class Fridge {
    * <strong>Description:</strong><br>
    * Overridden method for writing the class as a String.<br>
    *
-   * @return The {@link StringBuilder} as a String. Effectively a {@code String} of the content of the Fridge.
+   * @return The {@link StringBuilder} as a String. Effectively a {@code String} of the content of
+   the Fridge.
    */
   @Override
   public String toString() {

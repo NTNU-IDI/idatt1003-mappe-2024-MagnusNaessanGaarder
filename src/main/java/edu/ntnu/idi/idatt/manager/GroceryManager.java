@@ -7,9 +7,9 @@ import edu.ntnu.idi.idatt.utils.AbstractTerminalAction;
 /**
  * <strong>Description</strong><br>
  * An immutable class managing the other functionalities of a given {@link Grocery}
- that does not need to be directly contained in the Grocery class.
- Rather, this manager class is a bridge between the
- functionalities needed for the application and the Grocery class itself.
+ * that does not need to be directly contained in the Grocery class.
+ * Rather, this manager class is a bridge between the
+ * functionalities needed for the application and the Grocery class itself.
  */
 public class GroceryManager extends AbstractTerminalAction {
   private final Grocery grocery;
@@ -18,7 +18,8 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A constructor instantizing the class and initializing
-   the datafields {@code grocery} and {@code unit}<br>
+   * the datafields {@code grocery} and {@code unit}.<br>
+   *
    * @param g An object of type {@link Grocery}.
    */
   public GroceryManager(Grocery g) {
@@ -29,6 +30,7 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A get-method fetching an amount and a unit name based on a String userinput.<br>
+   *
    * @param str A user input of type String.
    * @return An array of type String with the amount and unit name as Strings.
    * @throws Exception If formating or unexpected Exceptions occur.
@@ -51,6 +53,7 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A get-method to get the value of a Grocery as price per quantity.<br>
+   *
    * @return A double representing the price per quantity of the grocery being managed.
    */
   public double getPricePerQuantity() {
@@ -70,8 +73,9 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A method parsing an amount and a unit name to use the
-   {@link Grocery#addAmount(double, SI) addAmount()} method for adding
-   an amount to a Grocery.<br>
+   * {@link Grocery#addAmount(double, SI) addAmount()} method for adding
+   * an amount to a Grocery.<br>
+   *
    * @param amountAndUnit An array of type String containing an amount and a unit
    *                      name as Strings.
    * @throws Exception Giving a reason and a message of the given Exception.
@@ -80,7 +84,7 @@ public class GroceryManager extends AbstractTerminalAction {
     try {
       //legg til en mengde
       double addAmount = Double.parseDouble(amountAndUnit[0]);
-      SI addUnit = SI_manager.getUnit(amountAndUnit[1]);
+      SI addUnit = SI_Manager.getUnit(amountAndUnit[1]);
       grocery.addAmount(addAmount, addUnit);
     } catch (Exception e) {
       throw new Exception(
@@ -91,8 +95,9 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A method parsing an amount and a unit name to use the
-   {@link Grocery#removeAmount(double, SI) removeAmount()} method
-   to remove an amount from a Grocery.<br>
+   * {@link Grocery#removeAmount(double, SI) removeAmount()} method
+   * to remove an amount from a Grocery.<br>
+   *
    * @param amountAndUnit An array of type String containing an amount and a unit
    *                      name as Strings.
    * @throws Exception Giving a reason and a message of the given Exception.
@@ -100,7 +105,7 @@ public class GroceryManager extends AbstractTerminalAction {
   public void removeAmountGrocery(String[] amountAndUnit) throws Exception {
     try {
       //trekk fra en mengde
-      SI newUnit = SI_manager.getUnit(amountAndUnit[1]);
+      SI newUnit = SI_Manager.getUnit(amountAndUnit[1]);
       double amount = Double.parseDouble(amountAndUnit[0]);
       grocery.removeAmount(amount, newUnit);
     } catch (Exception e) {

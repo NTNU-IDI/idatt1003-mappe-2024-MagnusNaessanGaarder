@@ -1,7 +1,7 @@
 package edu.ntnu.idi.idatt;
 
 import edu.ntnu.idi.idatt.modules.SI;
-import edu.ntnu.idi.idatt.manager.SI_manager;
+import edu.ntnu.idi.idatt.manager.SI_Manager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ class MainTest {
 
         String[] testRes = {"Liter", "2.0"};
 
-        meassure = SI_manager.getUnit(String.join("",testRes[0].split(" ")));
+        meassure = SI_Manager.getUnit(String.join("",testRes[0].split(" ")));
         String quantityStr = String.join("", testRes[1].split(" "));
         quantity = Double.parseDouble(String.join(",", quantityStr.split("/[,.]/gm")));
 
@@ -52,12 +52,12 @@ class MainTest {
     @Test
     void testGetUnit(){
         SI testUnit = new SI("Stykker","stk","stk","");
-        assertEquals(testUnit, SI_manager.getUnit("Stykker"));
+        assertEquals(testUnit, SI_Manager.getUnit("Stykker"));
     }
 
     @Test
     void testValidUnit(){
-        assertThrows(IllegalArgumentException.class, () -> SI_manager.getUnit("sdfkjsdkjfhs"));
+        assertThrows(IllegalArgumentException.class, () -> SI_Manager.getUnit("sdfkjsdkjfhs"));
     }
 
     private LocalDate testDate(String input) {

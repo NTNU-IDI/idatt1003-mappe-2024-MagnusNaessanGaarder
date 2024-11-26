@@ -51,21 +51,27 @@ import java.time.format.DateTimeFormatter;
 /**
  * <strong>Description:</strong><br>
  * A mutable class supposed to represent a {@code Grocery} which can be stored in a{@code Fridge}.
- * While this class is mutable, the focus of this class is to keep the datafields as immutable as possible.
- * This means that any other datafields other than datafields specified to be changeble in the exam-description,
- * will be kept immutable within reason.<br><br>
+ * While this class is mutable, the focus of this class is to keep the datafields as immutable as
+ * possible. This means that any other datafields other than datafields specified to be changeble in
+ * the exam-description, will be kept immutable within reason.<br><br>
  *
  * <strong>Datafields:</strong><br>
- * {@code nextID} - A private static integer that determines the non-static groceryID via {@link #advanceID()}.<br>
+ * {@code nextID} - A private static integer that determines the non-static groceryID via
+ * {@link #advanceID()}.<br>
  * {@code groceryID} - A immutable and unique integer that can identify any instanticed Grocery.<br>
  * {@code name} - A immutable String that is supposed to represent the name of the Grocery.<br>
- * {@code unit} - A mutable object of type {@link SI} that is supposed to represent the SI-unit of the Grocery.<br>
- * {@code quantity} - A mutable {@code double} that is supposed to represent the SI-unit of the Grocery.<br>
- * {@code bestBefore} - A immutable object of type {@link LocalDate} that is supposed to represent the expiration
+ * {@code unit} - A mutable object of type {@link SI} that is supposed to represent the SI-unit of
+ * the Grocery.<br>
+ * {@code quantity} - A mutable {@code double} that is supposed to represent the SI-unit of the
+ * Grocery.<br>
+ * {@code bestBefore} - A immutable object of type {@link LocalDate} that is supposed to represent
+ * the expiration
  * date of the Grocery.<br>
- * {@code price} - A immutable {@code double} that is supposed to represent price of the Grocery per approperiate
+ * {@code price} - A immutable {@code double} that is supposed to represent price of the Grocery
+ * per approperiate
  * unit for price (e.g. kg/ L / stk).<br>
- * {@code fridge} - A immutable object of type {@link Fridge} that is supposed to represent the SI-unit of the Grocery.<br>
+ * {@code fridge} - A immutable object of type {@link Fridge} that is supposed to represent the
+ * SI-unit of the Grocery.<br>
  * <br>
  *
  * <strong>Methods:</strong>
@@ -90,6 +96,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Grocery {
   private static int nextID = 1;
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   private final int groceryID;
   private final String name;
   private final LocalDate bestBefore;
@@ -103,13 +110,14 @@ public class Grocery {
   /**
    * <strong>Description:</strong><br>
    * A constructor instancing the class and initializing
-   the datafields.<br>
-   * @param name The name of the Grocery.
-   * @param measure The unit of the Grocery.
+   * the datafields.<br>
+   *
+   * @param name     The name of the Grocery.
+   * @param measure  The unit of the Grocery.
    * @param quantity The quantity/ amount of the Grocery.
-   * @param date The expiration date of the Grocery
-   * @param price the price amount of the Grocery
-   * @param fridge the Fridge the grocery is being stored in.
+   * @param date     The expiration date of the Grocery
+   * @param price    the price amount of the Grocery
+   * @param fridge   the Fridge the grocery is being stored in.
    */
   public Grocery(String name,
                  SI measure,
@@ -130,10 +138,13 @@ public class Grocery {
 
   /**
    * <strong>Description:</strong><br>
-   * A static method for advancing the ID statically and give unique ID's for instanticed objects.<br>
+   * A static method for advancing the ID statically and give unique ID's for instanticed
+   objects.<br>
    *
-   * @return The value of the static datafield {@code nextID}. The datafield post-increment (e.g. foo++).
+   * @return The value of the static datafield {@code nextID}. The datafield post-increment
+   (e.g. foo++).
    */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   private static int advanceID() {
     return nextID++;
   }
@@ -144,6 +155,7 @@ public class Grocery {
    *
    * @return An integer with the value of groceryID.
    */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public int getGroceryID() {
     return this.groceryID;
   }
@@ -160,7 +172,8 @@ public class Grocery {
 
   /**
    * <strong>Description:</strong><br>
-   * A method for formating the datafield bestBefore to the format "dd LLLL yyyy" (e.g. 11 mars 2023).<br>
+   * A method for formating the datafield bestBefore to the format "dd LLLL yyyy"
+   (e.g. 11 mars 2023).<br>
    *
    * @return A {@link String} with the value of the formated bestBefore.
    */
@@ -181,7 +194,8 @@ public class Grocery {
 
   /**
    * <strong>Description:</strong><br>
-   * A method for formating the datafield price to "price kr/unitForPrice". The unit for price is e.g. L, kg, stk.<br>
+   * A method for formating the datafield price to "price kr/unitForPrice". The unit for price is
+   e.g. L, kg, stk.<br>
    *
    * @return A {@link String} with the value of the formated price.
    */
@@ -240,7 +254,7 @@ public class Grocery {
    * A method to check if the Grocery has expired by comparing to {@code LocalDate.now()}.<br>
    *
    * @return A {@code boolean} with regard to the comparison. Returns true if the bestBefore
-   * datafield is after today's date. Else, false.
+   datafield is after today's date. Else, false.
    */
   public boolean hasExpired() {
     return this.bestBefore.isBefore(LocalDate.now());
@@ -258,12 +272,12 @@ public class Grocery {
    */
   public void addAmount(final double amount, final SI amountUnit) {
     /*
-    * Important!
-    * The only conditions of the method is that the amount must be positive.
-    * Both the grocery's unit and the unit of the addition should also be convertable to one another
-    * e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount unit and the grocery unit
-    * must be "Stykker" for it to work.<br>
-    */
+     * Important!
+     * The only conditions of the method is that the amount must be positive.
+     * Both the grocery's unit and the unit of the addition should also be convertable to one
+     * another e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount unit
+     * and the grocery unit must be "Stykker" for it to work.<br>
+     */
 
     final double currentQuantity = this.quantity;
 
@@ -275,14 +289,17 @@ public class Grocery {
 
     if (amount > 0) {
       if (groceryUnitAbrev.equals("stk") || amountUnitAbrev.equals("stk")) {
-        System.out.println(
-            "Kan ikke legge til et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
+        System.out.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når "
+            + "varen er oppgitt i \"stk\".");
       } else {
         if (groceryUnitAbrev.equals("kg")) {
           this.setQuantity(
               (double) (
-                  Math.round((currentQuantity * grocery_cf + amount * amount_cf) / grocery_cf) *
-                      100) / 100
+                  Math.round(
+                          (currentQuantity * grocery_cf + amount * amount_cf)
+                        / grocery_cf)
+                      * 100)
+                    / 100
           );
         } else {
           this.setQuantity(
@@ -303,7 +320,8 @@ public class Grocery {
    * <strong>Description:</strong><br>
    * A method for subtracting an amount with a unit form this Grocery.
    * This method works simmilarly to {@link #addAmount(double, SI)} method, exept
-   * it removes itself from a {@link Fridge} if the amount is below or equal to 0 after the subtraction.<br>
+   * it removes itself from a {@link Fridge} if the amount is below or equal to 0 after the
+   subtraction.<br>
    *
    * @param amount     A {@code double} representing the amount that will be added to the Grocery.
    * @param amountUnit An object of the type {@link SI} representing the unit of the amount that
@@ -311,12 +329,12 @@ public class Grocery {
    */
   public void removeAmount(final double amount, SI amountUnit) {
     /*
-    * Important!
-    * The only conditions of the method is that the amount must be positive.
-    * Both the grocery's unit and the unit of the addition should also be convertable to one another
-    * e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount unit and the grocery unit
-    * must be "Stykker" for it to work.<br>
-    */
+     * Important!
+     * The only conditions of the method is that the amount must be positive.
+     * Both the grocery's unit and the unit of the addition should also be convertable to one
+     * another e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount
+     * unit and the grocery unit must be "Stykker" for it to work.<br>
+     */
 
     double currentQuantity = this.quantity;
     final String groceryUnitAbrev = this.unit.getAbrev();
@@ -325,11 +343,12 @@ public class Grocery {
     final double grocery_cf = this.unit.getConvertionFactor();
 
     if (amount > 0) {
-      //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre og en av dem er oppgitt i stykker, kjører denne.
-      if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk")) ||
-          (!groceryUnitAbrev.equals("stk") && amountUnitAbrev.equals("stk"))) {
-        System.err.println(
-            "Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når varen er oppgitt i \"stk\".");
+      //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre
+      // og en av dem er oppgitt i stykker, kjører denne.
+      if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk"))
+          || (!groceryUnitAbrev.equals("stk") && amountUnitAbrev.equals("stk"))) {
+        System.err.println("Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når "
+                + "varen er oppgitt i \"stk\".");
         return;
       } else {
         if (groceryUnitAbrev.equals("kg")) {
@@ -395,15 +414,16 @@ public class Grocery {
    * <strong>Description:</strong><br>
    * Overridden method for writing the class as a String.<br>
    *
-   * @return The {@link StringBuilder} as a String. Effectively a {@code String} of the content of the Grocery.
+   * @return The {@link StringBuilder} as a String. Effectively a {@code String} of the content
+   of the Grocery.
    */
   @Override
   public String toString() {
     String str = "        Klasse Grocery;" + System.lineSeparator();
     str += "            VareID: " + this.groceryID + System.lineSeparator();
     str += "            Navn på varen: " + this.name + ";" + System.lineSeparator();
-    str += "            Mengde av varen: " + this.quantity + this.getUnit().getUnit() + ";" +
-        System.lineSeparator();
+    str += "            Mengde av varen: " + this.quantity + this.getUnit().getUnit() + ";"
+        + System.lineSeparator();
     str += "            Best-før dato: " + this.getDateToStr() + System.lineSeparator();
     str += "            Pris per måleenhet: " + this.getPriceToStr() + System.lineSeparator();
 

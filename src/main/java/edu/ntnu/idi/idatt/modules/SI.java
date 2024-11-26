@@ -11,6 +11,7 @@ import java.util.List;
  * This class contains static content for unit-conversion,
  and
  */
+@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public class SI {
   /**
    * <strong>Description</strong><br>
@@ -139,11 +140,11 @@ public class SI {
     try {
       SI s = (SI) o;
       Class<?> c = o.getClass();
-      return c == SI.class && s.getUnit().equalsIgnoreCase(this.unit) &&
-          s.getPrefix().equalsIgnoreCase(this.prefix) &&
-          s.getAbrev().equalsIgnoreCase(this.unitAbrev) &&
-          s.getUnitForPrice().equalsIgnoreCase(this.unitForPrice) &&
-          s.getConvertionFactor() == this.convertionFactor;
+      return c == SI.class && s.getUnit().equalsIgnoreCase(this.unit)
+          && s.getPrefix().equalsIgnoreCase(this.prefix)
+          && s.getAbrev().equalsIgnoreCase(this.unitAbrev)
+          && s.getUnitForPrice().equalsIgnoreCase(this.unitForPrice)
+          && s.getConvertionFactor() == this.convertionFactor;
     } catch (NullPointerException | ClassCastException e) {
       return false;
     }

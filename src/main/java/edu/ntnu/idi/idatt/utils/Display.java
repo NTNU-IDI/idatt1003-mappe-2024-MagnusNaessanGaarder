@@ -15,9 +15,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * <strong>Datafields</strong>
  * {@code START} - A constant static String surrounding alternative text if a
- Fridge is empty. Displayed before the string.<br>
+ * Fridge is empty. Displayed before the string.<br>
  * {@code END} - A constant static String surrounding alternative text if a
- Fridge is empty. Displayed after the string.<br>
+ * Fridge is empty. Displayed after the string.<br>
  * {@code fm} - A Fridge Manager-object to get necessary content for some displays.<br>
  */
 public class Display extends AbstractTable {
@@ -38,8 +38,9 @@ public class Display extends AbstractTable {
   /**
    * <strong>Description:</strong><br>
    * A method for displaying a menu list.<br>
-   * @param list A given List of Groceries.
-   * @param altText A String containing an alternative text.
+   *
+   * @param list    A given List of Groceries.
+   * @param altText - A String containing an alternative text.
    * @return A string with a table og Groceries or an alt-text.
    */
   public static String menuList(List<Grocery> list, String altText) {
@@ -78,28 +79,24 @@ public class Display extends AbstractTable {
   /**
    * <strong>Description:</strong><br>
    * A method for displaying a menu list.<br>
+   *
    * @param list A given List of Groceries.
    * @return A string with a table og Groceries or an alt-text.
    */
   public static String displayList(List<Grocery> list, int width) {
     StringBuilder sb = new StringBuilder();
 
-    String[][] rowDataArr = new String[list.size()][4];
-    AtomicInteger i = new AtomicInteger();
-    list.forEach(g -> {
-      String [] row = new String[] {
-          g.getGroceryID() + "",
-          g.getQuantity() + " " + g.getUnit().getAbrev(),
-          g.getPriceToStr(),
-          g.getDateToStr()
-      };
-      rowDataArr[i.getAndIncrement()] = row;
-    });
-
     for (Grocery grocery : list) {
       String table = createTableStatic(grocery.getName(),
           new String[] {"VareID", "Mengde", "Pris", "Dato"},
-          rowDataArr,
+          new String[][] {
+              {
+                  grocery.getGroceryID() + "",
+                  grocery.getQuantity() + " " + grocery.getUnit().getAbrev(),
+                  grocery.getPriceToStr(),
+                  grocery.getDateToStr()
+              }
+          },
           width
       );
       sb.append(table);
@@ -110,7 +107,7 @@ public class Display extends AbstractTable {
   /**
    * <strong>Description:</strong><br>
    * A static method for displaying a list of searched Groceries
-   from the Fridge.<br>
+   * from the Fridge.<br>
    *
    * @param list A List of Groceries containing searched Groceries.
    * @return A String containing the searched groceries.
@@ -132,11 +129,11 @@ public class Display extends AbstractTable {
    * <strong>Description:</strong><br>
    * A method displaying the total price of a given List of Groceries.<br>
    *
-   * @param list A List of Groceries to display.
-   * @param title A String with the title of the table.
+   * @param list      A List of Groceries to display.
+   * @param title     A String with the title of the table.
    * @param rowTitle1 A String with a title for a column.
    * @param rowTitle2 A String with a title for another column.
-   * @param width An integer representing the width of the table.
+   * @param width     An integer representing the width of the table.
    * @return A String displaying the given List of Groceries and the
    amount of money used on them.
    */
@@ -160,13 +157,13 @@ public class Display extends AbstractTable {
   /**
    * <strong>Description:</strong><br>
    * A method structuring and creating a table for the total price of a
-   given List of Groceries.<br>
+   * given List of Groceries.<br>
    *
-   * @param list A List of Groceries to display.
-   * @param title A String with the title of the table.
+   * @param list      A List of Groceries to display.
+   * @param title     A String with the title of the table.
    * @param rowTitle1 A String with a title for a column.
    * @param rowTitle2 A String with a title for another column.
-   * @param width An integer representing the width of the table.
+   * @param width     An integer representing the width of the table.
    * @return A String displaying the given List of Groceries and the
    amount of money used on them.
    */
@@ -176,7 +173,7 @@ public class Display extends AbstractTable {
                             String rowTitle2,
                             int width) {
 
-    String[] rowTitleArr = new String[]{rowTitle1, rowTitle2};
+    String[] rowTitleArr = new String[] {rowTitle1, rowTitle2};
     String[][] rowDataArr = new String[list.size()][];
 
     AtomicInteger i = new AtomicInteger();
@@ -195,8 +192,8 @@ public class Display extends AbstractTable {
    * <strong>Description:</strong><br>
    * A method displaying the total amount of money lost on expired Groceries.<br>
    *
-   * @param list A List of Groceries to display.
-   * @param title A String with the title of the table.
+   * @param list      A List of Groceries to display.
+   * @param title     A String with the title of the table.
    * @param rowTitle1 A String with a title for a column.
    * @param rowTitle2 A String with a title for another column.
    * @return A String displaying the given List of Groceries and the
@@ -222,7 +219,7 @@ public class Display extends AbstractTable {
    * <strong>Description:</strong><br>
    * A method displaying a given Grocery.<br>
    *
-   * @param g An object of type {@code Grocery}.
+   * @param g     An object of type {@code Grocery}.
    * @param width An integer representing the width.
    * @return A String displaying the given Grocery.
    */
@@ -243,8 +240,8 @@ public class Display extends AbstractTable {
    * <strong>Description:</strong><br>
    * A method displaying a list of Groceries sorted by date.<br>
    *
-   * @param title A string representing the title of the table.
-   * @param list A List of Groceries.
+   * @param title   A string representing the title of the table.
+   * @param list    A List of Groceries.
    * @param altText A string displayed when the list is empty.
    * @return A String displaying the given Grocery.
    */
