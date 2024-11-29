@@ -34,15 +34,13 @@ public class Fridge {
 
   /**
    * <strong>Description:</strong><br>
-   * Get-method for the {@link Fridge}-object. To ensure as much incaptulation as possible,
-   * get- and set-methods should be used to access datafields of other classes. Datafields such
-   * as{@code #groceryList} should also be private and final if possible.
+   * Get-method for the {@link Fridge}-object for getting the grocery list.
    *
-   * @return An object of type {@link List}, which is more accessable and abstract
-   through polymorpism than an ArrayList would be.
+   * @return An object of type {@link List}, which is more accessable through polymorpism than an
+   ArrayList would be.
    */
   public List<Grocery> getGroceryList() {
-    return this.groceryList.stream().toList();
+    return new ArrayList<>(this.groceryList).stream().toList();
   }
 
   /**

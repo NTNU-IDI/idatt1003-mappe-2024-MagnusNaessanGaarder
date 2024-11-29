@@ -20,7 +20,7 @@ public class GroceryManager extends AbstractTerminalAction {
    * A constructor instantizing the class and initializing
    * the datafields {@code grocery} and {@code unit}.<br>
    *
-   * @param g An object of type {@link Grocery}.
+   * @param g An object of type {@link Grocery}
    */
   public GroceryManager(Grocery g) {
     this.grocery = g;

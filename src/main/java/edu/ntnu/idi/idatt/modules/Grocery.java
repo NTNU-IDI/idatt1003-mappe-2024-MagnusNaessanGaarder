@@ -44,6 +44,7 @@ package edu.ntnu.idi.idatt.modules;
  Vi tenker her på forretningslogikken, ikke brukergrensesnittet).
 */
 
+import edu.ntnu.idi.idatt.manager.SI_Manager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -134,6 +135,15 @@ public class Grocery {
     this.groceryID = advanceID();
 
     convertUnit();
+  }
+
+  /**
+   * <strong>Description:</strong><br>
+   * A static method for reseting the ID. Primaraly used for testing.<br>
+   */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  public static void resetID() {
+    nextID = 1;
   }
 
   /**
@@ -287,7 +297,7 @@ public class Grocery {
     final double amount_cf = amountUnit.getConvertionFactor();
     final double grocery_cf = this.unit.getConvertionFactor();
 
-    if (amount > 0) {
+    if (amount > 0 && SI_Manager.hasValidUnit(amountUnit)) {
       if (groceryUnitAbrev.equals("stk") || amountUnitAbrev.equals("stk")) {
         System.out.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når "
             + "varen er oppgitt i \"stk\".");
@@ -311,6 +321,9 @@ public class Grocery {
 
       }
 
+    } else if (!SI_Manager.hasValidUnit(amountUnit)) {
+      throw new IllegalArgumentException("Illegal argument error: "
+          + "Cannot add an amount with invalid unit.");
     } else {
       throw new IllegalArgumentException("Illegal argument error: Cannot add a negative amount.");
     }
@@ -342,7 +355,7 @@ public class Grocery {
     final double amount_cf = amountUnit.getConvertionFactor();
     final double grocery_cf = this.unit.getConvertionFactor();
 
-    if (amount > 0) {
+    if (amount > 0 && SI_Manager.hasValidUnit(amountUnit)) {
       //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre
       // og en av dem er oppgitt i stykker, kjører denne.
       if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk"))
@@ -370,6 +383,9 @@ public class Grocery {
         fridge.removeGrocery(this);
         System.out.println("Fjernet vare med vareID " + this.groceryID);
       }
+    } else if (!SI_Manager.hasValidUnit(amountUnit)) {
+      throw new IllegalArgumentException(
+          "Illegal argument error: Cannot remove an amount with invalid unit.");
     } else {
       throw new IllegalArgumentException(
           "Illegal argument error: Cannot remove a negative amount.");

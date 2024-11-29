@@ -906,7 +906,7 @@ public class UserInterface extends AbstractOption {
    *
    * @param userInput A string representing given command from the user.
    */
-  private void changeHandler(String userInput) {
+  private void changeHandler(String userInput) throws Exception {
     final int userInt;
     if (userInput.equals("-change")) {
       System.out.println("Skriv en vareID du ønsker å endre på:");
@@ -917,11 +917,15 @@ public class UserInterface extends AbstractOption {
     }
     final int userIndex = fm.getGroceryListIndex(userInt);
 
-    if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
-      changeGrocery(fm.getGrocery(userIndex));
-      str.append(" - Endret vare ").append(userIndex + 1).append("\n");
-    } else {
-      throw new IllegalArgumentException(" - Ugyldig vareID. Skriv en annen vareID");
+    try {
+      if (userIndex >= 0 && userIndex < fridge.getGroceryList().size()) {
+        changeGrocery(fm.getGrocery(userIndex));
+        str.append(" - Endret vare ").append(userIndex + 1).append("\n");
+      } else {
+        throw new IllegalArgumentException(" - Ugyldig vareID. Skriv en annen vareID");
+      }
+    } catch (Exception e) {
+      throw new Exception(e.getMessage());
     }
   }
 

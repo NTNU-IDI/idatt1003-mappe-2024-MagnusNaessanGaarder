@@ -147,9 +147,9 @@ public class SI_Manager {
    * @return A {@code boolean} based on whether the userInput matches values or keys of the
    HashMap or not.
    */
-  private static boolean hasValidName(String userInput) {
-    List<String> validUnit = SI.getValidName().stream()
-        .filter(u -> u.equalsIgnoreCase(userInput))
+  private static boolean hasValidName(final String userInput) {
+    List<String[]> validUnit = SI.getValidUnits().stream()
+        .filter(u -> u[0].equalsIgnoreCase(userInput))
         .toList();
 
     return !validUnit.isEmpty();
@@ -165,9 +165,31 @@ public class SI_Manager {
    * @return A {@code boolean} based on whether the userInput matches values or keys of the
    HashMap or not.
    */
-  private static boolean hasValidAbrev(String userInput) {
-    List<String> validUnit = SI.getValidAbrev().stream()
-        .filter(u -> u.equalsIgnoreCase(userInput))
+  private static boolean hasValidAbrev(final String userInput) {
+    List<String[]> validUnit = SI.getValidUnits().stream()
+        .filter(u -> u[1].equalsIgnoreCase(userInput))
+        .toList();
+
+    return !validUnit.isEmpty();
+  }
+
+  /**
+   * <strong>Description:</strong><br>
+   * A public static method checkin the validity of a given unit.<br>
+   *
+   * @param unit A {@link SI} that in this case is supposed to represent the unit.
+   * @return A {@code boolean} based on whether the userInput matches values or keys of the
+   HashMap or not.
+   */
+  public static boolean hasValidUnit(final SI unit) {
+    List<String[]> validUnit = SI.getValidUnits().stream()
+        .filter(u ->
+            u[0].equalsIgnoreCase(unit.getUnit())
+                && u[1].equalsIgnoreCase(unit.getAbrev())
+                && u[2].equalsIgnoreCase(unit.getUnitForPrice())
+                && u[3].equalsIgnoreCase(unit.getPrefix())
+                && u[4].equalsIgnoreCase("" + unit.getConvertionFactor())
+        )
         .toList();
 
     return !validUnit.isEmpty();

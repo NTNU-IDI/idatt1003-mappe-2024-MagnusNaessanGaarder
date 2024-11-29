@@ -38,9 +38,7 @@ public class FridgeManager {
    * @return An object of type {@link Grocery}. Null if no grocery is found.
    */
   public Grocery getGrocery(final int index) {
-    if (fridge.getGroceryList().isEmpty()) {
-      return null;
-    } else if (index < 0 || index >= fridge.getGroceryList().size()) {
+    if (index < 0 || index >= fridge.getGroceryList().size()) {
       return null;
     } else {
       return fridge.getGroceryList().get(index);
