@@ -4,22 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="updating test and refactoring">
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Updated JUnit test - GroceryTest.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_Manager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTerminalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTerminalAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +24,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Test" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -53,6 +47,10 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/Client/Main.java" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="JavaCoverageOptionsProvider">
+    <option name="myRunnerId" value="jacoco" />
+    <option name="myTestModulesCoverage" value="true" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -72,11 +70,16 @@
     "JUnit.ClientTest.testAddToFridgeDate.executor": "Run",
     "JUnit.ClientTest.testGetUnit.executor": "Run",
     "JUnit.ClientTest.testValidUnit.executor": "Run",
+    "JUnit.DisplayTest.executor": "Coverage",
     "JUnit.FridgeTest.addGrocery.executor": "Run",
+    "JUnit.FridgeTest.executor": "Coverage",
     "JUnit.FridgeTest.fridgeAddGrocery.executor": "Debug",
     "JUnit.FridgeTest.fridgeGetMoneyLoss.executor": "Debug",
     "JUnit.FridgeTest.removeGrocery.executor": "Run",
+    "JUnit.GroceryTest.executor": "Run",
+    "JUnit.GroceryTest.groceryAddAmount.executor": "Run",
     "JUnit.GroceryTest.groceryConvertUnit.executor": "Run",
+    "JUnit.GroceryTest.groceryFailAddAmount.executor": "Run",
     "JUnit.GroceryTest.groceryFailRemoveAmount.executor": "Run",
     "JUnit.GroceryTest.groceryGetDate.executor": "Run",
     "JUnit.GroceryTest.groceryRemoveAmount.executor": "Run",
@@ -101,7 +104,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "org.infernus.idea.checkstyle.CheckStyleConfigurable",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -113,10 +116,11 @@
       <recent name="edu.ntnu.idi.idatt" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="edu.ntnu.idi.idatt.manager" />
       <recent name="edu.ntnu.idi.idatt" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Run Program">
+  <component name="RunManager" selected="JUnit.Run all Tests">
     <configuration name="Run Program" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.StorageApplication" />
       <module name="Foodwaste" />
@@ -124,9 +128,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DisplayTest.printTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DisplayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Foodwaste" />
-      <extension name="coverage">
+      <extension name="coverage" runner="jacoco">
         <pattern>
           <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
@@ -134,13 +138,42 @@
       </extension>
       <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.DisplayTest" />
-      <option name="METHOD_NAME" value="printTable" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GroceryTest.groceryGetDate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="FridgeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Foodwaste" />
+      <extension name="coverage" runner="jacoco">
+        <pattern>
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.FridgeTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GroceryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Foodwaste" />
+      <extension name="coverage" runner="jacoco">
+        <pattern>
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.GroceryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GroceryTest.groceryAddAmount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
@@ -150,13 +183,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.GroceryTest" />
-      <option name="METHOD_NAME" value="groceryGetDate" />
+      <option name="METHOD_NAME" value="groceryAddAmount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainTest.testAddToFridgeDate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GroceryTest.groceryFailAddAmount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
@@ -165,40 +198,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.MainTest" />
-      <option name="METHOD_NAME" value="testAddToFridgeDate" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainTest.testGetUnit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Foodwaste" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.MainTest" />
-      <option name="METHOD_NAME" value="testGetUnit" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainTest.testValidUnit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Foodwaste" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.MainTest" />
-      <option name="METHOD_NAME" value="testValidUnit" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.GroceryTest" />
+      <option name="METHOD_NAME" value="groceryFailAddAmount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -217,27 +218,27 @@
     <list>
       <item itemvalue="Application.Run Program" />
       <item itemvalue="JUnit.Run all Tests" />
-      <item itemvalue="JUnit.MainTest.testAddToFridgeDate" />
-      <item itemvalue="JUnit.MainTest.testGetUnit" />
-      <item itemvalue="JUnit.MainTest.testValidUnit" />
-      <item itemvalue="JUnit.DisplayTest.printTable" />
-      <item itemvalue="JUnit.GroceryTest.groceryGetDate" />
+      <item itemvalue="JUnit.DisplayTest" />
+      <item itemvalue="JUnit.FridgeTest" />
+      <item itemvalue="JUnit.GroceryTest" />
+      <item itemvalue="JUnit.GroceryTest.groceryAddAmount" />
+      <item itemvalue="JUnit.GroceryTest.groceryFailAddAmount" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GroceryTest.groceryGetDate" />
-        <item itemvalue="JUnit.DisplayTest.printTable" />
-        <item itemvalue="JUnit.MainTest.testValidUnit" />
-        <item itemvalue="JUnit.MainTest.testGetUnit" />
-        <item itemvalue="JUnit.MainTest.testAddToFridgeDate" />
+        <item itemvalue="JUnit.GroceryTest.groceryAddAmount" />
+        <item itemvalue="JUnit.GroceryTest.groceryFailAddAmount" />
+        <item itemvalue="JUnit.GroceryTest" />
+        <item itemvalue="JUnit.FridgeTest" />
+        <item itemvalue="JUnit.DisplayTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.24807.4" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.24807.4" />
       </set>
     </attachedChunks>
   </component>
@@ -260,6 +261,8 @@
       <workItem from="1732488803225" duration="57000" />
       <workItem from="1732488959827" duration="14688000" />
       <workItem from="1732559648640" duration="42648000" />
+      <workItem from="1732795954850" duration="880000" />
+      <workItem from="1732797037714" duration="29971000" />
     </task>
     <task id="LOCAL−00001" summary="updaterer client og tester">
       <option name="closed" value="true" />
@@ -401,7 +404,28 @@
       <option name="presentableId" value="LOCAL−00020" />
       <updated>1732646358955</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL−00021" summary="Adding classes for CookBook feature.">
+      <option name="closed" value="true" />
+      <created>1732899126480</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1732899126480</updated>
+    </task>
+    <task id="LOCAL−00022" summary="Added new JUnit test - GroceryManagerTest.">
+      <option name="closed" value="true" />
+      <created>1732899220097</created>
+      <option name="number" value="LOCAL−00022" />
+      <option name="presentableId" value="LOCAL−00022" />
+      <updated>1732899220097</updated>
+    </task>
+    <task id="LOCAL−00023" summary="Updated JUnit test - GroceryTest.">
+      <option name="closed" value="true" />
+      <created>1732899260101</created>
+      <option name="number" value="LOCAL−00023" />
+      <option name="presentableId" value="LOCAL−00023" />
+      <updated>1732899260101</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,10 +463,24 @@
     <MESSAGE value="xml updates" />
     <MESSAGE value="Javadoc-ing and bug-fixing" />
     <MESSAGE value="updating test and refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="updating test and refactoring" />
+    <MESSAGE value="Adding classes for CookBook feature." />
+    <MESSAGE value="Added new JUnit test - GroceryManagerTest." />
+    <MESSAGE value="Updated JUnit test - GroceryTest." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated JUnit test - GroceryTest." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/idatt1003_mappe_2024_MagnusNaessanGaarder$DisplayTest.exec" NAME="DisplayTest Coverage Results" MODIFIED="1732841933205" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="jacoco" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>edu.ntnu.idi.idatt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/idatt1003_mappe_2024_MagnusNaessanGaarder$FridgeTest.exec" NAME="FridgeTest Coverage Results" MODIFIED="1732841970592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="jacoco" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>edu.ntnu.idi.idatt.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/idatt1003_mappe_2024_MagnusNaessanGaarder$GroceryTest.exec" NAME="GroceryTest Coverage Results" MODIFIED="1732842017803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="jacoco" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>edu.ntnu.idi.idatt.*</FILTER>
+    </SUITE>
   </component>
 </project>
