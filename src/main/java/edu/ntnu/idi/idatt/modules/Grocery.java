@@ -126,6 +126,12 @@ public class Grocery {
                  LocalDate date,
                  double price,
                  Fridge fridge) {
+
+    if (quantity <= 0 || price <= 0) {
+      throw new IllegalArgumentException("Illegal arguments: Cannot have quantity or price "
+          + " less or equal to zero.");
+    }
+
     this.name = name;
     this.unit = measure;
     this.quantity = quantity;
@@ -135,6 +141,34 @@ public class Grocery {
     this.groceryID = advanceID();
 
     convertUnit();
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    try {
+      Grocery g = (Grocery) o;
+      Class<?> c = o.getClass();
+
+      System.out.println("<");
+      System.out.println(c == Grocery.class);
+      System.out.println(g.getName().equalsIgnoreCase(this.name));
+      System.out.println(g.getUnit().equals(this.unit));
+      System.out.println(g.getQuantity() == this.quantity);
+      System.out.println(g.getDate().isEqual(this.bestBefore));
+      System.out.println(g.getPrice() == this.price);
+      System.out.println(g.getFridge().equals(this.fridge));
+      System.out.println(">");
+
+      return c == Grocery.class && g.getName().equalsIgnoreCase(this.name)
+          && g.getUnit().equals(this.unit)
+          && g.getQuantity() == this.quantity
+          && g.getDate().isEqual(this.bestBefore)
+          && g.getPrice() == this.price
+          && g.getFridge().equals(this.fridge);
+
+    } catch (NullPointerException | ClassCastException e) {
+      return false;
+    }
   }
 
   /**
@@ -168,6 +202,10 @@ public class Grocery {
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public int getGroceryID() {
     return this.groceryID;
+  }
+
+  private Fridge getFridge() {
+    return fridge;
   }
 
   /**

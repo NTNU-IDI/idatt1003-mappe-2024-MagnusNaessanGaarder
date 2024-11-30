@@ -56,8 +56,7 @@ public class UserInterface extends AbstractOption {
     final Grocery grocery1 = new Grocery("Mel", g, 2000, LocalDate.now().minusDays(2), 200, fridge);
     final Grocery grocery2 = new Grocery("Bananer", stk, 18, LocalDate.now(), 49.90, fridge);
     final Grocery grocery3 = new Grocery("Mel", g, 500, LocalDate.now().plusDays(4), 200, fridge);
-    final Grocery grocery4 =
-        new Grocery("Kraft", l, 0.5, LocalDate.now().plusDays(1), 259.99, fridge);
+    final Grocery grocery4 = new Grocery("Kraft", l, 0.5, LocalDate.now().plusDays(1), 259.99, fridge);
 
     this.fridge.addGrocery(grocery1);
     this.fridge.addGrocery(grocery2);

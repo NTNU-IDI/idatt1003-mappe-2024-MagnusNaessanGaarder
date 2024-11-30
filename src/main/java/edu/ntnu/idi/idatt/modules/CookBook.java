@@ -10,12 +10,15 @@ public class CookBook {
     this.recipeList = new ArrayList<>();
   }
 
-  public List<Recipe> getRecipeList() throws IllegalArgumentException {
+  public List<Recipe> getRecipeList() {
     return new ArrayList<>(recipeList).stream().toList();
   }
 
-  public void addRecipe(Recipe recipe) {
-    if (!recipeList.contains(recipe)) {
+  public void addRecipe(final Recipe recipe) {
+    boolean containsRecipe = recipeList.stream()
+        .anyMatch(r -> r.equals(recipe));
+
+    if (!containsRecipe) {
       recipeList.add(recipe);
     } else {
       throw new IllegalArgumentException("Duplicate recipe. "
@@ -24,7 +27,10 @@ public class CookBook {
   }
 
   public void removeRecipe(Recipe recipe) throws IllegalArgumentException {
-    if (recipeList.contains(recipe)) {
+    boolean containsRecipe = recipeList.stream()
+        .anyMatch(r -> r.equals(recipe));
+
+    if (containsRecipe) {
       recipeList.remove(recipe);
     } else {
       throw new IllegalArgumentException("Cannot remove recipe because there is no such recipe"

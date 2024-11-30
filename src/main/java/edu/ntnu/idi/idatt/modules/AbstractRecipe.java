@@ -20,13 +20,18 @@ public abstract class AbstractRecipe {
                         String description,
                         String[] directions,
                         int portion,
-                        HashSet<Grocery> recipes) {
-    this.recipeID = advanceID();
+                        List<Grocery> recipes) {
     this.name = name;
     this.description = description;
     this.directions = directions;
     this.portion = portion;
-    this.recipes = recipes;
+    this.recipes = new HashSet<>(recipes);
+    this.recipeID = advanceID();
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  public static void resetID() {
+    advanceID = 1;
   }
 
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
