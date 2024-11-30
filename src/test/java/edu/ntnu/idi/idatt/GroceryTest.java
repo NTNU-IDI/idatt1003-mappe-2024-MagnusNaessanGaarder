@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class GroceryTest {
   private Grocery grocery;
   final private SI liter = new SI("Liter", "L","L","");
+  final private SI desiliter = new SI("Desiliter", "dl","L","Desi");
+  final private SI kilogram = new SI("Kilogram", "kg","kg","Kilo");
   private Fridge fridge;
 
   public void fetchGrocery(String n, SI si, double q, LocalDate d, double p, Fridge f) {
@@ -73,8 +75,9 @@ class GroceryTest {
 
     //Tester feil enhet
     assertThrows(IllegalArgumentException.class, () ->
-            grocery.addAmount(1, new SI("sdjkfskd", "sdfs","dsf","sdkf")),
-          "Grocery.addAmount should throw an error on negative values");
+        grocery.addAmount(1,
+            new SI("sdjkfskd", "sdfs","dsf", "sdkf")),
+        "Grocery.addAmount should throw an error on invalid SI unit.");
   }
 
   @Test
@@ -114,32 +117,36 @@ class GroceryTest {
   @Test
   void groceryGetDate() {
     fetchGrocery("Melk", liter, 10, LocalDate.now(), 10, null);
-    assertEquals(LocalDate.now(), grocery.getDate(), "Date should be " + grocery.getDate() + ", but wasn't");
+    assertEquals(LocalDate.now(), grocery.getDate(), "Date should be " + grocery.getDate()
+        + ", but wasn't");
   }
 
   @Test
   void groceryGetDateToStr() {
-      Grocery g = new Grocery("Melk", new SI("Liter", "L","L",""), 10, LocalDate.of(2024,10,26), 10, null);
-      assertEquals("26 oktober 2024", g.getDateToStr(), "Expected date does not match return value.");
+      fetchGrocery("Melk", liter, 10, LocalDate.of(2024,10,26),
+          10, null);
+      assertEquals("26 oktober 2024", grocery.getDateToStr(),
+          "Expected date does not match return value.");
   }
-
 
   @Test
   void groceryConvertUnit() {
-      Grocery g = new Grocery("Melk", new SI("Desiliter", "dl","L","Desi"), 0.9, LocalDate.now(), 10, null);
+    fetchGrocery("Melk", desiliter, 0.9, LocalDate.now(), 10, null);
+    assertEquals(90.0, grocery.getQuantity(),
+        "Expected amount to be 90.0, but wasn't");
 
-      assertEquals(90.0,g.getQuantity(), "Expected amount to be 90.0, but wasn't");
-
-      g = new Grocery("Mel", new SI("Kilogram", "kg","kg","Kilo"), 0.9, LocalDate.now(), 10, null);
-      assertEquals(900,g.getQuantity(), "Expected amount to be 900, but wasn't");
+    fetchGrocery("Mel", kilogram, 0.9, LocalDate.now(), 10, null);
+    assertEquals(900, grocery.getQuantity(),
+        "Expected amount to be 900, but wasn't");
   }
 
   @Test
   void groceryHasExpired() {
-      Grocery grocery1 = new Grocery("Melk", new SI("Desiliter", "dl","L","Desi"), 9, LocalDate.now(), 10, null);
-      assertFalse(grocery1.hasExpired(), "Expected grocery to be expired");
+      fetchGrocery("Melk", desiliter, 9, LocalDate.now(), 10, null);
+      assertFalse(grocery.hasExpired(), "Expected grocery to be expired");
 
-      Grocery grocery2 = new Grocery("Melk", new SI("Desiliter", "dl","L","Desi"), 9, LocalDate.of(2023,12,24), 10, null);
-      assertTrue(grocery2.hasExpired(), "Expected grocery to be expired");
+      fetchGrocery("Melk", desiliter, 9, LocalDate.of(2023,12,24),
+          10, null);
+      assertTrue(grocery.hasExpired(), "Expected grocery to be expired");
   }
 }
