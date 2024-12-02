@@ -1,8 +1,10 @@
 package edu.ntnu.idi.idatt.utils;
 
+import edu.ntnu.idi.idatt.manager.CookBookManager;
 import edu.ntnu.idi.idatt.manager.FridgeManager;
 import edu.ntnu.idi.idatt.manager.GroceryManager;
 import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.Recipe;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,6 +26,7 @@ public class Display extends AbstractTable {
   private static final String START = "\n            ---- ";
   private static final String END = " ----\n\n";
   private final FridgeManager fm;
+  private final CookBookManager cbm;
 
   /**
    * <strong>Description:</strong><br>
@@ -31,8 +34,20 @@ public class Display extends AbstractTable {
    *
    * @param fm An object of type {@link FridgeManager}.
    */
-  public Display(FridgeManager fm) {
+  public Display(final FridgeManager fm) {
     this.fm = fm;
+    this.cbm = null;
+  }
+
+  /**
+   * <strong>Description:</strong><br>
+   * A constructor instantizing the class and initializing datafields.<br>
+   *
+   * @param cbm An object of type {@link CookBookManager}.
+   */
+  public Display(final CookBookManager cbm) {
+    this.cbm = cbm;
+    this.fm = null;
   }
 
   /**
@@ -209,6 +224,7 @@ public class Display extends AbstractTable {
     } else {
       str.append(buildTable(list, title, rowTitle1, rowTitle2, 70));
 
+      assert fm != null;
       str.append("            Total pengetap på datovarer: ").append(fm.getMoneyLoss())
           .append(" kr\n\n");
     }
@@ -243,7 +259,7 @@ public class Display extends AbstractTable {
    * @param title   A string representing the title of the table.
    * @param list    A List of Groceries.
    * @param altText A string displayed when the list is empty.
-   * @return A String displaying the given Grocery.
+   * @return A String displaying the given Groceries.
    */
   public String dateList(String title, List<Grocery> list, String altText) {
     if (!list.isEmpty()) {
@@ -252,4 +268,53 @@ public class Display extends AbstractTable {
       return START + altText + END;
     }
   }
+
+  /**
+   * <strong>Description:</strong><br>
+   * A method displaying a list of Recipes.<br>
+   *
+   * @param title   A string representing the title of the table.
+   * @param list    A List of Recipes.
+   * @param altText A string displayed when the list is empty.
+   * @return A String displaying the given Recipies.
+   */
+  public String recipeMenuList(String title, List<Recipe> list, String altText) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("            ").append(title).append("\n");
+    if (list.isEmpty()) {
+      sb.append(START).append(altText).append(END);
+    } else {
+      list.forEach(r -> {
+        final String listStart = "   [%d] ";
+
+        sb.append(String.format(listStart, r.getRecipeID()))
+            .append(r.getName())
+            .append(", ")
+            .append(r.getDescription(), 0, Math.min(r.getDescription().length(), 40))
+            .append("...");
+        sb.append("\n");
+      });
+      sb.append("\n\n");
+    }
+    return sb.toString();
+  }
+
+  /*
+  /**
+   * <strong>Description:</strong><br>
+   * A method displaying a list of Recipes.<br>
+   *
+   * @param title   A string representing the title of the table.
+   * @param list    A List of Recipes.
+   * @param altText A string displayed when the list is empty.
+   * @return A String displaying the given Recipies.
+   */
+  /*
+  public String recipeList(String title, List<Recipe> list, String altText) {
+    if (!list.isEmpty()) {
+      return super.createRecipeList(title, list);
+    } else {
+      return START + altText + END;
+    }
+  }*/
 }

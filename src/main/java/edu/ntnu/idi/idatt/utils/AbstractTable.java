@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.utils;
 
 import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.Recipe;
 import java.util.Arrays;
 import java.util.List;
 
@@ -304,4 +305,50 @@ public abstract class AbstractTable {
 
     return sb.toString();
   }
+
+  /*public String createRecipeTable(String title, List<Recipe> list) {
+    StringBuilder sb = new StringBuilder();
+
+    String longBar = "-".repeat(86 / 2 - title.length() / 2);
+    String bottomBar = "-".repeat(86);
+
+    //Title of table
+    sb.append("\n").append(longBar);
+    sb.append(title);
+    while (sb.length() <= bottomBar.length()) {
+      sb.append("-");
+    }
+    sb.append("\n");
+
+    //| ID | name | quantity unit | price / unit | Best-before |
+    String idStr = center("ID", (bottomBar.length() * 5 / 100));
+    String nameStr = center("Navn", (bottomBar.length() * 20 / 100));
+    String quantityStr = center("Mengde", (bottomBar.length() * 20 / 100));
+    String priceStr = center("Pris", (bottomBar.length() * 25 / 100));
+    String bestBeforeStr = center("Best-før", (bottomBar.length() * 30 / 100 - 4));
+
+    int[] lengths = new int[] {
+        idStr.length(),
+        nameStr.length(),
+        quantityStr.length(),
+        priceStr.length(),
+        bestBeforeStr.length()
+    };
+
+    //formatering av streng
+    String str = "|%s|%s|%s|%s|%s|";
+    sb.append(String.format(str,
+        idStr,
+        nameStr,
+        quantityStr,
+        priceStr,
+        bestBeforeStr
+    ));
+    sb.append("\n").append(bottomBar).append("\n");
+
+    sb.append(getTableData(lengths, list));
+    sb.append(bottomBar).append("\n\n");
+
+    return sb.toString();
+  }*/
 }

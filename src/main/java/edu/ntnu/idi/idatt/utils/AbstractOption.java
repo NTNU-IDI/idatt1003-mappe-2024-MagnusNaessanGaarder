@@ -72,10 +72,13 @@ public abstract class AbstractOption extends AbstractTerminalAction {
       //Samlet verdi av varer
       case 5 -> ui.showValue();
 
-      //avslutt program
-      case 6 -> ui.finish();
+      //oversikt over kokebok
+      case 6 -> ui.displayCookBook();
 
-      default -> System.out.println("Input er ugyldig. Brukerinputen må være i intervallet [1,6].");
+      //avslutt program
+      case 7 -> ui.finish();
+
+      default -> System.out.println("Input er ugyldig. Brukerinputen må være i intervallet [1,8].");
     }
   }
 
