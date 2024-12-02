@@ -4,17 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Updated XML-files - pom and workplace.">
-      <change afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/CookBookTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/RecipeTest.java" afterDir="false" />
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Updating workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/CookBookManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/CookBookManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/AbstractRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/AbstractRecipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/CookBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/CookBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Fridge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Recipe.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryManagerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/GroceryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/FridgeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/RecipeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/RecipeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +94,7 @@
     "JUnit.MainTest.testValidUnit.executor": "Run",
     "JUnit.RecipeTest.executor": "Run",
     "JUnit.RecipeTest.getDirections.executor": "Run",
+    "JUnit.RecipeTest.getRecipes.executor": "Run",
     "JUnit.Run all Tests.executor": "Run",
     "JUnit.TableTest.printTable.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -127,7 +131,7 @@
       <recent name="edu.ntnu.idi.idatt" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CookBookTest">
+  <component name="RunManager" selected="Application.Run Program">
     <configuration name="Run Program" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.StorageApplication" />
       <module name="Foodwaste" />
@@ -197,7 +201,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RecipeTest.getDirections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RecipeTest.getRecipes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
@@ -207,7 +211,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.RecipeTest" />
-      <option name="METHOD_NAME" value="getDirections" />
+      <option name="METHOD_NAME" value="getRecipes" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -230,15 +234,15 @@
       <item itemvalue="JUnit.CookBookTest.getRecipeList" />
       <item itemvalue="JUnit.CookBookTest.negativeGetRecipeList" />
       <item itemvalue="JUnit.RecipeTest" />
-      <item itemvalue="JUnit.RecipeTest.getDirections" />
+      <item itemvalue="JUnit.RecipeTest.getRecipes" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RecipeTest.getRecipes" />
         <item itemvalue="JUnit.CookBookTest" />
         <item itemvalue="JUnit.RecipeTest" />
         <item itemvalue="JUnit.CookBookTest.negativeGetRecipeList" />
         <item itemvalue="JUnit.CookBookTest.getRecipeList" />
-        <item itemvalue="JUnit.RecipeTest.getDirections" />
       </list>
     </recent_temporary>
   </component>
@@ -270,7 +274,7 @@
       <workItem from="1732488959827" duration="14688000" />
       <workItem from="1732559648640" duration="42648000" />
       <workItem from="1732795954850" duration="880000" />
-      <workItem from="1732797037714" duration="49326000" />
+      <workItem from="1732797037714" duration="88603000" />
     </task>
     <task id="LOCAL−00001" summary="updaterer client og tester">
       <option name="closed" value="true" />
@@ -447,7 +451,35 @@
       <option name="presentableId" value="LOCAL−00025" />
       <updated>1732899338192</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL−00026" summary="Updating JUnit-tests, Deleted GroceryManagerTest, added CookBookTest and RecipeTest">
+      <option name="closed" value="true" />
+      <created>1732969274955</created>
+      <option name="number" value="LOCAL−00026" />
+      <option name="presentableId" value="LOCAL−00026" />
+      <updated>1732969274955</updated>
+    </task>
+    <task id="LOCAL−00027" summary="Reworking unit verification and equals-methods">
+      <option name="closed" value="true" />
+      <created>1732969327735</created>
+      <option name="number" value="LOCAL−00027" />
+      <option name="presentableId" value="LOCAL−00027" />
+      <updated>1732969327735</updated>
+    </task>
+    <task id="LOCAL−00028" summary="Updating JUnit-tests - GroceryTest.">
+      <option name="closed" value="true" />
+      <created>1732969362160</created>
+      <option name="number" value="LOCAL−00028" />
+      <option name="presentableId" value="LOCAL−00028" />
+      <updated>1732969362160</updated>
+    </task>
+    <task id="LOCAL−00029" summary="Updating workspace.xml">
+      <option name="closed" value="true" />
+      <created>1732969388304</created>
+      <option name="number" value="LOCAL−00029" />
+      <option name="presentableId" value="LOCAL−00029" />
+      <updated>1732969388304</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -465,10 +497,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updaterer client og tester" />
-    <MESSAGE value="fiks på warnings" />
-    <MESSAGE value="mer fiks av warnings + test på klient og Display.java" />
-    <MESSAGE value="nesten klarert med warnings" />
     <MESSAGE value="Feiloppretting på klient" />
     <MESSAGE value="endret på klient og logikk i ulike klasser" />
     <MESSAGE value="Byggeklossprinsippet for å få mer renhet i koden." />
@@ -490,7 +518,11 @@
     <MESSAGE value="Updated JUnit test - GroceryTest." />
     <MESSAGE value="Bugfixing - Fixed unit-conversion ." />
     <MESSAGE value="Updated XML-files - pom and workplace." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated XML-files - pom and workplace." />
+    <MESSAGE value="Updating JUnit-tests, Deleted GroceryManagerTest, added CookBookTest and RecipeTest" />
+    <MESSAGE value="Reworking unit verification and equals-methods" />
+    <MESSAGE value="Updating JUnit-tests - GroceryTest." />
+    <MESSAGE value="Updating workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating workspace.xml" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
