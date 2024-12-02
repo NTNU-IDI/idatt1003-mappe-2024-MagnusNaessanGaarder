@@ -2,7 +2,9 @@ package edu.ntnu.idi.idatt.manager;
 
 import edu.ntnu.idi.idatt.modules.CookBook;
 import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.Recipe;
+import edu.ntnu.idi.idatt.modules.SI;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,31 +24,51 @@ public class CookBookManager {
         .orElse(null);
   }
 
+  private List<Recipe> sortRecipes(List<Recipe> list) {
+    return list.stream()
+        .sorted(
+            Comparator.comparing(Recipe::matchingGroceries)
+            .thenComparing(Recipe::avrageDate))
+        .toList();
+  }
+
+  public List<Recipe> getAvailableRecipes() {
+    return sortRecipes(cookBook.getRecipeList().stream()
+        .filter(r -> r.matchingGroceries() >= 0.5)
+        .toList());
+  }
   public List<Recipe> getRecommendedRecipes() {
-    if (cookBook.getRecipeList().isEmpty()) {
-      return cookBook.getRecipeList();
-    } else {
-      List<Recipe> sortedList = cookBook.getRecipeList().stream()
-          .sorted(Comparator.comparing(
-              r -> r.matchingGroceries(fridge.getGroceryList())
-          ))
-          .toList();
-      if (sortedList.size() < 3) {
-        return sortedList.subList(0, sortedList.size() - 1);
-      } else {
-        return sortedList.subList(0, 3);
-      }
-    }
+    return getAvailableRecipes().size() >= 3 ? getAvailableRecipes().subList(0, 3)
+        : getAvailableRecipes().subList(0, getAvailableRecipes().size());
   }
 
   public List<Recipe> getRest() {
-    if (cookBook.getRecipeList().isEmpty()) {
-      return cookBook.getRecipeList();
-    } else {
-      final List<Recipe> sortedList = getRecommendedRecipes();
-      return cookBook.getRecipeList().stream()
-          .filter(r -> !sortedList.contains(r))
-          .toList();
+    final List<Recipe> sortedList = getAvailableRecipes();
+    return sortRecipes(cookBook.getRecipeList().stream()
+        .filter(r -> !sortedList.contains(r))
+        .toList());
+  }
+
+  public void makeRecipe(Recipe r) {
+    if (getRest().contains(r)) {
+      throw new IllegalArgumentException("The fridge does not contain any groceries from the "
+          + "recipe.");
     }
+    r.getRecipes().forEach(g -> {
+      final double[] amount = {g.getQuantity()};
+      SI unit = g.getUnit();
+      if (fridge.getGroceryList().contains(g)) {
+        List<Grocery> removableItems = fridge.getGroceryList().stream()
+            .filter(grocery -> grocery.getName().equalsIgnoreCase(g.getName()))
+            .sorted(Comparator.comparing(Grocery::getDate))
+            .toList();
+        removableItems.forEach(grocery -> {
+          if (amount[0] > 0) {
+            grocery.removeAmount(amount[0], unit);
+            amount[0] -= grocery.getQuantity();
+          }
+        });
+      }
+    });
   }
 }

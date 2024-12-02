@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractRecipe {
-  private static int advanceID = 1;
-  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-  private final int recipeID;
   private final String name;
   private final String description;
   private final String[] directions;
@@ -26,22 +23,6 @@ public abstract class AbstractRecipe {
     this.directions = directions;
     this.portion = portion;
     this.recipes = new HashSet<>(recipes);
-    this.recipeID = advanceID();
-  }
-
-  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-  public static void resetID() {
-    advanceID = 1;
-  }
-
-  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-  private static int advanceID() {
-    return advanceID++;
-  }
-
-  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-  public int getRecipeID() {
-    return recipeID;
   }
 
   public String getName() {

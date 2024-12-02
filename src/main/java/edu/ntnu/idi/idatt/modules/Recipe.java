@@ -1,10 +1,16 @@
 package edu.ntnu.idi.idatt.modules;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Recipe extends AbstractRecipe {
   private final Fridge fridge;
+  private static int advanceID = 1;
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private final int recipeID;
 
   public Recipe(String name,
                 String description,
@@ -13,7 +19,23 @@ public class Recipe extends AbstractRecipe {
                 List<Grocery> recipes,
                 Fridge fridge) {
     super(name, description, directions, portion, recipes);
+    this.recipeID = advanceID();
     this.fridge = fridge;
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  public static void resetID() {
+    advanceID = 1;
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private static int advanceID() {
+    return advanceID++;
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  public int getRecipeID() {
+    return recipeID;
   }
 
   @Override
@@ -21,16 +43,6 @@ public class Recipe extends AbstractRecipe {
     try {
       Recipe r = (Recipe) o;
       Class<?> c = o.getClass();
-      /*System.out.println(c == Recipe.class);
-      System.out.println(r.getName().equalsIgnoreCase(this.getName()));
-      System.out.println(r.getDescription().equalsIgnoreCase(this.getDescription()));
-      System.out.println(Arrays.equals(r.getDirections(), this.getDirections()));
-      System.out.println(r.getPortion() == this.getPortion());
-      System.out.println(!getFridge().getGroceryList().stream()
-          .filter(g -> this.getRecipes().stream()
-          .anyMatch(grocery -> grocery.equals(g))
-      ).toList().isEmpty());*/
-
       return c == Recipe.class && r.getName().equalsIgnoreCase(super.getName())
           && r.getDescription().equalsIgnoreCase(super.getDescription())
           && Arrays.equals(r.getDirections(), super.getDirections())
@@ -48,16 +60,50 @@ public class Recipe extends AbstractRecipe {
     }
   }
 
-  public int matchingGroceries(List<Grocery> list) {
-    return this.getRecipes().stream()
-        .filter(list::contains)
-        .toList()
-        .size();
+  public double matchingGroceries() {
+    if (getRecipes().isEmpty()) {
+      return 0;
+    } else {
+      return (double) this.getRecipes().stream()
+          .filter(g -> fridge.getGroceryList().stream()
+              .anyMatch(gr -> gr.getName().equalsIgnoreCase(g.getName())))
+          .toList()
+          .size() / getRecipes().size();
+    }
   }
 
-  @Override
-  public int getRecipeID() {
-    return super.getRecipeID();
+  public LocalDate avrageDate() {
+    AtomicInteger avrDay = new AtomicInteger();
+    AtomicInteger avrMonth = new AtomicInteger();
+    AtomicInteger avrYear = new AtomicInteger();
+
+    AtomicInteger correspondingGroceries = new AtomicInteger();
+    getRecipes().forEach(g -> {
+      Grocery correspondingFridgeItem = fridge.getGroceryList().stream()
+          .filter(gr -> gr.getName().equals(g.getName()))
+          .min(Comparator.comparing(Grocery::getDate))
+          .orElse(null);
+
+      if (correspondingFridgeItem != null) {
+        correspondingGroceries.getAndIncrement();
+        int day = correspondingFridgeItem.getDate().getDayOfMonth();
+        int month = correspondingFridgeItem.getDate().getMonthValue();
+        int year = correspondingFridgeItem.getDate().getYear();
+        avrDay.addAndGet(day);
+        avrMonth.addAndGet(month);
+        avrYear.addAndGet(year);
+      }
+    });
+
+    if (correspondingGroceries.get() == 0) {
+      return LocalDate.now().plusYears(100);
+    } else {
+      avrDay.updateAndGet(v -> v / correspondingGroceries.get());
+      avrMonth.updateAndGet(v -> v / correspondingGroceries.get());
+      avrYear.updateAndGet(v -> v / correspondingGroceries.get());
+
+      return LocalDate.of(avrYear.get(), avrMonth.get(), avrDay.get());
+    }
   }
 
   @Override
