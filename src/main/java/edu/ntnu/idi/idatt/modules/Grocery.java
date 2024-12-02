@@ -77,7 +77,6 @@ import java.time.format.DateTimeFormatter;
  *
  * <strong>Methods:</strong>
  * <ul>
- *     <li>{@link #advanceID()}</li>
  *     <li>{@link #getGroceryID()}</li>
  *     <li>{@link #getName()}</li>
  *     <li>{@link #getDateToStr()}</li>
@@ -148,16 +147,6 @@ public class Grocery {
     try {
       Grocery g = (Grocery) o;
       Class<?> c = o.getClass();
-
-      System.out.println("<");
-      System.out.println(c == Grocery.class);
-      System.out.println(g.getName().equalsIgnoreCase(this.name));
-      System.out.println(g.getUnit().equals(this.unit));
-      System.out.println(g.getQuantity() == this.quantity);
-      System.out.println(g.getDate().isEqual(this.bestBefore));
-      System.out.println(g.getPrice() == this.price);
-      System.out.println(g.getFridge().equals(this.fridge));
-      System.out.println(">");
 
       return c == Grocery.class && g.getName().equalsIgnoreCase(this.name)
           && g.getUnit().equals(this.unit)
@@ -476,7 +465,7 @@ public class Grocery {
     String str = "        Klasse Grocery;" + System.lineSeparator();
     str += "            VareID: " + this.groceryID + System.lineSeparator();
     str += "            Navn på varen: " + this.name + ";" + System.lineSeparator();
-    str += "            Mengde av varen: " + this.quantity + this.getUnit().getUnit() + ";"
+    str += "            Mengde av varen: " + this.quantity + " " + this.getUnit().getUnit() + ";"
         + System.lineSeparator();
     str += "            Best-før dato: " + this.getDateToStr() + System.lineSeparator();
     str += "            Pris per måleenhet: " + this.getPriceToStr() + System.lineSeparator();

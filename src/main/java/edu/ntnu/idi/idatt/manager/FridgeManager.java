@@ -31,22 +31,6 @@ public class FridgeManager {
 
   /**
    * <strong>Description:</strong><br>
-   * A get-method used to get an object from a given index.<br>
-   *
-   * @param index A defined constant integer representing the index in the
-   *              Fridges list of groceries.
-   * @return An object of type {@link Grocery}. Null if no grocery is found.
-   */
-  public Grocery getGrocery(final int index) {
-    if (index < 0 || index >= fridge.getGroceryList().size()) {
-      return null;
-    } else {
-      return fridge.getGroceryList().get(index);
-    }
-  }
-
-  /**
-   * <strong>Description:</strong><br>
    * A get-method used to get an index from a given ID of a Grocery.<br>
    *
    * @param groceryID A defined constant integer representing the ID

@@ -45,6 +45,22 @@ public class Fridge {
 
   /**
    * <strong>Description:</strong><br>
+   * A get-method used to get an object from a given index.<br>
+   *
+   * @param index A defined constant integer representing the index in the
+   *              Fridges list of groceries.
+   * @return An object of type {@link Grocery}. Null if no grocery is found.
+   */
+  public Grocery getGrocery(final int index) {
+    if (index < 0 || index >= groceryList.size()) {
+      return null;
+    } else {
+      return groceryList.get(index);
+    }
+  }
+
+  /**
+   * <strong>Description:</strong><br>
    * A method that effectively adds a {@link Grocery} to the {@code Fridge}.
    * If the {@code groceryList} is empty or does not contain a matching Grocery,
    the Grocery is added to the Fridge. If the groceryList
