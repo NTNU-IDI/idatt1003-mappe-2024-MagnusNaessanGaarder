@@ -46,7 +46,7 @@ class RecipeTest {
     setRecipe(
         "Banankake",
         "God kake.",
-        new String[]{"Instruks 1:", "Instruks 2:", "Instruks 3:"},
+        new String[]{"Instruksjon 1:", "Instruksjon 2:", "Instruksjon 3:"},
         4,
         new ArrayList<>(List.of(new Grocery[] {
             grocery1,
@@ -68,7 +68,7 @@ class RecipeTest {
 
   @Test
   void matchingGroceries() {
-    assertEquals(2, recipe.matchingGroceries(fridge.getGroceryList()));
+    assertEquals(2, recipe.matchingGroceries());
   }
 
   @Test
@@ -102,9 +102,8 @@ class RecipeTest {
   @Test
   void getDirections() {
     String[] strArr = new String[] {"Instruksjon 1:", "Instruksjon 2:", "Instruksjon 3:"};
-    //Tabellene har like verdier, men er forskjellige instanser av objekter. AssertEquals feiler.
-    assertEquals(strArr, recipe.getDirections(),
-        "Forventet: " + Arrays.toString(strArr) +  ", men fikk: " +
+    assertArrayEquals(recipe.getDirections(), strArr,
+        "Forventet: " + Arrays.toString(strArr) + ", men fikk: " +
             Arrays.toString(recipe.getDirections()));
   }
 
@@ -123,11 +122,11 @@ class RecipeTest {
     grocery3 = fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50, fridge);
 
     ArrayList<Grocery> list = new ArrayList<>();
-    list.add(grocery3);
     list.add(grocery1);
     list.add(grocery2);
+    list.add(grocery3);
 
-    //Listene har like verdier, men er forskjellige instanser av objekter. AssertEquals feiler.
-    assertEquals(list, recipe.getRecipes());
+    //has equal content, but for some reason assertion fails
+    assertEquals(list.stream().toList(), recipe.getRecipes());
   }
 }

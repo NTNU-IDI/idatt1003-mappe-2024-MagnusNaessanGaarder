@@ -42,8 +42,8 @@ class FridgeTest {
 
 
         //tester om test-listen samsvarer med listen over varer i kjøleskapet.
-        assertEquals(grocery1, fm.getGrocery(0),"Expected Arraylist with groceryObject, but got something else");
-        assertEquals(grocery2, fm.getGrocery(1),"Expected Arraylist with groceryObject, but got something else");
+        assertEquals(grocery1, fridge.getGrocery(0),"Expected Arraylist with groceryObject, but got something else");
+        assertEquals(grocery2, fridge.getGrocery(1),"Expected Arraylist with groceryObject, but got something else");
     }
 
     @Test
@@ -52,7 +52,7 @@ class FridgeTest {
         Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
         fridge.addGrocery(grocery);
 
-        assertEquals(grocery, fm.getGrocery(0), "Did not get expected grocery.");
+        assertEquals(grocery, fridge.getGrocery(0), "Did not get expected grocery.");
     }
 
     @Test
