@@ -1,7 +1,11 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.Recipe;
+import edu.ntnu.idi.idatt.modules.SI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
