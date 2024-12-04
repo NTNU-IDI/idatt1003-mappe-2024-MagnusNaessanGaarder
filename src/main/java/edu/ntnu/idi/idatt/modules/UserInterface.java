@@ -70,17 +70,16 @@ public class UserInterface extends AbstractOption {
 
     final Grocery grocery1 = new Grocery("Mel", g, 2000, 
         LocalDate.now().minusDays(2), 200, fridge);
-    final Grocery grocery2 = new Grocery("Bananer", stk, 1,
+    final Grocery grocery2 = new Grocery("Banan", stk, 1,
         LocalDate.now(), 49.90, fridge);
     final Grocery grocery3 = new Grocery("Mel", g, 500, 
         LocalDate.now().plusDays(4), 200, fridge);
     final Grocery grocery4 = new Grocery("Kraft", l, 0.5, 
         LocalDate.now().plusDays(1), 259.99, fridge);
     final Grocery grocery5 = new Grocery("Melk", dl, 2,
-        LocalDate.now().plusYears(1), 1, fridge);
-    final Grocery grocery6 = new Grocery("Egg", stk, 3,
+        LocalDate.now().plusYears(1), 180.50, fridge);
+    final Grocery grocery6 = new Grocery("Egg", stk, 5,
         LocalDate.now(), 1, fridge);
-
 
     this.fridge.addGrocery(grocery1);
     this.fridge.addGrocery(grocery2);
@@ -92,7 +91,7 @@ public class UserInterface extends AbstractOption {
 
     //tester å legge til og trekke fra fra varer i kjøleskapet
     grocery3.removeAmount(500, g);
-    grocery1.addAmount(6, stk);
+    grocery2.addAmount(6, stk);
 
     final Recipe recipe1 = new Recipe("Banankake", "God!!", 
         new String[] {"ins1:", "ins2:"}, 4,
@@ -118,7 +117,7 @@ public class UserInterface extends AbstractOption {
             new Grocery("Persille", ss, 2, null, 1, fridge),
             new Grocery("Salt", ts, 2, null, 1, fridge))), fridge);
     final Recipe recipe4 = new Recipe("Naan Brød", "Deilig!!", 
-        new String[]{"ajsd", "askhd"}, 2,
+        new String[] {"ajsd", "askhd"}, 2,
         new ArrayList<>(Arrays.asList(
             new Grocery("Egg", stk, 2, null, 1, fridge),
             new Grocery("Mel", dl, 2, null, 1, fridge),
@@ -777,14 +776,18 @@ public class UserInterface extends AbstractOption {
     boolean retry = true;
     while (retry) {
       try {
-        System.out.println(str);
-        System.out.println("""
-            Skriv "-e" for å gå tilbake til menyen, eller "tall" for å endre på en vare.
-            "tall" skal skrives som et heltall i intervallet [1,3].
-            
-            """);
+        if (fridge.getGroceryList().contains(grocery)) {
+          System.out.println(str);
+          System.out.println("""
+              Skriv "-e" for å gå tilbake til menyen, eller "tall" for å endre på en vare.
+              "tall" skal skrives som et heltall i intervallet [1,3].
+              
+              """);
 
-        retry = changeInputHandler(grocery);
+          retry = changeInputHandler(grocery);
+        } else {
+          retry = false;
+        }
       } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
       }
@@ -1042,6 +1045,11 @@ public class UserInterface extends AbstractOption {
    * A class displaying a Recipes in a CoocBook.
    */
   public void displayCookBook() {
+    displayCookBookMenu();
+    recipeCommands(str.toString());
+  }
+
+  public void displayCookBookMenu() {
     str = new StringBuilder();
     Display display = new Display(cbm);
     str.append(AbstractTable.createMenuTable("KOKEBOK",
@@ -1059,8 +1067,6 @@ public class UserInterface extends AbstractOption {
       str.append(display.recipeMenuList("Oppskrifter med ingredienser du ikke har:",
           cbm.getRest(),
           "Ingen resterende oppskrifter"));
-
-      recipeCommands(str.toString());
     }
   }
 
@@ -1099,6 +1105,7 @@ public class UserInterface extends AbstractOption {
       } else if (userInput.equals("-add")) {
         //legg til oppskrift i kokebok
         addRecipe();
+        displayCookBookMenu();
       } else if (userInput.contains("-remove") && !cookBook.getRecipeList().isEmpty()) {
 
         //fjern oppskrift
@@ -1117,27 +1124,40 @@ public class UserInterface extends AbstractOption {
 
         Recipe removableRescipe = cbm.getRecipe(userId);
         cookBook.removeRecipe(removableRescipe);
-
+        displayCookBookMenu();
       } else if (userInput.contains("-make") && !cookBook.getRecipeList().isEmpty()) {
-        System.out.println(userInput.contains("-make"));
+
         Display display = new Display(cbm);
-        System.out.println(display.recipeMenuList("Tilgjengelige oppskrifter",
-            cbm.getAvailableRecipes(), "Ingen tilgjengelige oppskrifter"));
-        System.out.println(display.recipeMenuList("Anbefalte Oppskrifter",
-            cbm.getAvailableRecipes(), "Ingen anbefalte oppskrifter"));
 
         final int userId;
         if (userInput.equals("-make")) {
+          System.out.println(display.recipeMenuList("Tilgjengelige oppskrifter",
+              cbm.getAvailableRecipes(), "Ingen tilgjengelige oppskrifter"));
+          System.out.println(display.recipeMenuList("Anbefalte Oppskrifter",
+              cbm.getAvailableRecipes(), "Ingen anbefalte oppskrifter"));
           System.out.print("Skriv en gyldig oppskriftsID: ");
           userId = Integer.parseInt(getInput());
         } else {
           userId = Integer.parseInt(String.join("", userInput.split("\\D")));
         }
-        cbm.makeRecipe(cbm.getRecipe(userId));
+
+        clearScreen();
+        final Recipe recipe = cbm.getRecipe(userId);
+        System.out.println(display.displayRecipe(recipe));
+
+        char userOption = 'e';
+        while (userOption == 'e') {
+          userOption = option("Vil du bruke varer fra kjøleskapet for å lage oppskriften?");
+        }
+        if (userOption == 'y') {
+          cbm.makeRecipe(recipe);
+          str.append("Lagde retten: ").append(recipe.getName())
+              .append(", og fjernet tilhørende mengder av varer i oppskriften fra kjøleskapet.")
+              .append("\n");
+        }
       } else {
         throw new IllegalArgumentException("Illegal command! Please enter a legal command.");
       }
-
     } catch (NumberFormatException e) {
       throw new NumberFormatException("Could not format " + e.getMessage() + " to a number.");
     } catch (IllegalArgumentException e) {

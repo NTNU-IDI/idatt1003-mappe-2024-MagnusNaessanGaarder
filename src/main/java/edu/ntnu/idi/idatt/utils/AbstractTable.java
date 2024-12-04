@@ -4,6 +4,7 @@ import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.Recipe;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  *<strong>Description:</strong><br>
@@ -306,49 +307,25 @@ public abstract class AbstractTable {
     return sb.toString();
   }
 
-  /*public String createRecipeTable(String title, List<Recipe> list) {
+  public String createRecipeContent(Recipe recipe) {
     StringBuilder sb = new StringBuilder();
 
-    String longBar = "-".repeat(86 / 2 - title.length() / 2);
-    String bottomBar = "-".repeat(86);
+    //ingredienser
+    sb.append("------------Ingredienser------------\n\n");
+    recipe.getRecipes().forEach(g -> sb.append("   ● ")
+        .append(g.getName()).append(", ").append(g.getQuantity()).append(" ")
+        .append(g.getUnit().getAbrev()).append("\n"));
+    //porsjoner
+    sb.append(" Porsjoner: ").append(recipe.getPortion()).append("\n\n");
+    //instruksjoner
+    sb.append("\n Slik gjør du:\n");
+    AtomicReference<Integer> i = new AtomicReference<>(1);
+    Arrays.asList(recipe.getDirections()).forEach(d -> sb.append("  (")
+        .append(i.getAndSet(i.get() + 1)).append(")")
+        .append(" ").append(d).append(".").append("\n"));
 
-    //Title of table
-    sb.append("\n").append(longBar);
-    sb.append(title);
-    while (sb.length() <= bottomBar.length()) {
-      sb.append("-");
-    }
     sb.append("\n");
 
-    //| ID | name | quantity unit | price / unit | Best-before |
-    String idStr = center("ID", (bottomBar.length() * 5 / 100));
-    String nameStr = center("Navn", (bottomBar.length() * 20 / 100));
-    String quantityStr = center("Mengde", (bottomBar.length() * 20 / 100));
-    String priceStr = center("Pris", (bottomBar.length() * 25 / 100));
-    String bestBeforeStr = center("Best-før", (bottomBar.length() * 30 / 100 - 4));
-
-    int[] lengths = new int[] {
-        idStr.length(),
-        nameStr.length(),
-        quantityStr.length(),
-        priceStr.length(),
-        bestBeforeStr.length()
-    };
-
-    //formatering av streng
-    String str = "|%s|%s|%s|%s|%s|";
-    sb.append(String.format(str,
-        idStr,
-        nameStr,
-        quantityStr,
-        priceStr,
-        bestBeforeStr
-    ));
-    sb.append("\n").append(bottomBar).append("\n");
-
-    sb.append(getTableData(lengths, list));
-    sb.append(bottomBar).append("\n\n");
-
     return sb.toString();
-  }*/
+  }
 }

@@ -2,12 +2,9 @@ package edu.ntnu.idi.idatt.modules;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Recipe extends AbstractRecipe {
-  private final Fridge fridge;
   private static int advanceID = 1;
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   private final int recipeID;
@@ -18,9 +15,8 @@ public class Recipe extends AbstractRecipe {
                 int portion,
                 List<Grocery> recipes,
                 Fridge fridge) {
-    super(name, description, directions, portion, recipes);
+    super(name, description, directions, portion, recipes, fridge);
     this.recipeID = advanceID();
-    this.fridge = fridge;
   }
 
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
@@ -60,50 +56,14 @@ public class Recipe extends AbstractRecipe {
     }
   }
 
+  @Override
   public double matchingGroceries() {
-    if (getRecipes().isEmpty()) {
-      return 0;
-    } else {
-      return (double) this.getRecipes().stream()
-          .filter(g -> fridge.getGroceryList().stream()
-              .anyMatch(gr -> gr.getName().equalsIgnoreCase(g.getName())))
-          .toList()
-          .size() / getRecipes().size();
-    }
+    return super.matchingGroceries();
   }
 
+  @Override
   public LocalDate avrageDate() {
-    AtomicInteger avrDay = new AtomicInteger();
-    AtomicInteger avrMonth = new AtomicInteger();
-    AtomicInteger avrYear = new AtomicInteger();
-
-    AtomicInteger correspondingGroceries = new AtomicInteger();
-    getRecipes().forEach(g -> {
-      Grocery correspondingFridgeItem = fridge.getGroceryList().stream()
-          .filter(gr -> gr.getName().equals(g.getName()))
-          .min(Comparator.comparing(Grocery::getDate))
-          .orElse(null);
-
-      if (correspondingFridgeItem != null) {
-        correspondingGroceries.getAndIncrement();
-        int day = correspondingFridgeItem.getDate().getDayOfMonth();
-        int month = correspondingFridgeItem.getDate().getMonthValue();
-        int year = correspondingFridgeItem.getDate().getYear();
-        avrDay.addAndGet(day);
-        avrMonth.addAndGet(month);
-        avrYear.addAndGet(year);
-      }
-    });
-
-    if (correspondingGroceries.get() == 0) {
-      return LocalDate.now().plusYears(100);
-    } else {
-      avrDay.updateAndGet(v -> v / correspondingGroceries.get());
-      avrMonth.updateAndGet(v -> v / correspondingGroceries.get());
-      avrYear.updateAndGet(v -> v / correspondingGroceries.get());
-
-      return LocalDate.of(avrYear.get(), avrMonth.get(), avrDay.get());
-    }
+    return super.avrageDate();
   }
 
   @Override
@@ -131,7 +91,8 @@ public class Recipe extends AbstractRecipe {
     return super.getRecipes();
   }
 
+  @Override
   public Fridge getFridge() {
-    return fridge;
+    return super.getFridge();
   }
 }

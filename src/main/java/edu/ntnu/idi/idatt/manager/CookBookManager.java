@@ -54,21 +54,34 @@ public class CookBookManager {
       throw new IllegalArgumentException("The fridge does not contain any groceries from the "
           + "recipe.");
     }
-    r.getRecipes().forEach(g -> {
-      final double[] amount = {g.getQuantity()};
-      SI unit = g.getUnit();
-      if (fridge.getGroceryList().contains(g)) {
-        List<Grocery> removableItems = fridge.getGroceryList().stream()
-            .filter(grocery -> grocery.getName().equalsIgnoreCase(g.getName()))
-            .sorted(Comparator.comparing(Grocery::getDate))
+    final List<Grocery> corespondingGroceries = fridge.getGroceryList().stream()
+        .filter(grocery -> r.getRecipes().stream()
+            .map(Grocery::getName)
+            .distinct()
+            .anyMatch(name -> grocery.getName().equalsIgnoreCase(name))
+        ).toList();
+
+    if (!corespondingGroceries.isEmpty()) {
+      r.getRecipes().forEach(g -> {
+        final double[] amount = {g.getQuantity()};
+        final SI unit = g.getUnit();
+
+        List<Grocery> removableGroceries = corespondingGroceries.stream()
+            .filter(gr -> gr.getName().equalsIgnoreCase(g.getName()))
             .toList();
-        removableItems.forEach(grocery -> {
-          if (amount[0] > 0) {
-            grocery.removeAmount(amount[0], unit);
-            amount[0] -= grocery.getQuantity();
-          }
-        });
-      }
-    });
+
+        if (!removableGroceries.isEmpty()) {
+          removableGroceries.stream()
+              .sorted(Comparator.comparing(Grocery::getDate))
+              .toList().forEach(grocery -> {
+                if (amount[0] > 0) {
+                  grocery.removeAmount(amount[0], unit);
+                  amount[0] -= grocery.getQuantity();
+                }
+              });
+        }
+      });
+    }
+
   }
 }

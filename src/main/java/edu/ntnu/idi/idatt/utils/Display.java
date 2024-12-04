@@ -299,22 +299,18 @@ public class Display extends AbstractTable {
     return sb.toString();
   }
 
-  /*
+
   /**
    * <strong>Description:</strong><br>
-   * A method displaying a list of Recipes.<br>
+   * A method displaying the contents of a Recipes.<br>
    *
-   * @param title   A string representing the title of the table.
-   * @param list    A List of Recipes.
-   * @param altText A string displayed when the list is empty.
+   * @param recipe  An object of type Recipe containing Groceries.
    * @return A String displaying the given Recipies.
    */
-  /*
-  public String recipeList(String title, List<Recipe> list, String altText) {
-    if (!list.isEmpty()) {
-      return super.createRecipeList(title, list);
-    } else {
-      return START + altText + END;
-    }
-  }*/
+
+  public String displayRecipe(Recipe recipe) {
+    return AbstractTable.createMenuTable("OPPSKRIFT - " + recipe.getName().toUpperCase(),
+        recipe.getDescription())
+        + super.createRecipeContent(recipe);
+  }
 }
