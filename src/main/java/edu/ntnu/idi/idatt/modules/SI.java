@@ -1,7 +1,6 @@
 package edu.ntnu.idi.idatt.modules;
 
 //imports
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;

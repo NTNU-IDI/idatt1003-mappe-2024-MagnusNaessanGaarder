@@ -166,4 +166,10 @@ public class FridgeManager {
     }
     return sum;
   }
+
+  public List<Grocery> getByName(final String name) {
+    return this.getListSortedDate(fridge.getGroceryList().stream()
+        .filter(g -> g.getName().equalsIgnoreCase(name))
+        .toList());
+  }
 }

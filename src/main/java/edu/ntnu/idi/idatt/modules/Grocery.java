@@ -325,7 +325,7 @@ public class Grocery {
     final double grocery_cf = this.unit.getConvertionFactor();
 
     if (amount > 0 && SI_Manager.hasValidUnit(amountUnit)) {
-      if (groceryUnitAbrev.equals("stk") || amountUnitAbrev.equals("stk")) {
+      if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk"))) {
         System.out.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når "
             + "varen er oppgitt i \"stk\".");
       } else {
@@ -387,9 +387,9 @@ public class Grocery {
       // og en av dem er oppgitt i stykker, kjører denne.
       if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk"))
           || (!groceryUnitAbrev.equals("stk") && amountUnitAbrev.equals("stk"))) {
-        System.err.println("Kan ikke trekke fra et antall med en annen målenhet enn \"stk\" når "
-                + "varen er oppgitt i \"stk\".");
-        return;
+        throw new IllegalArgumentException("Kan ikke trekke fra et antall med en annen målenhet "
+            + "enn \"stk\" når varen er oppgitt i \"stk\". Varens enhet er gitt som "
+            + groceryUnitAbrev + " og brukerens enhet er gitt ved " + amountUnitAbrev + ".");
       } else {
         if (groceryUnitAbrev.equals("kg")) {
           this.setQuantity(
