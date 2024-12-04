@@ -239,7 +239,11 @@ public class Grocery {
    * A set-method for incapsulating and assigning a value to the datafield unit.<br>
    */
   private void setUnit(SI unit) {
-    this.unit = unit;
+    if (SI_Manager.hasValidUnit(unit)) {
+      this.unit = unit;
+    } else {
+      throw new IllegalArgumentException("");
+    }
   }
 
   /**
@@ -384,28 +388,32 @@ public class Grocery {
     final double groceryQuantity = this.quantity;
     final String groceryUnit = this.unit.getPrefix();
 
-    if (groceryQuantity < 1.0 && groceryUnit.isEmpty()) {
-      if (unit.getAbrev().equalsIgnoreCase("L")) {
+    try {
+      if (groceryQuantity < 1.0 && groceryUnit.isEmpty()) {
+        if (unit.getAbrev().equalsIgnoreCase("L")) {
+          this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
+          this.setQuantity(groceryQuantity * 10);
+        }
+      } else if (groceryQuantity >= 1000.0 && groceryUnit.isEmpty()) {
+        if (unit.getAbrev().equalsIgnoreCase("g")) {
+          this.setUnit(new SI("Kilogram", "kg", "kg", "Kilo"));
+          this.setQuantity(groceryQuantity / 1000);
+        }
+      } else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
+        this.setUnit(new SI("Gram", "g", "kg", ""));
+        this.setQuantity(groceryQuantity * 1000);
+      } else if (groceryQuantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
+        this.setUnit(new SI("Liter", "L", "L", "Desi"));
+        this.setQuantity(groceryQuantity / 10);
+      } else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
+        this.setUnit(new SI("Milliliter", "mL", "L", "Milli"));
+        this.setQuantity(groceryQuantity * 100);
+      } else if (groceryQuantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
         this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
-        this.setQuantity(groceryQuantity * 10);
+        this.setQuantity(groceryQuantity / 100);
       }
-    } else if (groceryQuantity >= 1000.0 && groceryUnit.isEmpty()) {
-      if (unit.getAbrev().equalsIgnoreCase("g")) {
-        this.setUnit(new SI("Kilogram", "kg", "kg", "Kilo"));
-        this.setQuantity(groceryQuantity / 1000);
-      }
-    } else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
-      this.setUnit(new SI("Gram", "g", "kg", ""));
-      this.setQuantity(groceryQuantity * 1000);
-    } else if (groceryQuantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-      this.setUnit(new SI("Liter", "L", "L", "Desi"));
-      this.setQuantity(groceryQuantity / 10);
-    } else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-      this.setUnit(new SI("Milliliter", "mL", "L", "Milli"));
-      this.setQuantity(groceryQuantity * 100);
-    } else if (groceryQuantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
-      this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
-      this.setQuantity(groceryQuantity / 100);
+    } catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
     }
   }
 

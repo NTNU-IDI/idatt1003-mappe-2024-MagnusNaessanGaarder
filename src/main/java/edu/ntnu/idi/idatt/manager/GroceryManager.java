@@ -42,9 +42,10 @@ public class GroceryManager extends AbstractTerminalAction {
       Double.parseDouble(res[0]);
 
       return res;
-    } catch (NumberFormatException e) {
-      throw new NumberFormatException(
-          "NumberFormatExeption with following message: " + e.getMessage());
+    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+      throw new IllegalArgumentException(
+          "Illegal argument: Invalid input. Please enter BOTH amount and unit."
+      );
     } catch (Exception e) {
       throw new Exception("Something went wrong: " + e.getMessage());
     }
