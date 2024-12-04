@@ -37,6 +37,7 @@ public class CookBookManager {
         .filter(r -> r.matchingGroceries() >= 0.5)
         .toList());
   }
+
   public List<Recipe> getRecommendedRecipes() {
     return getAvailableRecipes().size() >= 3 ? getAvailableRecipes().subList(0, 3)
         : getAvailableRecipes().subList(0, getAvailableRecipes().size());

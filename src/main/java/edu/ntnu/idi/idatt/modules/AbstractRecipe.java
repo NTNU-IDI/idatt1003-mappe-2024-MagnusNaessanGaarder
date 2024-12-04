@@ -16,7 +16,7 @@ public abstract class AbstractRecipe {
   private final int portion;
   private final HashSet<Grocery> recipes;
 
-  public AbstractRecipe(String name,
+  protected AbstractRecipe(String name,
                         String description,
                         String[] directions,
                         int portion,

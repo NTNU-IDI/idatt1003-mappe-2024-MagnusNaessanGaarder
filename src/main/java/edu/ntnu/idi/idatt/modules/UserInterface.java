@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
  * <strong>Heritage</strong><br>
  * This class inherits traits from the super class {@link AbstractOption}.<br><br>
@@ -142,7 +143,6 @@ public class UserInterface extends AbstractOption {
   }
 
   private void showMenu() {
-
     // Menyvalg i konsollen
     clearScreen();
     str = new StringBuilder();
@@ -502,6 +502,7 @@ public class UserInterface extends AbstractOption {
   private void fetchRemove(Grocery g) {
     boolean retry = true;
     final GroceryManager gm = new GroceryManager(g);
+
     //Går i loop så lenge brukerinput gir feilmelding
     while (retry) {
       try {
@@ -684,7 +685,6 @@ public class UserInterface extends AbstractOption {
     while (retry) {
       clearScreen();
       System.out.println(str);
-
       userInput = getInput();
 
       String finalUserInput = userInput;
@@ -693,14 +693,11 @@ public class UserInterface extends AbstractOption {
           .filter(name -> name.equalsIgnoreCase(finalUserInput))
           .count();
 
-      if (userInput.equals("-e")) {
+      try {
+        searchHandler(countMax, finalUserInput);
         retry = false;
-      } else {
-        try {
-          searchHandler(countMax, finalUserInput);
-        } catch (Exception e) {
-          System.out.println(e.getMessage());
-        }
+      } catch (Exception e) {
+        System.out.println(e.getMessage());
       }
     }
   }
@@ -881,7 +878,6 @@ public class UserInterface extends AbstractOption {
    */
   private void commands() {
     boolean escape = false;
-    str.append("Command log:\n");
     while (!escape) {
       clearScreen();
       System.out.println(str);
@@ -932,10 +928,19 @@ public class UserInterface extends AbstractOption {
       displayFridgeList();
     } else if (userInput.equals("-delete all") && !fm.getExpiredList().isEmpty()) {
       for (Grocery expiredItem : fm.getExpiredList()) {
-        fridge.removeGrocery(expiredItem);
+        clearScreen();
+        System.out.println("En vare som har gått ut på kan i mange tilfeller fortsatt brukes. "
+            + "Bruk Se, Lukt og Smak-regelen før du kaster varer.");
+        char userChoice = 'e';
+        while (userChoice == 'e') {
+          userChoice = option("Er du sikker på at du ønsker å fjerne alle datovarer?");
+        }
+        if (userChoice == 'y') {
+          fridge.removeGrocery(expiredItem);
+        }
+        System.out.println("Alle datovarer er nå fjernet!\n");
+        displayFridgeList();
       }
-      System.out.println("Alle datovarer er nå fjernet!\n");
-      displayFridgeList();
     } else if (userInput.contains("-change")) {
       changeHandler(userInput);
       return true;
@@ -987,7 +992,7 @@ public class UserInterface extends AbstractOption {
         changeGrocery(fridge.getGrocery(userIndex));
         str.append(" - Endret vare ").append(userIndex + 1).append("\n");
       } else {
-        throw new IllegalArgumentException(" - Ugyldig vareID. Skriv en annen vareID");
+        throw new IllegalArgumentException(" - Ugyldig vareID. Skriv en annen vareID.");
       }
     } catch (Exception e) {
       throw new Exception(e.getMessage());
@@ -1042,16 +1047,20 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Discription:</strong><br>
-   * A class displaying a Recipes in a CoocBook.
+   * A class displaying a Recipes in a CookBook.
    */
   public void displayCookBook() {
     displayCookBookMenu();
     recipeCommands(str.toString());
   }
 
+  /**
+   * <strong>Discription:</strong><br>
+   * A class displaying the menu for the CookBook.
+   */
   public void displayCookBookMenu() {
     str = new StringBuilder();
-    Display display = new Display(cbm);
+    Display display = new Display();
     str.append(AbstractTable.createMenuTable("KOKEBOK",
         "Her er en overikt over tilgjengelige oppskrifter i kokeboken:"));
 
@@ -1089,10 +1098,9 @@ public class UserInterface extends AbstractOption {
             Skriv "-e" for å gå tilbake til menyen.""");
       }
       try {
-        String userInput = getInput();
-        retry = recipeInputHandler(userInput);
+        retry = recipeInputHandler(getInput());
       } catch (Exception e) {
-        System.out.println(e.getMessage());
+        str.append(e.getMessage());
       }
     }
   }
@@ -1109,7 +1117,7 @@ public class UserInterface extends AbstractOption {
       } else if (userInput.contains("-remove") && !cookBook.getRecipeList().isEmpty()) {
 
         //fjern oppskrift
-        Display display = new Display(cbm);
+        Display display = new Display();
 
         System.out.println(display.recipeMenuList("Tilgjengelige oppskrifter:",
             cbm.getAvailableRecipes(), "Ingen tilgjengelige oppskrifter"));
@@ -1127,7 +1135,7 @@ public class UserInterface extends AbstractOption {
         displayCookBookMenu();
       } else if (userInput.contains("-make") && !cookBook.getRecipeList().isEmpty()) {
 
-        Display display = new Display(cbm);
+        Display display = new Display();
 
         final int userId;
         if (userInput.equals("-make")) {
@@ -1278,8 +1286,7 @@ public class UserInterface extends AbstractOption {
     try {
       System.out.print("Skriv navnet på ingrediensen: ");
       String name = getInput();
-      System.out.print("Skriv mengden på varen (f.eks 2 gram / desiliter / stykker): ");
-      String[] amountAndUnit = GroceryManager.getAmountAndUnit(getInput());
+      String[] amountAndUnit = fetchAmountAndUnit();
       double quantity = Double.parseDouble(amountAndUnit[0]);
       SI unit = SI_Manager.getUnit(amountAndUnit[1]);
 

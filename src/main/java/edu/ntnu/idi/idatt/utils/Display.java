@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.utils;
 
-import edu.ntnu.idi.idatt.manager.CookBookManager;
 import edu.ntnu.idi.idatt.manager.FridgeManager;
 import edu.ntnu.idi.idatt.manager.GroceryManager;
 import edu.ntnu.idi.idatt.modules.Grocery;
@@ -26,7 +25,6 @@ public class Display extends AbstractTable {
   private static final String START = "\n            ---- ";
   private static final String END = " ----\n\n";
   private final FridgeManager fm;
-  private final CookBookManager cbm;
 
   /**
    * <strong>Description:</strong><br>
@@ -36,17 +34,13 @@ public class Display extends AbstractTable {
    */
   public Display(final FridgeManager fm) {
     this.fm = fm;
-    this.cbm = null;
   }
 
   /**
    * <strong>Description:</strong><br>
    * A constructor instantizing the class and initializing datafields.<br>
-   *
-   * @param cbm An object of type {@link CookBookManager}.
    */
-  public Display(final CookBookManager cbm) {
-    this.cbm = cbm;
+  public Display() {
     this.fm = null;
   }
 

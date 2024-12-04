@@ -1,53 +1,9 @@
 package edu.ntnu.idi.idatt.modules;
 
-/*
- # Nivå 2:
- Applikasjonen utvides fra Nivå 1 med følgende funksjonlalitet:
- Som bruker må jeg kunne:
-     • Opprette en matoppskrift (for en matrett). En matoppskrift (engelsk: Recipe) består
-     typisk av følgende elementer: Et navn på oppskriften, en kort beskrivelse av hva
-     oppskriften lager, en fremgangsmåte og en liste av ingredienser (inkludert mengde).
-     • Sjekke om kjøleskapet inneholder nok varer/ingredienser til å lage matretten.
-     • Legge oppskriften inn i en kokebok for senere bruk.
-     • Få forslag til hvilke retter som kan lages fra rettene i kokeboken med
-     varene/ingrediensene som finnes i kjøleskapet. (Avansert!)
-
- # Matoppskrift:
- Implementer en klasse som representerer en oppskrift. En oppskrift skal minimum inneholde
- følgende informasjon:
- • Navn på rett
- • En kort beskrivelse av retten
- • Fremgangsmåte (et tekstfelt)
- • En liste over matvarer/ingredienser som inngår for å lage retten. Her må du selv velge
- hviken klasse fra JDK’en du tenker passer (ArrayList, HashMap, HashSet osv). Begrunn
- valget i rapporten.
- • Antall personer oppskriften er myntet på (ofte er 4 standard)
-
- # Kokebok:
- Opprett en klasse som representerer en Kokebok (engelsk: Cookbook). Du må selv bestemme
- hvilken klasse fra Java biblioteket du vil bruke (ArrayList, HashMap osv) (husk å begrunn valget
- i rapporten din).
- Du skal selv tenke ut og implementere fornuftige metoder i en slik klasse for å kunne oppfylle
- brukerkravene under (fra prosjektbeskrivelsen).
-
- # Brukerkrav:
- Som bruker må jeg kunne:
- • Opprette en matoppskrift (for en matrett). En matoppskrift (engelsk: Recipe) består
- typisk av følgende elementer: Et navn på oppskriften, en kort beskrivelse av hva
- oppskriften lager, en fremgangsmåte og en liste av ingredienser (inkludert mengde).
- • Sjekke om kjøleskapet inneholder nok varer/ingredienser til å lage en bestemt matrett.
- • Legge oppskriften inn i en kokebok for senere bruk.
- • Få forslag til hvilke retter som kan lages fra rettene i kokeboken med
- varene/ingrediensene som finnes i kjøleskapet. (Avansert!)
- NB! Det er ikke sikkert at alle disse funksjonene lar seg løse bare med klassen for oppskrift og
- klassen for kokebok. I så fall må du vurdere om du trenger flere klasser for å løse kravene (NB!
- Vi tenker her på forretningslogikken, ikke brukergrensesnittet).
-*/
-
 import edu.ntnu.idi.idatt.manager.SI_Manager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import org.jetbrains.annotations.Nullable;
 
 /**
  * <strong>Description:</strong><br>

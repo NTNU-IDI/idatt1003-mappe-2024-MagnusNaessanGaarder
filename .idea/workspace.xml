@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Updating workspace.">
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Creating abstraction by moving methods to abstract classes, and updating version in Javadoc.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/CookBookManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/CookBookManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/AbstractRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/AbstractRecipe.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractTable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/DisplayTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/MainTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/CookBookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/CookBookTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/RecipeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/RecipeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,12 +141,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.modules.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.CookBookTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.CookBookTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -156,12 +156,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.modules.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.CookBookTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.CookBookTest" />
       <option name="METHOD_NAME" value="getRecipeList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -172,12 +172,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.modules.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.CookBookTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.CookBookTest" />
       <option name="METHOD_NAME" value="negativeGetRecipeList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -188,12 +188,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.modules.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.RecipeTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.RecipeTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -203,12 +203,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.modules.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.RecipeTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.RecipeTest" />
       <option name="METHOD_NAME" value="getRecipes" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -272,7 +272,7 @@
       <workItem from="1732488959827" duration="14688000" />
       <workItem from="1732559648640" duration="42648000" />
       <workItem from="1732795954850" duration="880000" />
-      <workItem from="1732797037714" duration="115597000" />
+      <workItem from="1732797037714" duration="122427000" />
     </task>
     <task id="LOCAL−00001" summary="updaterer client og tester">
       <option name="closed" value="true" />
@@ -519,7 +519,28 @@
       <option name="presentableId" value="LOCAL−00035" />
       <updated>1733136143631</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL−00036" summary="Reworked logic for classes - Grocery, FridgeManager, SI.">
+      <option name="closed" value="true" />
+      <created>1733302437627</created>
+      <option name="number" value="LOCAL−00036" />
+      <option name="presentableId" value="LOCAL−00036" />
+      <updated>1733302437627</updated>
+    </task>
+    <task id="LOCAL−00037" summary="Fixed bugs and added features - AbstractTable, CookBookManager, Display, Recipe, UserInterface.">
+      <option name="closed" value="true" />
+      <created>1733302658811</created>
+      <option name="number" value="LOCAL−00037" />
+      <option name="presentableId" value="LOCAL−00037" />
+      <updated>1733302658811</updated>
+    </task>
+    <task id="LOCAL−00038" summary="Creating abstraction by moving methods to abstract classes, and updating version in Javadoc.">
+      <option name="closed" value="true" />
+      <created>1733302853183</created>
+      <option name="number" value="LOCAL−00038" />
+      <option name="presentableId" value="LOCAL−00038" />
+      <updated>1733302853183</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -537,9 +558,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactoring and structuring code" />
-    <MESSAGE value="refactoring and bugfixing. Done with part 1 level 1" />
-    <MESSAGE value="Reworked some issues with last commit" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="bugfixing" />
     <MESSAGE value="update workspace" />
@@ -562,7 +580,10 @@
     <MESSAGE value="Updating and bugfixing - Fridge, Grocery and FridgeManager." />
     <MESSAGE value="Creating features for CookBook - UserInterface." />
     <MESSAGE value="Updating workspace." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating workspace." />
+    <MESSAGE value="Reworked logic for classes - Grocery, FridgeManager, SI." />
+    <MESSAGE value="Fixed bugs and added features - AbstractTable, CookBookManager, Display, Recipe, UserInterface." />
+    <MESSAGE value="Creating abstraction by moving methods to abstract classes, and updating version in Javadoc." />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating abstraction by moving methods to abstract classes, and updating version in Javadoc." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
