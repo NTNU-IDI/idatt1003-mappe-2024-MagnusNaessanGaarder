@@ -124,7 +124,7 @@ public abstract class AbstractOption extends AbstractTerminalAction {
           System.out.println(AbstractTable.createMenuTable("FJERN FRA " + g.getName().toUpperCase(),
               "Fyll ut deltaljer om varen du skal fjerne fra:"));
           String[] amountAndUnit = getAmountAndUnit(getInput());
-          gm.removeAmountGrocery(amountAndUnit);
+          gm.removeAmountGrocery(amountAndUnit, f);
         } catch (Exception e) {
           System.out.println(e.getMessage());
         }

@@ -70,17 +70,17 @@ public class UserInterface extends AbstractOption {
     final SI ss = new SI("Spiseskje", "ss", "", "Spise");
 
     final Grocery grocery1 = new Grocery("Mel", g, 2000, 
-        LocalDate.now().minusDays(2), 200, fridge);
+        LocalDate.now().minusDays(2), 200);
     final Grocery grocery2 = new Grocery("Banan", stk, 1,
-        LocalDate.now(), 49.90, fridge);
+        LocalDate.now(), 49.90);
     final Grocery grocery3 = new Grocery("Mel", g, 500, 
-        LocalDate.now().plusDays(4), 200, fridge);
+        LocalDate.now().plusDays(4), 200);
     final Grocery grocery4 = new Grocery("Kraft", l, 0.5, 
-        LocalDate.now().plusDays(1), 259.99, fridge);
+        LocalDate.now().plusDays(1), 259.99);
     final Grocery grocery5 = new Grocery("Melk", dl, 2,
-        LocalDate.now().plusYears(1), 180.50, fridge);
+        LocalDate.now().plusYears(1), 180.50);
     final Grocery grocery6 = new Grocery("Egg", stk, 5,
-        LocalDate.now(), 1, fridge);
+        LocalDate.now(), 1);
 
     this.fridge.addGrocery(grocery1);
     this.fridge.addGrocery(grocery2);
@@ -91,39 +91,39 @@ public class UserInterface extends AbstractOption {
     this.fridge.addGrocery(grocery6);
 
     //tester å legge til og trekke fra fra varer i kjøleskapet
-    grocery3.removeAmount(500, g);
+    grocery3.removeAmount(500, g, fridge);
     grocery2.addAmount(6, stk);
 
     final Recipe recipe1 = new Recipe("Banankake", "God!!", 
         new String[] {"ins1:", "ins2:"}, 4,
         new ArrayList<>(Arrays.asList(
-            new Grocery("Banan", stk, 2, null, 1, fridge),
-            new Grocery("Mel", kg, 0.5, null, 1, fridge),
-            new Grocery("Egg", stk, 2, null, 1, fridge),
-            new Grocery("Vaniljesukker", ts, 4, null, 1, fridge))), fridge);
+            new Grocery("Banan", stk, 2, null, 1),
+            new Grocery("Mel", kg, 0.5, null, 1),
+            new Grocery("Egg", stk, 2, null, 1),
+            new Grocery("Vaniljesukker", ts, 4, null, 1))), fridge);
     final Recipe recipe2 = new Recipe("Brød", "Luftig!!", 
         new String[] {"ins1:", "ins2:", "ins3:"}, 6,
         new ArrayList<>(Arrays.asList(
-            new Grocery("Mel", g, 500, null, 1, fridge),
-            new Grocery("Melk", dl, 2, null, 1, fridge),
-            new Grocery("Egg", stk, 3, null, 1, fridge),
-            new Grocery("Gjær", ss, 1, null, 1, fridge))), fridge);
+            new Grocery("Mel", g, 500, null, 1),
+            new Grocery("Melk", dl, 2, null, 1),
+            new Grocery("Egg", stk, 3, null, 1),
+            new Grocery("Gjær", ss, 1, null, 1))), fridge);
     final Recipe recipe3 = new Recipe("Penne Al Arabiata", "Spicy og digg!!", 
         new String[] {"ins1:", "ins2:"}, 4,
         new ArrayList<>(Arrays.asList(
-            new Grocery("Chilly", stk, 1, null, 1, fridge),
-            new Grocery("Olivenolje", ml, 100, null, 1, fridge),
-            new Grocery("Hvitløksfedd", stk, 2, null, 1, fridge),
-            new Grocery("Hakkede tomater, Boks", stk, 2, null, 1, fridge),
-            new Grocery("Persille", ss, 2, null, 1, fridge),
-            new Grocery("Salt", ts, 2, null, 1, fridge))), fridge);
+            new Grocery("Chilly", stk, 1, null, 1),
+            new Grocery("Olivenolje", ml, 100, null, 1),
+            new Grocery("Hvitløksfedd", stk, 2, null, 1),
+            new Grocery("Hakkede tomater, Boks", stk, 2, null, 1),
+            new Grocery("Persille", ss, 2, null, 1),
+            new Grocery("Salt", ts, 2, null, 1))), fridge);
     final Recipe recipe4 = new Recipe("Naan Brød", "Deilig!!", 
         new String[] {"ajsd", "askhd"}, 2,
         new ArrayList<>(Arrays.asList(
-            new Grocery("Egg", stk, 2, null, 1, fridge),
-            new Grocery("Mel", dl, 2, null, 1, fridge),
-            new Grocery("Koreander", ts, 1, null, 1, fridge),
-            new Grocery("Salt", ts, 1, null, 1, fridge))), fridge);
+            new Grocery("Egg", stk, 2, null, 1),
+            new Grocery("Mel", dl, 2, null, 1),
+            new Grocery("Koreander", ts, 1, null, 1),
+            new Grocery("Salt", ts, 1, null, 1))), fridge);
 
     cookBook.addRecipe(recipe1);
     cookBook.addRecipe(recipe2);
@@ -145,6 +145,7 @@ public class UserInterface extends AbstractOption {
   private void showMenu() {
     // Menyvalg i konsollen
     clearScreen();
+
     str = new StringBuilder();
 
     final String menuStr =
@@ -248,7 +249,7 @@ public class UserInterface extends AbstractOption {
     //sjekker om brukeren har svart ja.
     if (yesNoErr == 'y') {
       //sjekker om varen allerede er i kjøleskapet
-      Grocery grocery = new Grocery(name, measure, quantity, date, price, fridge);
+      Grocery grocery = new Grocery(name, measure, quantity, date, price);
       fridge.addGrocery(grocery);
     } else {
       //fortesetter med ny laging av vare hvis brukeren ikke ønsker å beholde forrige vare
@@ -477,6 +478,9 @@ public class UserInterface extends AbstractOption {
               .findFirst()
               .orElse(null);
 
+          if (grocery == null) {
+            throw new IllegalArgumentException("Invalid groceryID. Grocery ID is out of bounds2");
+          }
           fetchRemove(grocery);
           retry = false;
         } catch (NumberFormatException e) {
@@ -510,7 +514,7 @@ public class UserInterface extends AbstractOption {
             + "/ desiliter / stykker): ");
         String staticInput = getInputStatic();
 
-        gm.removeAmountGrocery(GroceryManager.getAmountAndUnit(staticInput));
+        gm.removeAmountGrocery(GroceryManager.getAmountAndUnit(staticInput), fridge);
         retry = false;
       } catch (Exception e) {
         System.out.println(e.getMessage());
@@ -1290,7 +1294,7 @@ public class UserInterface extends AbstractOption {
       double quantity = Double.parseDouble(amountAndUnit[0]);
       SI unit = SI_Manager.getUnit(amountAndUnit[1]);
 
-      return new Grocery(name, unit, quantity, null, 1, null);
+      return new Grocery(name, unit, quantity, null, 1);
     } catch (NumberFormatException e) {
       throw new NumberFormatException(e.getMessage());
     } catch (Exception e) {

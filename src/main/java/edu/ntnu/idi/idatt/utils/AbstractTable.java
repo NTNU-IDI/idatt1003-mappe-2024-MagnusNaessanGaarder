@@ -307,16 +307,24 @@ public abstract class AbstractTable {
     return sb.toString();
   }
 
+  /**
+   * <strong>Description:</strong><br>
+   * Creating a String of contents from a Recipe.<br>
+   *
+   * @param recipe A given object of type {@link Recipe} in which contents of the object is
+   *               going to be displayed.
+   * @return A {@code String} of the content in the recipe.
+   */
   public String createRecipeContent(Recipe recipe) {
     StringBuilder sb = new StringBuilder();
 
     //ingredienser
     sb.append("------------Ingredienser------------\n\n");
-    recipe.getRecipes().forEach(g -> sb.append("   ● ")
+    recipe.getRecipes().forEach(g -> sb.append("   - ")
         .append(g.getName()).append(", ").append(g.getQuantity()).append(" ")
         .append(g.getUnit().getAbrev()).append("\n"));
     //porsjoner
-    sb.append(" Porsjoner: ").append(recipe.getPortion()).append("\n\n");
+    sb.append("\n").append(" Porsjoner: ").append(recipe.getPortion()).append("\n\n");
     //instruksjoner
     sb.append("\n Slik gjør du:\n");
     AtomicReference<Integer> i = new AtomicReference<>(1);
