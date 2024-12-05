@@ -89,7 +89,7 @@ public class FridgeManager {
   /**
    * <strong>Description:</strong><br>
    * A get-method used to collect all groceries that has a longer expiration
-   * date from the Fridge.<br>
+   date from the Fridge.<br>
    *
    * @return An object of type {@link List} containing objects of type {@link Grocery}.
    */
@@ -163,10 +163,19 @@ public class FridgeManager {
     for (Grocery g : fridge.getGroceryList()) {
       final GroceryManager gm = new GroceryManager(g);
       sum += gm.getPricePerQuantity();
+      //Debugging
+      //System.out.println("Sum: " + sum);
     }
     return sum;
   }
 
+  /**
+   * <strong>Description:</strong><br>
+   * A method for searching through a grocery list after groceries with a specified name.<br>
+   *
+   * @param name A {@link String} containing the name of the grocery being searched for.
+   * @return A {@link List} of Groceries with the specified name.
+   */
   public List<Grocery> getByName(final String name) {
     return this.getListSortedDate(fridge.getGroceryList().stream()
         .filter(g -> g.getName().equalsIgnoreCase(name))
