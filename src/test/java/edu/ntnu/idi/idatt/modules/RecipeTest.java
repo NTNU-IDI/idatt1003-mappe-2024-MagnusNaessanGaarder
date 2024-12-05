@@ -1,11 +1,7 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.modules;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
-import edu.ntnu.idi.idatt.modules.Recipe;
-import edu.ntnu.idi.idatt.modules.SI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +21,8 @@ class RecipeTest {
   private Grocery grocery2;
   private Grocery grocery3;
 
-  public Grocery fetchGrocery(String n, SI si, double q, LocalDate d, double p, Fridge f) {
-    return new Grocery(n, si, q, d, p, f);
+  public Grocery fetchGrocery(String n, SI si, double q, LocalDate d, double p) {
+    return new Grocery(n, si, q, d, p);
   }
 
   public void setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list,
@@ -37,11 +33,11 @@ class RecipeTest {
   @BeforeEach
   public void initTest() {
     fridge = new Fridge();
-    grocery1 = fetchGrocery("Mel", g, 2000, LocalDate.now().minusDays(2), 200,
-        fridge);
-    grocery2 = fetchGrocery("Bananer", stk, 18, LocalDate.now(), 49.90, fridge);
-    grocery3 = fetchGrocery("Kraft", l, 0.5, LocalDate.now().plusDays(1), 259.99,
-        fridge);
+    grocery1 = fetchGrocery("Mel", g, 2000, LocalDate.now().minusDays(2),
+        200);
+    grocery2 = fetchGrocery("Bananer", stk, 18, LocalDate.now(), 49.90);
+    grocery3 = fetchGrocery("Kraft", l, 0.5, LocalDate.now().plusDays(1),
+        259.99);
 
     fridge.addGrocery(grocery1);
     fridge.addGrocery(grocery2);
@@ -55,7 +51,7 @@ class RecipeTest {
         new ArrayList<>(List.of(new Grocery[] {
             grocery1,
             grocery2,
-            fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50, fridge)
+            fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50)
         })),
         fridge
     );
@@ -72,7 +68,7 @@ class RecipeTest {
 
   @Test
   void matchingGroceries() {
-    assertEquals(2, recipe.matchingGroceries());
+    assertEquals((double) 2 / 3, recipe.matchingGroceries());
   }
 
   @Test
@@ -86,7 +82,7 @@ class RecipeTest {
         new ArrayList<>(List.of(new Grocery[] {
             grocery1,
             grocery2,
-            fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50, fridge)
+            fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50)
         })),
         fridge
     );
@@ -119,11 +115,11 @@ class RecipeTest {
   @Test
   void getRecipes() {
     Grocery.resetID();
-    grocery1 = fetchGrocery("Mel", g, 2000, LocalDate.now().minusDays(2), 200,
-        fridge);
-    grocery2 = fetchGrocery("Bananer", stk, 18, LocalDate.now(), 49.90, fridge);
-    fetchGrocery("Bananer", stk, 18, LocalDate.now(), 49.90, fridge);
-    grocery3 = fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50, fridge);
+    grocery1 = fetchGrocery("Mel", g, 2000, LocalDate.now().minusDays(2),
+        200);
+    grocery2 = fetchGrocery("Bananer", stk, 18, LocalDate.now(), 49.90);
+    fetchGrocery("Bananer", stk, 18, LocalDate.now(), 49.90);
+    grocery3 = fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50);
 
     ArrayList<Grocery> list = new ArrayList<>();
     list.add(grocery1);

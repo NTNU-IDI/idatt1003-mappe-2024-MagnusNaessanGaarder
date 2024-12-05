@@ -1,9 +1,6 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.modules;
 
 import edu.ntnu.idi.idatt.manager.FridgeManager;
-import edu.ntnu.idi.idatt.modules.SI;
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ class FridgeTest {
         //Lager et kjøleskap, en SI-enhet og en vare. Legger til varen i kjøleskapet
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
 
-        Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
+        Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25);
         fridge.addGrocery(grocery);
 
         //lager en test-liste som inneholder varen lagd ovenfor.
@@ -35,8 +32,8 @@ class FridgeTest {
         //Lager et kjøleskap, en SI-enhet og en vare. Legger til varen i kjøleskapet
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
         SI stk = new SI("Stykker", "stk", "stk","");
-        Grocery grocery1 = new Grocery ("Egg", stk, 18, LocalDate.now(), 25, fridge);
-        Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
+        Grocery grocery1 = new Grocery ("Egg", stk, 18, LocalDate.now(), 25);
+        Grocery grocery2 = new Grocery ("Mel", kg, 2, LocalDate.now(), 25);
         fridge.addGrocery(grocery1);
         fridge.addGrocery(grocery2);
 
@@ -49,7 +46,7 @@ class FridgeTest {
     @Test
     void fridgeAddGrocery() {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
-        Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
+        Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25);
         fridge.addGrocery(grocery);
 
         assertEquals(grocery, fridge.getGrocery(0), "Did not get expected grocery.");
@@ -58,7 +55,7 @@ class FridgeTest {
     @Test
     void fridgeRemoveGrocery() {
         SI kg = new SI("Kilogram", "kg","kg","Kilo");
-        Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25, fridge);
+        Grocery grocery = new Grocery ("Mel", kg, 2, LocalDate.now(), 25);
         fridge.addGrocery(grocery);
 
         fridge.removeGrocery(grocery);
@@ -72,10 +69,10 @@ class FridgeTest {
         SI dL = new SI("Desiliter", "dL","L","Desi");
         SI stk = new SI("Stykker", "stk","stk","");
 
-        Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.now(), 49, fridge);
-        Grocery grocery2 = new Grocery ("Melk", dL, 5, LocalDate.now(), 49, fridge);
-        Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023, 3,21), 25, fridge);
-        Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2024,9,30), 3, fridge);
+        Grocery grocery1 = new Grocery ("Melk", L, 1, LocalDate.now(), 49);
+        Grocery grocery2 = new Grocery ("Melk", dL, 5, LocalDate.now(), 49);
+        Grocery grocery3 = new Grocery ("Coca Cola", dL, 7.5, LocalDate.of(2023, 3,21), 25);
+        Grocery grocery4 = new Grocery ("Egg", stk, 18, LocalDate.of(2024,9,30), 3);
 
         fridge.addGrocery(grocery1);
         fridge.addGrocery(grocery2);
