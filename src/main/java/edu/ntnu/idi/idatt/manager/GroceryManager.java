@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.manager;
 
+import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.SI;
 import edu.ntnu.idi.idatt.utils.AbstractTerminalAction;
@@ -59,14 +60,19 @@ public class GroceryManager extends AbstractTerminalAction {
    */
   public double getPricePerQuantity() {
     double result;
+    double factor;
 
     if (unit.getAbrev().equals(unit.getUnitForPrice())) {
-      result = grocery.getQuantity() * grocery.getPrice();
+      factor = grocery.getQuantity();
     } else if (unit.getAbrev().equalsIgnoreCase("g")) {
-      result = grocery.getPrice() * (grocery.getQuantity() / 1000);
+      factor = (grocery.getQuantity() / 1000);
     } else {
-      result = grocery.getPrice() * (grocery.getQuantity() * unit.getConvertionFactor());
+      factor = (grocery.getQuantity() * unit.getConvertionFactor());
     }
+    result = grocery.getPrice() * factor;
+
+    //Debuging
+    //System.out.println(grocery.getPrice() + " * " + factor +  " = " + result);
 
     return (double) Math.round(result * 100) / 100;
   }
@@ -96,19 +102,19 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A method parsing an amount and a unit name to use the
-   * {@link Grocery#removeAmount(double, SI) removeAmount()} method
+   * {@link Grocery#removeAmount(double, SI, Fridge) removeAmount()} method
    * to remove an amount from a Grocery.<br>
    *
    * @param amountAndUnit An array of type String containing an amount and a unit
    *                      name as Strings.
    * @throws Exception Giving a reason and a message of the given Exception.
    */
-  public void removeAmountGrocery(String[] amountAndUnit) throws Exception {
+  public void removeAmountGrocery(String[] amountAndUnit, Fridge fridge) throws Exception {
     try {
       //trekk fra en mengde
       SI newUnit = SI_Manager.getUnit(amountAndUnit[1]);
       double amount = Double.parseDouble(amountAndUnit[0]);
-      grocery.removeAmount(amount, newUnit);
+      grocery.removeAmount(amount, newUnit, fridge);
     } catch (Exception e) {
       throw new Exception(
           "Could not remove amount from the grocery for the following reason: " + e.getMessage());

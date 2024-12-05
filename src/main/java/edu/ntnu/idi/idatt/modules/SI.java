@@ -35,7 +35,7 @@ public class SI {
     VALID_UNITS.add(new String[] {"Liter", "L", "L", "", "1.0"});
     VALID_UNITS.add(new String[] {"Desiliter", "dL", "L", "Desi", "0.1"});
     VALID_UNITS.add(new String[] {"Centiliter", "cL", "L", "Centi", "0.01"});
-    VALID_UNITS.add(new String[] {"Milliliter", "cL", "L", "Milli", "0.001"});
+    VALID_UNITS.add(new String[] {"Milliliter", "mL", "L", "Milli", "0.001"});
     VALID_UNITS.add(new String[] {"Teskje", "ts", "", "Te", "0.015"});
     VALID_UNITS.add(new String[] {"Spiseskje", "ss", "", "Spise", "0.005"});
   }
@@ -86,6 +86,16 @@ public class SI {
     //Angir en konverteringsfaktor avhengig av prefixen til enheten.
     //Hvis enheten ikke finnes i SI_PREFIXES blir faktoren 1.
     this.convertionFactor = SI_PREFIXES.getOrDefault(prefix, 1.0);
+  }
+
+  /**
+   * <strong>Description:</strong><br>
+   * A get-method for the HashMap for unit convertion.<br>
+   *
+   * @return A {@link HashMap} of unitconvertion based on prefixes.
+   */
+  public static HashMap<String, Double> getSiPrefixes() {
+    return SI_PREFIXES;
   }
 
   /**

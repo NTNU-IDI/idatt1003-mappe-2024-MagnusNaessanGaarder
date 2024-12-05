@@ -3,7 +3,6 @@ package edu.ntnu.idi.idatt.modules;
 import edu.ntnu.idi.idatt.manager.SI_Manager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * <strong>Description:</strong><br>
@@ -45,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
  *     <li>{@link #setUnit(SI)}</li>
  *     <li>{@link #hasExpired()}</li>
  *     <li>{@link #addAmount(double, SI)}</li>
- *     <li>{@link #removeAmount(double, SI)}</li>
+ *     <li>{@link #removeAmount(double, SI, Fridge)}</li>
  *     <li>{@link #convertUnit()}</li>
  *     <li>{@link #toString()}</li>
  * </ul>
@@ -57,7 +56,6 @@ public class Grocery {
   private final String name;
   private final LocalDate bestBefore;
   private final double price;
-  private final Fridge fridge;
   private SI unit;
   private double quantity;
 
@@ -73,14 +71,12 @@ public class Grocery {
    * @param quantity The quantity/ amount of the Grocery.
    * @param date     The expiration date of the Grocery
    * @param price    the price amount of the Grocery
-   * @param fridge   the Fridge the grocery is being stored in.
    */
   public Grocery(String name,
                  SI measure,
                  double quantity,
                  LocalDate date,
-                 double price,
-                 Fridge fridge) {
+                 double price) {
 
     if (quantity <= 0 || price <= 0) {
       throw new IllegalArgumentException("Illegal arguments: Cannot have quantity or price "
@@ -92,10 +88,9 @@ public class Grocery {
     this.quantity = quantity;
     this.bestBefore = date;
     this.price = price;
-    this.fridge = fridge;
     this.groceryID = advanceID();
 
-    convertUnit();
+    this.convertUnit();
   }
 
   @Override
@@ -108,8 +103,7 @@ public class Grocery {
           && g.getUnit().equals(this.unit)
           && g.getQuantity() == this.quantity
           && g.getDate().isEqual(this.bestBefore)
-          && g.getPrice() == this.price
-          && g.getFridge().equals(this.fridge);
+          && g.getPrice() == this.price;
 
     } catch (NullPointerException | ClassCastException e) {
       return false;
@@ -147,10 +141,6 @@ public class Grocery {
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public int getGroceryID() {
     return this.groceryID;
-  }
-
-  private Fridge getFridge() {
-    return fridge;
   }
 
   /**
@@ -226,6 +216,16 @@ public class Grocery {
 
   /**
    * <strong>Description:</strong><br>
+   * A set-method for incapsulating and assigning a value to the datafield quantity.
+   This spesific method is ment for setting the quantity depending on the convertion between
+   units.<br>
+   */
+  private void setQuantityWithFactor(double quantity) {
+    this.quantity *= quantity;
+  }
+
+  /**
+   * <strong>Description:</strong><br>
    * A get-method for incapsulating the datafield unit.<br>
    *
    * @return An object of type {@link SI} with the value of unit.
@@ -279,30 +279,19 @@ public class Grocery {
     final double currentQuantity = this.quantity;
 
     final String groceryUnitAbrev = this.unit.getAbrev();
-    final String amountUnitAbrev = amountUnit.getAbrev();
-
-    final double amount_cf = amountUnit.getConvertionFactor();
     final double grocery_cf = this.unit.getConvertionFactor();
+
+    final String amountUnitAbrev = amountUnit.getAbrev();
+    final double amount_cf = amountUnit.getConvertionFactor();
 
     if (amount > 0 && SI_Manager.hasValidUnit(amountUnit)) {
       if ((groceryUnitAbrev.equals("stk") && !amountUnitAbrev.equals("stk"))) {
         System.out.println("Kan ikke legge til et antall med en annen målenhet enn \"stk\" når "
             + "varen er oppgitt i \"stk\".");
       } else {
-        if (groceryUnitAbrev.equals("kg")) {
-          this.setQuantity(
-              (double) (
-                  Math.round(
-                          (currentQuantity * grocery_cf + amount * amount_cf)
-                        / grocery_cf)
-                      * 100)
-                    / 100
-          );
-        } else {
-          this.setQuantity(
-              (double) (Math.round((currentQuantity * grocery_cf + amount * amount_cf) * 100)) / 100
-          );
-        }
+        this.setQuantity(
+            (double) Math.round((currentQuantity * grocery_cf + amount * amount_cf) * 100) / 100
+        );
         convertUnit();
         System.out.println("La til " + amount + " " + amountUnitAbrev + " til varen " + this.name);
 
@@ -327,7 +316,7 @@ public class Grocery {
    * @param amountUnit An object of the type {@link SI} representing the unit of the amount that
    *                   will be added to the Grocery.
    */
-  public void removeAmount(final double amount, SI amountUnit) {
+  public void removeAmount(final double amount, final SI amountUnit, final Fridge fridge) {
     /*
      * Important!
      * The only conditions of the method is that the amount must be positive.
@@ -335,12 +324,13 @@ public class Grocery {
      * another e.g. kg <-> g  and dL <-> L. In the case of the unit "Stykker", both the amount
      * unit and the grocery unit must be "Stykker" for it to work.<br>
      */
-
     double currentQuantity = this.quantity;
+
     final String groceryUnitAbrev = this.unit.getAbrev();
+    final double grocery_cf = this.unit.getConvertionFactor();
+
     final String amountUnitAbrev = amountUnit.getAbrev();
     final double amount_cf = amountUnit.getConvertionFactor();
-    final double grocery_cf = this.unit.getConvertionFactor();
 
     if (amount > 0 && SI_Manager.hasValidUnit(amountUnit)) {
       //XOR for forkortelse av enhetene. Hvis begge enhetene ikke samsvarer samsvarer med hverandre
@@ -351,16 +341,9 @@ public class Grocery {
             + "enn \"stk\" når varen er oppgitt i \"stk\". Varens enhet er gitt som "
             + groceryUnitAbrev + " og brukerens enhet er gitt ved " + amountUnitAbrev + ".");
       } else {
-        if (groceryUnitAbrev.equals("kg")) {
-          this.setQuantity(
-              (double) (Math.round(
-                  ((currentQuantity * grocery_cf - amount * amount_cf) / grocery_cf) * 100)) / 100
-          );
-        } else {
-          this.setQuantity(
-              (double) (Math.round((currentQuantity * grocery_cf - amount * amount_cf) * 100)) / 100
-          );
-        }
+        this.setQuantity(
+            (double) Math.round((currentQuantity * grocery_cf - amount * amount_cf) * 100) / 100
+        );
         System.out.println("Fjernet " + amount + " " + amountUnitAbrev + " fra varen " + this.name);
         currentQuantity = this.quantity;
       }
@@ -385,32 +368,33 @@ public class Grocery {
    * The quantity of the grocery will also be ajusted accordingly to the unit convertion.
    */
   private void convertUnit() {
-    final double groceryQuantity = this.quantity;
     final String groceryUnit = this.unit.getPrefix();
 
     try {
-      if (groceryQuantity < 1.0 && groceryUnit.isEmpty()) {
+      if (this.quantity < 1.0 && groceryUnit.isEmpty()) {
         if (unit.getAbrev().equalsIgnoreCase("L")) {
-          this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
-          this.setQuantity(groceryQuantity * 10);
+          this.setUnit(SI_Manager.getUnit("dL"));
+          this.setQuantityWithFactor(1 / SI.getSiPrefixes().get("Desi"));
         }
-      } else if (groceryQuantity >= 1000.0 && groceryUnit.isEmpty()) {
-        if (unit.getAbrev().equalsIgnoreCase("g")) {
-          this.setUnit(new SI("Kilogram", "kg", "kg", "Kilo"));
-          this.setQuantity(groceryQuantity / 1000);
+      } else if (this.quantity >= 1000.0 && groceryUnit.isEmpty()) {
+        if (this.unit.getAbrev().equalsIgnoreCase("g")) {
+          this.setUnit(SI_Manager.getUnit("kg"));
+          this.setQuantityWithFactor(1 / SI.getSiPrefixes().get("Kilo"));
         }
-      } else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
-        this.setUnit(new SI("Gram", "g", "kg", ""));
-        this.setQuantity(groceryQuantity * 1000);
-      } else if (groceryQuantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-        this.setUnit(new SI("Liter", "L", "L", "Desi"));
-        this.setQuantity(groceryQuantity / 10);
-      } else if (groceryQuantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-        this.setUnit(new SI("Milliliter", "mL", "L", "Milli"));
-        this.setQuantity(groceryQuantity * 100);
-      } else if (groceryQuantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
-        this.setUnit(new SI("Desiliter", "dL", "L", "Desi"));
-        this.setQuantity(groceryQuantity / 100);
+      } else if (this.quantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
+        this.setUnit(SI_Manager.getUnit("g"));
+        this.setQuantityWithFactor(SI.getSiPrefixes().get(groceryUnit));
+      } else if (this.quantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
+        this.setUnit(SI_Manager.getUnit("L"));
+        this.setQuantityWithFactor(SI.getSiPrefixes().get(groceryUnit));
+      } else if (this.quantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
+        this.setUnit(SI_Manager.getUnit("mL"));
+        this.setQuantityWithFactor(1
+            / (SI.getSiPrefixes().get("Milli") / SI.getSiPrefixes().get(groceryUnit)));
+      } else if (this.quantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
+        this.setUnit(SI_Manager.getUnit("dL"));
+        this.setQuantityWithFactor(1
+            / (SI.getSiPrefixes().get("Desi") / SI.getSiPrefixes().get(groceryUnit)));
       }
     } catch (IllegalArgumentException e) {
       System.out.println(e.getMessage());
