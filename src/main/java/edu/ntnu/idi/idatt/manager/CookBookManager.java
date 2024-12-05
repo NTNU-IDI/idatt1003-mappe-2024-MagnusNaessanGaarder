@@ -18,10 +18,18 @@ public class CookBookManager {
   }
 
   public Recipe getRecipe(final int id) {
-    return cookBook.getRecipeList().stream()
+    Recipe recipe = cookBook.getRecipeList().stream()
         .filter(r -> r.getRecipeID() == id)
         .findFirst()
         .orElse(null);
+    if (id < 0) {
+      throw new IllegalArgumentException("ID cannot be negative.");
+    }
+    if (recipe == null) {
+      throw new ArrayIndexOutOfBoundsException("The given ID is out of range of the recipes "
+          + "in the cook book.");
+    }
+    return recipe;
   }
 
   private List<Recipe> sortRecipes(List<Recipe> list) {
@@ -40,7 +48,7 @@ public class CookBookManager {
 
   public List<Recipe> getRecommendedRecipes() {
     return getAvailableRecipes().size() >= 3 ? getAvailableRecipes().subList(0, 3)
-        : getAvailableRecipes().subList(0, getAvailableRecipes().size());
+        : getAvailableRecipes().subList(0, 1);
   }
 
   public List<Recipe> getRest() {
@@ -55,28 +63,32 @@ public class CookBookManager {
       throw new IllegalArgumentException("The fridge does not contain any groceries from the "
           + "recipe.");
     }
-    final List<Grocery> corespondingGroceries = fridge.getGroceryList().stream()
+    if (!cookBook.getRecipeList().contains(r)) {
+      throw new IllegalArgumentException("The recipe cannot be found in the cook book. ");
+    }
+    final List<Grocery> correspondingGroceries = fridge.getGroceryList().stream()
         .filter(grocery -> r.getRecipes().stream()
             .map(Grocery::getName)
             .distinct()
             .anyMatch(name -> grocery.getName().equalsIgnoreCase(name))
         ).toList();
 
-    if (!corespondingGroceries.isEmpty()) {
+    if (!correspondingGroceries.isEmpty()) {
       r.getRecipes().forEach(g -> {
         final double[] amount = {g.getQuantity()};
         final SI unit = g.getUnit();
 
-        List<Grocery> removableGroceries = corespondingGroceries.stream()
+        List<Grocery> removableGroceries = correspondingGroceries.stream()
             .filter(gr -> gr.getName().equalsIgnoreCase(g.getName()))
             .toList();
 
         if (!removableGroceries.isEmpty()) {
           removableGroceries.stream()
               .sorted(Comparator.comparing(Grocery::getDate))
-              .toList().forEach(grocery -> {
+              .toList()
+              .forEach(grocery -> {
                 if (amount[0] > 0) {
-                  grocery.removeAmount(amount[0], unit);
+                  grocery.removeAmount(amount[0], unit, fridge);
                   amount[0] -= grocery.getQuantity();
                 }
               });
