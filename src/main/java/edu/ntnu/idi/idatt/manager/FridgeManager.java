@@ -152,7 +152,7 @@ public class FridgeManager {
 
   /**
    * <strong>Description:</strong><br>
-   * A get-method used to calculate the money spent on on all the groceries
+   * A get-method used to calculate the money spent on all the groceries
    * in the Fridge.<br>
    *
    * @return A double floating point value with the sum of all the groceries

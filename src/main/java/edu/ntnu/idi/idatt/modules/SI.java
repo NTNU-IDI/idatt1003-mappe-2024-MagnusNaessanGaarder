@@ -113,7 +113,7 @@ public class SI {
    * A method overriding the usual
    * {@link Object#equals(Object o) equals(Object obj)} method.
    * This method is manually set to compare contents of the SI-
-   object rather than if its the same object.<br>
+   object rather than if it's the same object.<br>
    *
    * @param o An unknown object.
    * @return A boolean based on the comparison.
@@ -186,7 +186,7 @@ public class SI {
   /**
    * <strong>Description:</strong><br>
    * A method overriding the usual {@link Object#toString() toString()}.
-   * It is used for debugging an will now be desplayed in the TUI.
+   * It is used for debugging and will not be desplayed in the TUI.
    *
    * @return A string dumping information about the instantized object
    of the class.

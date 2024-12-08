@@ -87,7 +87,7 @@ public abstract class AbstractOption extends AbstractTerminalAction {
    * A method for choosing an appropriate action from a userInput in the change-menu.<br><br>
    * <i>Options:</i>
    * <ul>
-   *     <li>Add a amount to a Grocery.</li>
+   *     <li>Add an amount to a Grocery.</li>
    *     <li>Remove amount from a Grocery.</li>
    *     <li>Check if a Grocery has expired.</li>
    * </ul>

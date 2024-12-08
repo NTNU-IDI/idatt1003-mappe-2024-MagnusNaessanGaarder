@@ -18,7 +18,7 @@ import java.util.Scanner;
  * {@link AbstractTerminalAction#getInput() getInput()} - Fetches userInput.<br>
  * {@link AbstractTerminalAction#getInputStatic() getInputStatic()} - Fetches
  userInput while beeing static.<br>
- * {@link AbstractTerminalAction#close() getInputStatic()} - Closes both Scanner-
+ * {@link AbstractTerminalAction#close() getInputStatic()} - Closes both Scanner -
  objects ({@code scanner} and {@code scannerStatic}).<br>
  * {@link AbstractTerminalAction#clearScreen() clearScreen()} - "Cleans" the terminal.<br>
  */

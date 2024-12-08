@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.modules;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,93 +94,5 @@ public class Recipe extends AbstractRecipe {
     } catch (NullPointerException | ClassCastException e) {
       return false;
     }
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * An override of the {@link AbstractRecipe#matchingGroceries() matchingGroceries()} method.
-   *
-   * @return A double floatingpoint representing percent factor of matching groceries.
-   */
-  @Override
-  public double matchingGroceries() {
-    return super.matchingGroceries();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * An override of the {@link AbstractRecipe#avrageDate() avrageDate()} method.
-   *
-   * @return A LocalDate representing the average expiry date of the groceries in the recipe.
-   */
-  @Override
-  public LocalDate avrageDate() {
-    return super.avrageDate();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method used to get the name of the Recipe.
-   *
-   * @return A String representing the name of the Recipe.
-   */
-  @Override
-  public String getName() {
-    return super.getName();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method used to get the description of the Recipe.
-   *
-   * @return A String representing the description of the Recipe.
-   */
-  @Override
-  public String getDescription() {
-    return super.getDescription();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method used to get the directions of the Recipe.
-   *
-   * @return An Array of Strings representing the directions of the Recipe.
-   */
-  @Override
-  public String[] getDirections() {
-    return super.getDirections();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method used to get the portion of the Recipe.
-   *
-   * @return An integer representing the portion of the Recipe.
-   */
-  @Override
-  public int getPortion() {
-    return super.getPortion();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method used to get the groceries of the Recipe.
-   *
-   * @return A List of Groceries representing the groceries of the Recipe.
-   */
-  @Override
-  public List<Grocery> getRecipes() {
-    return super.getRecipes();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method used to get the fridge of the Recipe.
-   *
-   * @return An object of type Fridge representing the fridge of the Recipe.
-   */
-  @Override
-  public Fridge getFridge() {
-    return super.getFridge();
   }
 }
