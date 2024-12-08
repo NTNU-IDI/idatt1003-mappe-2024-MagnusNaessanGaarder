@@ -158,6 +158,7 @@ public class Display extends AbstractTable {
     } else {
       str.append(buildTable(list, title, rowTitle1, rowTitle2, width));
 
+      assert fm != null;
       str.append("            Total brukt på varer: ").append(fm.getTotalPrice()).append(" kr\n\n");
     }
     return str.toString();

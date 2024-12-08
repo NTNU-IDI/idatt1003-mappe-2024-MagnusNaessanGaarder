@@ -156,7 +156,7 @@ public class Grocery {
   /**
    * <strong>Description:</strong><br>
    * A method for formating the datafield bestBefore to the format "dd LLLL yyyy"
-   (e.g. 11 mars 2023).<br>
+   (e.g. 11 Mars 2023).<br>
    *
    * @return A {@link String} with the value of the formated bestBefore.
    */
@@ -369,36 +369,68 @@ public class Grocery {
    */
   private void convertUnit() {
     final String groceryUnit = this.unit.getPrefix();
-
     try {
       if (this.quantity < 1.0 && groceryUnit.isEmpty()) {
         if (unit.getAbrev().equalsIgnoreCase("L")) {
-          this.setUnit(SI_Manager.getUnit("dL"));
-          this.setQuantityWithFactor(1 / SI.getSiPrefixes().get("Desi"));
+          convertFromLToDL();
         }
       } else if (this.quantity >= 1000.0 && groceryUnit.isEmpty()) {
         if (this.unit.getAbrev().equalsIgnoreCase("g")) {
-          this.setUnit(SI_Manager.getUnit("kg"));
-          this.setQuantityWithFactor(1 / SI.getSiPrefixes().get("Kilo"));
+          convertFromGToKg();
         }
       } else if (this.quantity < 1.0 && groceryUnit.equalsIgnoreCase("Kilo")) {
-        this.setUnit(SI_Manager.getUnit("g"));
-        this.setQuantityWithFactor(SI.getSiPrefixes().get(groceryUnit));
+        convertFromKgToG();
       } else if (this.quantity >= 10.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-        this.setUnit(SI_Manager.getUnit("L"));
-        this.setQuantityWithFactor(SI.getSiPrefixes().get(groceryUnit));
+        convertFromDLToL();
       } else if (this.quantity < 1.0 && groceryUnit.equalsIgnoreCase("Desi")) {
-        this.setUnit(SI_Manager.getUnit("mL"));
-        this.setQuantityWithFactor(1
-            / (SI.getSiPrefixes().get("Milli") / SI.getSiPrefixes().get(groceryUnit)));
+        convertFromDLToML();
       } else if (this.quantity >= 100 && groceryUnit.equalsIgnoreCase("Milli")) {
-        this.setUnit(SI_Manager.getUnit("dL"));
-        this.setQuantityWithFactor(1
-            / (SI.getSiPrefixes().get("Desi") / SI.getSiPrefixes().get(groceryUnit)));
+        convertFromMLToDL();
       }
     } catch (IllegalArgumentException e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private void convertFromLToDL() {
+    if (unit.getAbrev().equalsIgnoreCase("L")) {
+      this.setUnit(SI_Manager.getUnit("dL"));
+      this.setQuantityWithFactor(1 / SI.getSiPrefixes().get("Desi"));
+    }
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private void convertFromGToKg() {
+    if (this.unit.getAbrev().equalsIgnoreCase("g")) {
+      this.setUnit(SI_Manager.getUnit("kg"));
+      this.setQuantityWithFactor(1 / SI.getSiPrefixes().get("Kilo"));
+    }
+  }
+
+  private void convertFromKgToG() {
+    this.setUnit(SI_Manager.getUnit("g"));
+    this.setQuantityWithFactor(SI.getSiPrefixes().get("Kilo"));
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private void convertFromDLToL() {
+    this.setUnit(SI_Manager.getUnit("L"));
+    this.setQuantityWithFactor(SI.getSiPrefixes().get("Desi"));
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private void convertFromDLToML() {
+    this.setUnit(SI_Manager.getUnit("mL"));
+    this.setQuantityWithFactor(1 / (SI.getSiPrefixes().get("Milli")
+        / SI.getSiPrefixes().get("Desi")));
+  }
+
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private void convertFromMLToDL() {
+    this.setUnit(SI_Manager.getUnit("dL"));
+    this.setQuantityWithFactor(1 / (SI.getSiPrefixes().get("Desi")
+        / SI.getSiPrefixes().get("Milli")));
   }
 
   /**
