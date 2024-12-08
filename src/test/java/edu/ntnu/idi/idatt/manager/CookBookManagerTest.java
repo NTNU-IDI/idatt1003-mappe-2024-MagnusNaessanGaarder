@@ -10,6 +10,7 @@ import edu.ntnu.idi.idatt.modules.SI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -153,6 +154,17 @@ class CookBookManagerTest {
 
   @Test
   void negativeMakeRecipe() {
+    assertThrows(IllegalArgumentException.class, () -> cbm.makeRecipe(new Recipe("test", "test", new String[] {"test"}, 1,
+        new ArrayList<>(Collections.singletonList(
+            fetchGrocery("test", g, 1, null, 1))), fridge)));
 
+    fridge.removeGrocery(grocery1);
+    fridge.removeGrocery(grocery2);
+    fridge.removeGrocery(grocery3);
+    fridge.removeGrocery(grocery4);
+    fridge.removeGrocery(grocery5);
+    fridge.removeGrocery(grocery6);
+
+    assertThrows(IllegalArgumentException.class, () -> cbm.makeRecipe(recipe1));
   }
 }
