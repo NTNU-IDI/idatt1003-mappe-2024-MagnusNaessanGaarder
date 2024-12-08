@@ -28,7 +28,7 @@ import java.util.List;
  * continues.<br>
  * {@code fridge} - An object of type {@link Fridge} acting as the
  * foodstorage for the application.<br>
- * {@code fm} - An object of type {@link FridgeManager}. Helps managing the Fridge.<br>
+ * {@code fm} - An object of type {@link FridgeManager}. It helps to manage the Fridge.<br>
  */
 public class UserInterface extends AbstractOption {
   //global variables
@@ -265,6 +265,7 @@ public class UserInterface extends AbstractOption {
    * @return An array of both amount and unit name of a Grocery, as a
    string-type array.
    */
+
   private String[] fetchAmountAndUnit() {
     String userInput;
     String[] amountAndUnit = new String[0];
@@ -347,7 +348,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description</strong><br>
-   * A method for fetching a expiration date for a Grocery from a useri input.
+   * A method for fetching an expiration date for a Grocery from a user input.
    *
    * @return A {@code LocalDate} expiration date for a grocery.
    */
@@ -448,7 +449,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description:</strong><br>
-   * A method for interpreting a userinput and play a corresponding command
+   * A method for interpreting a user input and play a corresponding command
    * from {@link #removeHandler()}.<br>
    *
    * @param userInput A String representing an usergiven command.
@@ -498,8 +499,8 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description:</strong><br>
-   * A method fetching a amount and unit name to remove from a Grocery
-   * based on a userinput.<br>
+   * A method fetching an amount and unit name to remove from a Grocery
+   * based on an userinput.<br>
    *
    * @param g An object of type {@link Grocery} to remove from.
    */
@@ -617,7 +618,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description:</strong><br>
-   * A method both displaying a the content of a Fridge and
+   * A method both displaying the content of a Fridge and
    * handeling commands from user input.<br>
    */
   public void displayFridge() {
@@ -790,7 +791,7 @@ public class UserInterface extends AbstractOption {
           retry = false;
         }
       } catch (IllegalArgumentException e) {
-        System.out.println(e.getMessage());
+        str.append(e.getMessage());
       }
     }
   }
@@ -843,7 +844,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description:</strong><br>
-   * A override of the
+   * An override of the
    * {@link AbstractOption#changeOptions(Grocery, Fridge, String, UserInterface) changeOption()}
    * from the abstract class {@link AbstractOption}.<br>
    *
@@ -877,7 +878,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Descriptions:</strong><br>
-   * A method displaying available commands and handling an user input
+   * A method displaying available commands and handling a user input
    * according to the available commands.
    */
   private void commands() {
@@ -912,7 +913,7 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description:</strong><br>
-   * A method purely for handling the a user input according
+   * A method purely for handling a user input according
    * to available commands.<br>
    *
    * @param userInput A String representing the users
@@ -1055,7 +1056,7 @@ public class UserInterface extends AbstractOption {
    */
   public void displayCookBook() {
     displayCookBookMenu();
-    recipeCommands(str.toString());
+    recipeCommands();
   }
 
   /**
@@ -1076,6 +1077,10 @@ public class UserInterface extends AbstractOption {
       str.append(
           display.recipeMenuList("Anbefalte oppskrifter:", cbm.getRecommendedRecipes(),
               "Ingen anbeflate ingredienser"));
+      //Viser utgåtte varer i en liste
+      str.append(
+          display.recipeMenuList("Tilgjengelige:", cbm.getAvailableRecipes(),
+              "Ingen tilgjengelige ingredienser"));
       //oppskrifter med varer som ikke er tilgjengelig i kjøleskapet
       str.append(display.recipeMenuList("Oppskrifter med ingredienser du ikke har:",
           cbm.getRest(),
@@ -1083,11 +1088,11 @@ public class UserInterface extends AbstractOption {
     }
   }
 
-  private void recipeCommands(String menu) {
+  private void recipeCommands() {
     boolean retry = true;
     while (retry) {
       clearScreen();
-      System.out.println(menu);
+      System.out.println(str);
       if (!cookBook.getRecipeList().isEmpty()) {
         System.out.println("""
             Skriv "-add" for å legge til en oppskrift.
@@ -1242,7 +1247,7 @@ public class UserInterface extends AbstractOption {
         instructions = Integer.parseInt(getInput());
         dir = new String[instructions];
         for (int i = 0; i < instructions; i++) {
-          System.out.printf("Skriv introduksjon nr. [%d]: ", i + 1);
+          System.out.printf("Skriv instruksjon nr. [%d]: ", i + 1);
           dir[i] = getInput();
         }
         retry = false;
@@ -1280,7 +1285,8 @@ public class UserInterface extends AbstractOption {
       } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
       } catch (Exception e) {
-        System.out.println("Unexpected error" + e.getMessage());
+        System.out.println("Unexpected error - Illegal input: " + e.getMessage()
+            + ". Type a number.");
       }
     }
     return recipes.stream().toList();

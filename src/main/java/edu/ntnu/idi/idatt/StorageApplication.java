@@ -8,10 +8,9 @@ import edu.ntnu.idi.idatt.modules.UserInterface;
  This application keeps track of Groceries in a Fridge / Food Storage<br>
  *
  * @author Magnus Naessan Gaarder.
- * @version 1.5.5
+ * @version 2.0.0
  */
 public class StorageApplication {
-
   /**
    * <strong>Description</strong><br>
    * The main method of the application. This method always initiates every time the program runs
@@ -19,7 +18,6 @@ public class StorageApplication {
    */
   public static void main(final String[] args) {
     final UserInterface ui = new UserInterface();
-
     ui.init();
     ui.start();
   }
