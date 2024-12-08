@@ -122,19 +122,19 @@ public abstract class AbstractTable {
    whitespace on left and right.<br>
    *
    * @param s The String being centered by whitespace.
-   * @param size The total width the string will be centered
+   * @param length The total width the string will be centered
    *             in as an integer.
    * @return A String centered by whitespace.
    */
-  private static String center(String s, int size) {
-    if (s == null || size <= s.length()) {
+  private static String center(String s, int length) {
+    if (s == null || length <= s.length()) {
       return s;
     }
 
-    StringBuilder sb = new StringBuilder(size);
-    sb.append(" ".repeat((size - s.length()) / 2));
+    StringBuilder sb = new StringBuilder(length);
+    sb.append(" ".repeat((length - s.length()) / 2));
     sb.append(s);
-    while (sb.length() < size) {
+    while (sb.length() < length) {
       sb.append(" ");
     }
     return sb.toString();
@@ -156,11 +156,31 @@ public abstract class AbstractTable {
     final int width = bottomBar.length() / rowTitleArr.length;
 
     tableData.append("|");
-    Arrays.asList(rowTitleArr).forEach(r -> tableData.append(center(r, width - 1)).append("|"));
+    int[] i = {0};
+
+    Arrays.asList(rowTitleArr).forEach(r -> {
+      if (i[0] == 0) {
+        tableData.append(center(r, width - 2));
+        i[0]++;
+      } else {
+        tableData.append(center(r, width - 1));
+      }
+      tableData.append("|");
+    });
+
+    i[0] = 0;
     tableData.append("\n").append(bottomBar).append("\n");
     Arrays.asList(rowDataArr).forEach(r -> {
       tableData.append("|");
-      Arrays.asList(r).forEach(rr -> tableData.append(center(rr, width - 1)).append("|"));
+      Arrays.asList(r).forEach(rr -> {
+        if (i[0] == 0) {
+          tableData.append(center(rr, width - 2));
+          i[0]++;
+        } else {
+          tableData.append(center(rr, width - 1));
+        }
+        tableData.append("|");
+      });
       tableData.append("\n");
     });
 
@@ -276,11 +296,11 @@ public abstract class AbstractTable {
     sb.append("\n");
 
     //| ID | name | quantity unit | price / unit | Best-before |
-    String idStr = center("ID", (bottomBar.length() * 5 / 100));
-    String nameStr = center("Navn", (bottomBar.length() * 20 / 100));
-    String quantityStr = center("Mengde", (bottomBar.length() * 20 / 100));
-    String priceStr = center("Pris", (bottomBar.length() * 25 / 100));
-    String bestBeforeStr = center("Best-før", (bottomBar.length() * 30 / 100 - 4));
+    String idStr = center("ID", Math.round((float) (86 * 5) / 100) - 2);
+    String nameStr = center("Navn", Math.round((float) (86 * 20) / 100) - 1);
+    String quantityStr = center("Mengde", Math.round((float) (86 * 20) / 100) - 1);
+    String priceStr = center("Pris", Math.round((float) (86 * 25) / 100) - 1);
+    String bestBeforeStr = center("Best-før", Math.round((float) (86 * 30) / 100) - 1);
 
     int[] lengths = new int[] {
         idStr.length(),
@@ -292,7 +312,8 @@ public abstract class AbstractTable {
 
     //formatering av streng
     String str = "|%s|%s|%s|%s|%s|";
-    sb.append(String.format(str,
+    sb.append(String.format(
+        str,
         idStr,
         nameStr,
         quantityStr,
