@@ -94,22 +94,51 @@ public class UserInterface extends AbstractOption {
     grocery3.removeAmount(500, g, fridge);
     grocery2.addAmount(6, stk);
 
-    final Recipe recipe1 = new Recipe("Banankake", "God!!", 
-        new String[] {"ins1:", "ins2:"}, 4,
-        new ArrayList<>(Arrays.asList(
-            new Grocery("Banan", stk, 2, null, 1),
-            new Grocery("Mel", kg, 0.5, null, 1),
-            new Grocery("Egg", stk, 2, null, 1),
-            new Grocery("Vaniljesukker", ts, 4, null, 1))), fridge);
-    final Recipe recipe2 = new Recipe("Brød", "Luftig!!", 
-        new String[] {"ins1:", "ins2:", "ins3:"}, 6,
+    final Recipe recipe1 = new Recipe("Banankake", "En saftig og smakfull "
+        + "banankake, perfekt for å bruke overmodne bananer. Enkel å lage og deilig som dessert "
+        + "eller mellommåltid.",
+            new String[]{
+              "Forvarm ovnen til 180°C.",
+              "Mos bananene i en bolle.",
+              "Rør sammen bananer, sukker og smør.",
+              "Tilsett mel, bakepulver og vaniljesukker.",
+              "Hell røren i en smurt form og stek i 50 minutter."
+            },
+            4,
+            new ArrayList<>(Arrays.asList(
+              new Grocery("Banan", stk, 2, null, 1),
+              new Grocery("Mel", kg, 0.5, null, 1),
+              new Grocery("Egg", stk, 2, null, 1),
+              new Grocery("Vaniljesukker", ts, 4, null, 1),
+              new Grocery("Sukker", g, 200, null, 1)
+            )),
+        fridge);
+    final Recipe recipe2 = new Recipe("Brød", "En klassisk oppskrift på hjemmebakt "
+        + "brød med myk kjerne og sprø skorpe. Perfekt til smørbrød eller som tilbehør til supper "
+        + "og gryter.",
+        new String[]{
+            "Bland mel, salt, egg, og gjær i en bolle.",
+            "Tilsett vann og elt til en jevn deig.",
+            "La deigen heve i 1 time.",
+            "Form brødene og la dem etterheve i 30 minutter.",
+            "Stek i ovnen på 200°C i 25-30 minutter."
+        }, 6,
         new ArrayList<>(Arrays.asList(
             new Grocery("Mel", g, 500, null, 1),
+            new Grocery("Salt", ts, 1, null, 1),
             new Grocery("Melk", dl, 2, null, 1),
             new Grocery("Egg", stk, 3, null, 1),
             new Grocery("Gjær", ss, 1, null, 1))), fridge);
-    final Recipe recipe3 = new Recipe("Penne Al Arabiata", "Spicy og digg!!", 
-        new String[] {"ins1:", "ins2:"}, 4,
+    final Recipe recipe3 = new Recipe("Penne Al Arabiata", "En krydret italiensk "
+        + "pastarett med en syrlig tomat- og chilisaus. En enkel og smakfull middag for "
+        + "pastaelskere.",
+        new String[]{
+            "Kok penne i lettsaltet vann.",
+            "Varm olivenolje i en panne og hvitløk til den er gyllen.",
+            "Tilsett hakket chili, hakkede tomater og persille.",
+            "La sausen småkoke i 15 minutter og krydre etter behov.",
+            "Bland kokt pasta med sausen og server."
+        }, 4,
         new ArrayList<>(Arrays.asList(
             new Grocery("Chilly", stk, 1, null, 1),
             new Grocery("Olivenolje", ml, 100, null, 1),
@@ -117,11 +146,20 @@ public class UserInterface extends AbstractOption {
             new Grocery("Hakkede tomater, Boks", stk, 2, null, 1),
             new Grocery("Persille", ss, 2, null, 1),
             new Grocery("Salt", ts, 2, null, 1))), fridge);
-    final Recipe recipe4 = new Recipe("Naan Brød", "Deilig!!", 
-        new String[] {"ajsd", "askhd"}, 2,
+    final Recipe recipe4 = new Recipe("Naan Brød", "Mykt og luftig indisk flatbrød,"
+        + " perfekt som tilbehør til gryteretter eller alene. Lett å lage og stekes i en "
+        + "varm stekepanne.",
+        new String[]{
+            "Bland hvetemel, egg, koreander og salt i en bolle.",
+            "Tilsett yoghurt og vann, og elt til en smidig deig.",
+            "La deigen heve i 1 time.",
+            "Del deigen i små biter og kjevle dem ut.",
+            "Stek brødene i en varm stekepanne til de er gylne."
+        }, 2,
         new ArrayList<>(Arrays.asList(
             new Grocery("Egg", stk, 2, null, 1),
             new Grocery("Mel", dl, 2, null, 1),
+            new Grocery("Yoghurt", dl, 1, null, 1),
             new Grocery("Koreander", ts, 1, null, 1),
             new Grocery("Salt", ts, 1, null, 1))), fridge);
 
