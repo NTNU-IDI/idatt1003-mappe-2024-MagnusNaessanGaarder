@@ -26,19 +26,21 @@ condence the menu and make it simpler and easier for the user to use.
 
 ## Project structure
 
-The main Java sourcefiles for the application is located in the src-folder (src/main/java/edu/ntnu/idi/idatt).
-In this folder there are three packages: "manager", "modules" and "utils" as well as the main sourcefile for the 
-application, StorageApplication.java. 
-The "manager"-package contains the classes that manages the groceries and recipes in the
-application. The "modules"-package contains the classes that represents the groceries and recipes in the application.
-The "utils"-package contains the classes that are used to help the application run smoothly.
+The main Java sourcefiles for the application is located in the idatt-folder in src (src/main/java/edu/ntnu/idi/idatt).
+In this folder there are three packages: 
+ - "modules" - The "modules"-package contains the classes that represents the groceries and recipes in the application.
+ - "utils" - The "utils"-package contains the classes that are used to help the application run smoothly.
+ - "views" - The "views"-package contains the class that are used to display the application in the terminal (UserInterface.java).
 
-The JUnit-test classes for the application is located in the test-folder (src/test/java/edu/ntnu/idi/idatt).
+Including these packages the main sourcefile for the application, StorageApplication.java, is located in the idatt-folder.  
+
+
+The JUnit-test classes for the application is located in the idatt-folder in test (src/test/java/edu/ntnu/idi/idatt).
 In this folder there are two packages: "manager" and "modules". Each test package has tests form their respective 
 classes in the main sourcefiles, namely the manager-classes and the modules-classes. The JUnit-tests for the manager -
 package was integrated to ensure testing of the other important features for the modules-package classes.
 
-## https://github.com/NTNU-IDI/idatt1003-mappe-2024-MagnusNaessanGaarder
+#### https://github.com/NTNU-IDI/idatt1003-mappe-2024-MagnusNaessanGaarder
 
 ## How to run the project
 

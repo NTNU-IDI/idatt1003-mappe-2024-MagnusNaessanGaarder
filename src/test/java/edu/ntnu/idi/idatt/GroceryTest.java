@@ -1,5 +1,9 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.SI;
+import edu.ntnu.idi.idatt.modules.SI_Manager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
