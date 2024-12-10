@@ -1,8 +1,5 @@
-package edu.ntnu.idi.idatt.manager;
+package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
-import edu.ntnu.idi.idatt.modules.SI;
 import edu.ntnu.idi.idatt.utils.AbstractTerminalAction;
 
 /**

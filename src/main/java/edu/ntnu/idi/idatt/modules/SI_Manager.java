@@ -1,6 +1,5 @@
-package edu.ntnu.idi.idatt.manager;
+package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.modules.SI;
 import java.util.List;
 
 /**

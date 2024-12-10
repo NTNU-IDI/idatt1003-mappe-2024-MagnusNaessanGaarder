@@ -1,10 +1,5 @@
-package edu.ntnu.idi.idatt.manager;
+package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.modules.CookBook;
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
-import edu.ntnu.idi.idatt.modules.Recipe;
-import edu.ntnu.idi.idatt.modules.SI;
 import java.util.Comparator;
 import java.util.List;
 

@@ -1,9 +1,14 @@
-package edu.ntnu.idi.idatt.modules;
+package edu.ntnu.idi.idatt.views;
 
-import edu.ntnu.idi.idatt.manager.CookBookManager;
-import edu.ntnu.idi.idatt.manager.FridgeManager;
-import edu.ntnu.idi.idatt.manager.GroceryManager;
-import edu.ntnu.idi.idatt.manager.SI_Manager;
+import edu.ntnu.idi.idatt.modules.CookBook;
+import edu.ntnu.idi.idatt.modules.CookBookManager;
+import edu.ntnu.idi.idatt.modules.Fridge;
+import edu.ntnu.idi.idatt.modules.FridgeManager;
+import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.GroceryManager;
+import edu.ntnu.idi.idatt.modules.Recipe;
+import edu.ntnu.idi.idatt.modules.SI;
+import edu.ntnu.idi.idatt.modules.SI_Manager;
 import edu.ntnu.idi.idatt.utils.AbstractOption;
 import edu.ntnu.idi.idatt.utils.AbstractTable;
 import edu.ntnu.idi.idatt.utils.Display;

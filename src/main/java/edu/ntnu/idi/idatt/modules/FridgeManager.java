@@ -1,7 +1,5 @@
-package edu.ntnu.idi.idatt.manager;
+package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.modules.Fridge;
-import edu.ntnu.idi.idatt.modules.Grocery;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
