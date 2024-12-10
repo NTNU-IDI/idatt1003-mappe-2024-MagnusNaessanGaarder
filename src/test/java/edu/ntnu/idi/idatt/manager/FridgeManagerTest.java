@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.FridgeManager;
+import edu.ntnu.idi.idatt.modules.SI_Manager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;

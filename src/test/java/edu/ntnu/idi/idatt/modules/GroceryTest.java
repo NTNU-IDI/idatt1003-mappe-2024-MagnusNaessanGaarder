@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.manager.SI_Manager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

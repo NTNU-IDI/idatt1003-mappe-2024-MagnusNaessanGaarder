@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.GroceryManager;
+import edu.ntnu.idi.idatt.modules.SI_Manager;
 import java.time.LocalDate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -7,6 +7,8 @@ import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.Recipe;
 import edu.ntnu.idi.idatt.modules.SI;
+import edu.ntnu.idi.idatt.modules.CookBookManager;
+import edu.ntnu.idi.idatt.modules.SI_Manager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.manager.FridgeManager;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
