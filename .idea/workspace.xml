@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Refactoring and updating README-file">
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Refactoring tests and updating README">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/CookBookManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/CookBookManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/FridgeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/GroceryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI_Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/views/UserInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/CookBookManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/CookBookManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/FridgeManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/FridgeManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/GroceryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/GroceryManagerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/FridgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/FridgeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/GroceryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/GroceryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,8 +123,8 @@
       <recent name="" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="edu.ntnu.idi.idatt.modules" />
       <recent name="edu.ntnu.idi.idatt" />
+      <recent name="edu.ntnu.idi.idatt.modules" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="edu.ntnu.idi.idatt.manager" />
@@ -158,12 +144,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.manager.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.manager" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.manager.CookBookManagerTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.CookBookManagerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -173,12 +159,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.manager.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.manager" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.manager.CookBookManagerTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.CookBookManagerTest" />
       <option name="METHOD_NAME" value="getRecipe" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -189,12 +175,12 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.manager.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.manager" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.manager.CookBookManagerTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.CookBookManagerTest" />
       <option name="METHOD_NAME" value="makeRecipe" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -209,8 +195,8 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt.modules" />
-      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.modules.RecipeTest" />
+      <option name="PACKAGE_NAME" value="edu.ntnu.idi.idatt" />
+      <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.RecipeTest" />
       <option name="METHOD_NAME" value="getRecipes" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -291,42 +277,7 @@
       <workItem from="1733589027044" duration="2004000" />
       <workItem from="1733660239500" duration="2176000" />
       <workItem from="1733662458087" duration="23435000" />
-      <workItem from="1733833209774" duration="7543000" />
-    </task>
-    <task id="LOCAL−00006" summary="endret på klient og logikk i ulike klasser">
-      <option name="closed" value="true" />
-      <created>1731066010703</created>
-      <option name="number" value="LOCAL−00006" />
-      <option name="presentableId" value="LOCAL−00006" />
-      <updated>1731066010703</updated>
-    </task>
-    <task id="LOCAL−00007" summary="Byggeklossprinsippet for å få mer renhet i koden.">
-      <option name="closed" value="true" />
-      <created>1731093818177</created>
-      <option name="number" value="LOCAL−00007" />
-      <option name="presentableId" value="LOCAL−00007" />
-      <updated>1731093818177</updated>
-    </task>
-    <task id="LOCAL−00008" summary="Byggeklossprinsippet, dele opp, forbedre kode">
-      <option name="closed" value="true" />
-      <created>1731251352253</created>
-      <option name="number" value="LOCAL−00008" />
-      <option name="presentableId" value="LOCAL−00008" />
-      <updated>1731251352253</updated>
-    </task>
-    <task id="LOCAL−00009" summary="Ferdigstiller del 1, mangler søkefunksjon">
-      <option name="closed" value="true" />
-      <created>1731281624908</created>
-      <option name="number" value="LOCAL−00009" />
-      <option name="presentableId" value="LOCAL−00009" />
-      <updated>1731281624908</updated>
-    </task>
-    <task id="LOCAL−00010" summary="feiljusteringer i del 1">
-      <option name="closed" value="true" />
-      <created>1731631782587</created>
-      <option name="number" value="LOCAL−00010" />
-      <option name="presentableId" value="LOCAL−00010" />
-      <updated>1731631782588</updated>
+      <workItem from="1733833209774" duration="9792000" />
     </task>
     <task id="LOCAL−00011" summary="refactoring and structuring code">
       <option name="closed" value="true" />
@@ -636,7 +587,42 @@
       <option name="presentableId" value="LOCAL−00054" />
       <updated>1733706843537</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL−00055" summary="Refactoring code for less coupling.">
+      <option name="closed" value="true" />
+      <created>1733865547969</created>
+      <option name="number" value="LOCAL−00055" />
+      <option name="presentableId" value="LOCAL−00055" />
+      <updated>1733865547969</updated>
+    </task>
+    <task id="LOCAL−00056" summary="Refactoring tests.">
+      <option name="closed" value="true" />
+      <created>1733865576489</created>
+      <option name="number" value="LOCAL−00056" />
+      <option name="presentableId" value="LOCAL−00056" />
+      <updated>1733865576489</updated>
+    </task>
+    <task id="LOCAL−00057" summary="Refactoring imports.">
+      <option name="closed" value="true" />
+      <created>1733865684990</created>
+      <option name="number" value="LOCAL−00057" />
+      <option name="presentableId" value="LOCAL−00057" />
+      <updated>1733865684990</updated>
+    </task>
+    <task id="LOCAL−00058" summary="Updating version, README and workspace.">
+      <option name="closed" value="true" />
+      <created>1733865717756</created>
+      <option name="number" value="LOCAL−00058" />
+      <option name="presentableId" value="LOCAL−00058" />
+      <updated>1733865717756</updated>
+    </task>
+    <task id="LOCAL−00059" summary="Refactoring tests and updating README">
+      <option name="closed" value="true" />
+      <created>1733866284023</created>
+      <option name="number" value="LOCAL−00059" />
+      <option name="presentableId" value="LOCAL−00059" />
+      <updated>1733866284023</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -654,11 +640,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updating workspace.xml" />
-    <MESSAGE value="updating JUnit-tests - FridgeTest, and RecipeTest" />
-    <MESSAGE value="updating and bugfixing - AbstractRecipe, Recipe and CookBookManager" />
-    <MESSAGE value="Creating options for CookBook." />
-    <MESSAGE value="Updating and bugfixing - Fridge, Grocery and FridgeManager." />
     <MESSAGE value="Creating features for CookBook - UserInterface." />
     <MESSAGE value="Updating workspace." />
     <MESSAGE value="Reworked logic for classes - Grocery, FridgeManager, SI." />
@@ -679,7 +660,12 @@
     <MESSAGE value="Refactoring, updating version and workspace." />
     <MESSAGE value="Refactoring, and spellchecking." />
     <MESSAGE value="Refactoring and updating README-file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring and updating README-file" />
+    <MESSAGE value="Refactoring code for less coupling." />
+    <MESSAGE value="Refactoring tests." />
+    <MESSAGE value="Refactoring imports." />
+    <MESSAGE value="Updating version, README and workspace." />
+    <MESSAGE value="Refactoring tests and updating README" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring tests and updating README" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

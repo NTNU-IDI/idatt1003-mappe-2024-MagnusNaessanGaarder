@@ -114,7 +114,7 @@ Stack Overflow (2023) How to clear the console using Java? [Link to StackOverflo
 ##### KI:
 - JavaDocing og generering av "dummy-elementer" i `init()`:
    - CoPilot.
-- Forslag filstruktur og oppsett av prosjekt:
+- Forslag filstruktur og hjelp til SI-klasse:
    - ChatGPT.
 
 
