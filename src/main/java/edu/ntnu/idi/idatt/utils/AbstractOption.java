@@ -1,11 +1,11 @@
 package edu.ntnu.idi.idatt.utils;
 
-import static edu.ntnu.idi.idatt.manager.GroceryManager.getAmountAndUnit;
+import static edu.ntnu.idi.idatt.modules.GroceryManager.getAmountAndUnit;
 
-import edu.ntnu.idi.idatt.manager.GroceryManager;
 import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
-import edu.ntnu.idi.idatt.modules.UserInterface;
+import edu.ntnu.idi.idatt.modules.GroceryManager;
+import edu.ntnu.idi.idatt.views.UserInterface;
 
 /**
  * <strong>Heritage</strong><br>

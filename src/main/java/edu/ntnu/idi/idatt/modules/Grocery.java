@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.modules;
 
-import edu.ntnu.idi.idatt.manager.SI_Manager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

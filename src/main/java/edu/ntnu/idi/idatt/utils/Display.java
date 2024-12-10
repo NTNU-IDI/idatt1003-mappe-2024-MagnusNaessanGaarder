@@ -1,8 +1,8 @@
 package edu.ntnu.idi.idatt.utils;
 
-import edu.ntnu.idi.idatt.manager.FridgeManager;
-import edu.ntnu.idi.idatt.manager.GroceryManager;
+import edu.ntnu.idi.idatt.modules.FridgeManager;
 import edu.ntnu.idi.idatt.modules.Grocery;
+import edu.ntnu.idi.idatt.modules.GroceryManager;
 import edu.ntnu.idi.idatt.modules.Recipe;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
