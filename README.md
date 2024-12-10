@@ -2,13 +2,10 @@
 [![Review Assignment Due Date]([x]https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/INcAwgxk)
 # Portfolio project IDATT1003
 This file uses Mark Down syntax. For more information see [here]([x]https://www.markdownguide.org/basic-syntax/).
-[!E-portofolio](https://sites.google.com/view/magnusnaessangaarder/om-meg?authuser=0)
-[!Assignments 1-11 IDATT1003](https://github.com/MagnusNaessanGaarder/IDATT1003_ProgrammeringOvinger)
 
-[//]: # Name and student ID
+STUDENT NAME = "Magnus Næssan Gaarder"
 
-STUDENT NAME = "Magnus Næssan Gaarder"  
-STUDENT ID = ""
+CANDIDATE ID = "10019"
 
 ## Project description
 
@@ -37,10 +34,9 @@ application. The "modules"-package contains the classes that represents the groc
 The "utils"-package contains the classes that are used to help the application run smoothly.
 
 The JUnit-test classes for the application is located in the test-folder (src/test/java/edu/ntnu/idi/idatt).
-In this folder there are two packages: "manager" and "modules". The "manager"-package contains the JUnit-test classes
-for the classes in the "manager"-package in the src-folder. The "modules"-package contains the JUnit-test classes for
-the classes in the "modules"-package in the src-folder. JUnit-tests for the manager-package was integrated to ensure
-testing of the other important features for the modules-package classes.
+In this folder there are two packages: "manager" and "modules". Each test package has tests form their respective 
+classes in the main sourcefiles, namely the manager-classes and the modules-classes. The JUnit-tests for the manager -
+package was integrated to ensure testing of the other important features for the modules-package classes.
 
 ## https://github.com/NTNU-IDI/idatt1003-mappe-2024-MagnusNaessanGaarder
 
@@ -53,11 +49,11 @@ the UserInterface class which stars the application.
 To run the application, there are two options:
 
 1. Run the main sourcefile through a commandline terminal. For this method you need to download the project from
-the GitHub repository and navigate to the project folder in the terminal. Then you can run the application by typing
-the following command in the terminal:
-```cd [path to the project folder]```
-```cd src/main/java/edu/ntnu/idi/idatt```
-```Java StorageApplication.java```.
+the GitHub repository and navigate to the project folder in the terminal. Make sure to download the latest release 
+of the application. Then you can run the application by typing the following command in the terminal:
+   * ```cd [path to the project folder]```.
+   * ```cd src/main/java/edu/ntnu/idi/idatt```.
+   * ```Java StorageApplication.java```. 
 Simply press enter after each command. This will run the application in the terminal.
 2. Run the main sourcefile StorageApplication.java in src/main/java/edu/ntnu/idi/idatt/StorageApplication.java directly 
 in the IDE of choice. If you are using IntelliJ IDEA, you can run the application by right-clicking on the main 
@@ -86,3 +82,37 @@ select "Run 'All Tests'". The tests should run and the results should be display
 
 [//]: # (TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
 Or if you have used code from a website or other source, include a link to the source.)
+
+Horstmann, C. S.(2024). Core Java Volume I - Fundamentals. 13th ed. Pearson Education, Inc.
+
+Oracle. Interface Stream<T> Java Platform, Standard Edition 8 API Specification.
+[Link to oracle - Stream](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html)
+
+Oracle. Class ArrayList<E> Java Platform, Standard Edition 8 API Specification.
+[Link to oracle - ArrayList](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)
+
+Oracle. Interface Comparator Java Platform, Standard Edition 8 API Specification.
+[Link to oracle - Comparator](https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html)
+
+Oracle. Interface HashMap<K,V> Java Platform, Standard Edition 8 API Specification.
+[Link to oracle - HashMap](https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)
+
+Oracle. Class LocalDate Java Platform, Standard Edition 8 API Specification.
+[Link to oracle - LocalDate](https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html)
+
+Oracle. Class Scanner Java Platform, Standard Edition 8 API Specification.
+[Link to oracle - Scanner](https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html)
+
+Stack Overflow. (2022) How to center a string using String.format? [Link to StackOverflow - StringFormat](https://stackoverflow.com/questions/8154366/how-to-center-a-string-using-string-format)
+
+Stack Overflow (2023) How to clear the console using Java? [Link to StackOverflow - clearScreen](https://stackoverflow.com/questions/2979383/how-to-clear-the-console-using-java)
+
+
+
+##### KI:
+- JavaDocing og generering av "dummy-elementer" i `init()`:
+   - CoPilot.
+- Forslag filstruktur og oppsett av prosjekt:
+   - ChatGPT.
+
+

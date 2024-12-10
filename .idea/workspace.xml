@@ -4,10 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Refactoring, and spellchecking.">
+    <list default="true" id="3a4323eb-9d24-46d1-b212-cf10c7fee581" name="Changes" comment="Refactoring and updating README-file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/StorageApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/CookBookManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/CookBookManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/FridgeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/FridgeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/GroceryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/GroceryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/manager/SI_Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/SI_Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/Grocery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/modules/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/views/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/AbstractOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/ntnu/idi/idatt/utils/Display.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/CookBookManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/CookBookManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/FridgeManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/FridgeManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/GroceryManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/manager/GroceryManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/FridgeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/FridgeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/GroceryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/edu/ntnu/idi/idatt/modules/GroceryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,68 +69,69 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Client.executor": "Run",
-    "Application.Run Program.executor": "Run",
-    "JUnit.ClientTest.executor": "Run",
-    "JUnit.ClientTest.testAddToFridgeDate.executor": "Run",
-    "JUnit.ClientTest.testGetUnit.executor": "Run",
-    "JUnit.ClientTest.testValidUnit.executor": "Run",
-    "JUnit.CookBookManagerTest.executor": "Run",
-    "JUnit.CookBookManagerTest.getAvailableRecipes.executor": "Run",
-    "JUnit.CookBookManagerTest.getRecipe.executor": "Run",
-    "JUnit.CookBookManagerTest.makeRecipe.executor": "Run",
-    "JUnit.CookBookTest.executor": "Run",
-    "JUnit.CookBookTest.getRecipeList.executor": "Run",
-    "JUnit.CookBookTest.negativeGetRecipeList.executor": "Run",
-    "JUnit.DisplayTest.executor": "Coverage",
-    "JUnit.FridgeManagerTest.executor": "Run",
-    "JUnit.FridgeManagerTest.getByName.executor": "Run",
-    "JUnit.FridgeManagerTest.getTotalPrice.executor": "Run",
-    "JUnit.FridgeTest.addGrocery.executor": "Run",
-    "JUnit.FridgeTest.executor": "Coverage",
-    "JUnit.FridgeTest.fridgeAddGrocery.executor": "Debug",
-    "JUnit.FridgeTest.fridgeGetMoneyLoss.executor": "Debug",
-    "JUnit.FridgeTest.removeGrocery.executor": "Run",
-    "JUnit.GroceryManagerTest.addAmountGrocery.executor": "Run",
-    "JUnit.GroceryManagerTest.executor": "Run",
-    "JUnit.GroceryTest.executor": "Coverage",
-    "JUnit.GroceryTest.groceryAddAmount.executor": "Run",
-    "JUnit.GroceryTest.groceryConvertUnit.executor": "Run",
-    "JUnit.GroceryTest.groceryFailAddAmount.executor": "Run",
-    "JUnit.GroceryTest.groceryFailRemoveAmount.executor": "Run",
-    "JUnit.GroceryTest.groceryGetDate.executor": "Run",
-    "JUnit.GroceryTest.groceryRemoveAmount.executor": "Run",
-    "JUnit.MainTest.testAddToFridgeDate.executor": "Debug",
-    "JUnit.MainTest.testValidUnit.executor": "Run",
-    "JUnit.RecipeTest.executor": "Run",
-    "JUnit.RecipeTest.getDirections.executor": "Run",
-    "JUnit.RecipeTest.getRecipes.executor": "Run",
-    "JUnit.Run all Tests.executor": "Run",
-    "JUnit.TableTest.printTable.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "#1 on main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/magnu/OneDrive/BIDATA/Programmering/Programmering1/Java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run Program.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.testAddToFridgeDate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.testGetUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ClientTest.testValidUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookManagerTest.getAvailableRecipes.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookManagerTest.getRecipe.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookManagerTest.makeRecipe.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookTest.getRecipeList.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CookBookTest.negativeGetRecipeList.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DisplayTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.FridgeManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FridgeManagerTest.getByName.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FridgeManagerTest.getTotalPrice.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FridgeTest.addGrocery.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FridgeTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.FridgeTest.fridgeAddGrocery.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.FridgeTest.fridgeGetMoneyLoss.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.FridgeTest.removeGrocery.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryManagerTest.addAmountGrocery.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.GroceryTest.groceryAddAmount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryConvertUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryFailAddAmount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryFailRemoveAmount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryGetDate.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GroceryTest.groceryRemoveAmount.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MainTest.testAddToFridgeDate.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.MainTest.testValidUnit.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RecipeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RecipeTest.getDirections.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RecipeTest.getRecipes.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Run all Tests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TableTest.printTable.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.idatt in Foodwaste.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#1 on main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/magnu/OneDrive/BIDATA/Programmering/Programmering1/Java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -132,7 +146,7 @@
       <recent name="edu.ntnu.idi.idatt" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.idatt in Foodwaste">
+  <component name="RunManager" selected="Application.Run Program">
     <configuration name="Run Program" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="edu.ntnu.idi.idatt.StorageApplication" />
       <module name="Foodwaste" />
@@ -191,7 +205,7 @@
       <module name="Foodwaste" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="edu.ntnu.idi.idatt.modules.*" />
+          <option name="PATTERN" value="edu.ntnu.idi.idatt.views.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -276,14 +290,8 @@
       <workItem from="1733588124435" duration="879000" />
       <workItem from="1733589027044" duration="2004000" />
       <workItem from="1733660239500" duration="2176000" />
-      <workItem from="1733662458087" duration="19291000" />
-    </task>
-    <task id="LOCAL−00005" summary="Feiloppretting på klient">
-      <option name="closed" value="true" />
-      <created>1730773264721</created>
-      <option name="number" value="LOCAL−00005" />
-      <option name="presentableId" value="LOCAL−00005" />
-      <updated>1730773264721</updated>
+      <workItem from="1733662458087" duration="23435000" />
+      <workItem from="1733833209774" duration="7543000" />
     </task>
     <task id="LOCAL−00006" summary="endret på klient og logikk i ulike klasser">
       <option name="closed" value="true" />
@@ -621,7 +629,14 @@
       <option name="presentableId" value="LOCAL−00053" />
       <updated>1733692822468</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL−00054" summary="Refactoring and updating README-file">
+      <option name="closed" value="true" />
+      <created>1733706843537</created>
+      <option name="number" value="LOCAL−00054" />
+      <option name="presentableId" value="LOCAL−00054" />
+      <updated>1733706843537</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updating JUnit-tests - GroceryTest." />
     <MESSAGE value="Updating workspace.xml" />
     <MESSAGE value="updating JUnit-tests - FridgeTest, and RecipeTest" />
     <MESSAGE value="updating and bugfixing - AbstractRecipe, Recipe and CookBookManager" />
@@ -664,7 +678,8 @@
     <MESSAGE value="Refactoring and reducing complexity." />
     <MESSAGE value="Refactoring, updating version and workspace." />
     <MESSAGE value="Refactoring, and spellchecking." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring, and spellchecking." />
+    <MESSAGE value="Refactoring and updating README-file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring and updating README-file" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
