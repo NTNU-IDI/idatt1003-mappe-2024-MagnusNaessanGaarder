@@ -62,10 +62,10 @@ public class SI_Manager {
       unit = "Liter";
       unitForPrice = "L";
       prefix = "";
-    } else if (abrev.contains("L")) {
+    } else if (abrev.contains("L") || abrev.contains("l")) {
       if (abrev.contains("d")) {
         unit = prefix = "Desi";
-      } else if (abrev.contains("m")) {
+      } else if (abrev.contains("m") || abrev.contains("M")) {
         unit = prefix = "Milli";
       } else {
         unit = prefix = "Centi";
