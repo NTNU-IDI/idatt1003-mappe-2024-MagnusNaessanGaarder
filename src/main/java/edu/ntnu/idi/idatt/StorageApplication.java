@@ -8,7 +8,7 @@ import edu.ntnu.idi.idatt.views.UserInterface;
  This application keeps track of Groceries in a Fridge / Food Storage<br>
  *
  * @author Magnus Naessan Gaarder.
- * @version 2.1.1
+ * @version 2.1.2
  */
 public class StorageApplication {
   /**

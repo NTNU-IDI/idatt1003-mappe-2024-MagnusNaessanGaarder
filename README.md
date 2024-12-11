@@ -3,9 +3,8 @@
 # Portfolio project IDATT1003
 This file uses Mark Down syntax. For more information see [here]([x]https://www.markdownguide.org/basic-syntax/).
 
-STUDENT NAME = "Magnus Næssan Gaarder"
-
-CANDIDATE ID = "10019"
+STUDENT NAME = "Magnus Næssan Gaarder".
+CANDIDATE ID = "10019".
 
 ## Project description
 
@@ -28,9 +27,10 @@ condence the menu and make it simpler and easier for the user to use.
 
 The main Java sourcefiles for the application is located in the idatt-folder in src (src/main/java/edu/ntnu/idi/idatt).
 In this folder there are three packages: 
- - "modules" - The "modules"-package contains the classes that represents the groceries and recipes in the application.
- - "utils" - The "utils"-package contains the classes that are used to help the application run smoothly.
- - "views" - The "views"-package contains the class that are used to display the application in the terminal (UserInterface.java).
+ - `modules` - The "modules"-package contains the classes that represents the groceries and recipes in the application.
+ - `utils` - The "utils"-package contains the classes that are used to help the application run smoothly.
+ - `views` - The "views"-package contains the class that are used to display the application in the terminal 
+(UserInterface.java).
 
 Including these packages the main sourcefile for the application, StorageApplication.java, is located in the idatt-folder.  
 
@@ -66,10 +66,11 @@ The first method is recommended as it promotes unique features such as clearing 
 menus is displayed. While the first method is recommended, the second method is also a good option if you are
 familiar with the IDE and want to run the application in the IDE.
 
-The input and output of the program is text-based, as the project is an TUI. The expected behaviour of the program is that the application starts 
-and the user is presented with a menu with commands that the user can use to navigate the application. With this, 
-the user can choose to add, remove or update groceries and add or remove groceries from a foodstorage. The user also 
-gets to add, remove or make a recipe, make a dish from a recipe and view the groceries in the foodstorage.
+The input and output of the program is text-based, as the project is an TUI. The expected behaviour of the program is 
+that the application starts and the user is presented with a menu with commands that the user can use to navigate the 
+application. With this, the user can choose to add, remove or update groceries and add or remove groceries from a 
+foodstorage. The user also gets to add, remove or make a recipe, make a dish from a recipe and view the groceries in 
+the foodstorage.
 
 
 ## How to run the tests
@@ -81,9 +82,6 @@ select "Run 'All Tests'". The tests should run and the results should be display
 
 
 ## References
-
-[//]: # (TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
-Or if you have used code from a website or other source, include a link to the source.)
 
 Horstmann, C. S.(2024). Core Java Volume I - Fundamentals. 13th ed. Pearson Education, Inc.
 
@@ -105,13 +103,12 @@ Oracle. Class LocalDate Java Platform, Standard Edition 8 API Specification.
 Oracle. Class Scanner Java Platform, Standard Edition 8 API Specification.
 [Link to oracle - Scanner](https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html)
 
-Stack Overflow. (2022) How to center a string using String.format? [Link to StackOverflow - StringFormat](https://stackoverflow.com/questions/8154366/how-to-center-a-string-using-string-format)
+Stack Overflow. (2022) How to center a string using `String.format()`? [Link to StackOverflow - StringFormat](https://stackoverflow.com/questions/8154366/how-to-center-a-string-using-string-format)
 
 Stack Overflow (2023) How to clear the console using Java? [Link to StackOverflow - clearScreen](https://stackoverflow.com/questions/2979383/how-to-clear-the-console-using-java)
 
 
-
-##### KI:
+#### KI:
 - JavaDocing og generering av "dummy-elementer" i `init()`:
    - CoPilot.
 - Forslag filstruktur og hjelp til SI-klasse:
