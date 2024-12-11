@@ -85,14 +85,14 @@ class GroceryTest {
   void groceryRemoveAmount() {
     fetchGrocery("Melk", liter, 1, LocalDate.now(), 1);
     grocery.removeAmount(9,
-        new SI("Desiliter", "dL","L","Desi"), fridge);
+        new SI("Desiliter", "dL","L","Desi"));
     assertEquals(1, grocery.getQuantity(), "Expected 1 but got another value.");
   }
 
   @Test
   void failRemoveAmount() {
     fetchGrocery("Melk", liter, 1, LocalDate.now(), 1);
-    assertThrows(IllegalArgumentException.class, () -> grocery.removeAmount(-1, liter, fridge),
+    assertThrows(IllegalArgumentException.class, () -> grocery.removeAmount(-1, liter),
         "Grocery.removeAmount() should throw an error on negative values");
   }
 

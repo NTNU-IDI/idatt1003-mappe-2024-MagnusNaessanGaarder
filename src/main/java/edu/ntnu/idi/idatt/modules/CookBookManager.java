@@ -150,8 +150,11 @@ public class CookBookManager {
               .toList()
               .forEach(grocery -> {
                 if (amount[0] > 0) {
-                  grocery.removeAmount(amount[0], unit, fridge);
+                  grocery.removeAmount(amount[0], unit);
                   amount[0] -= grocery.getQuantity();
+                  if (grocery.getQuantity() <= 0) {
+                    fridge.removeGrocery(grocery);
+                  }
                 }
               });
         }

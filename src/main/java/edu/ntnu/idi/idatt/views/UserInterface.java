@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt.views;
 
+import static edu.ntnu.idi.idatt.modules.GroceryManager.getAmountAndUnit;
+
 import edu.ntnu.idi.idatt.modules.CookBook;
 import edu.ntnu.idi.idatt.modules.CookBookManager;
 import edu.ntnu.idi.idatt.modules.Fridge;
@@ -96,7 +98,11 @@ public class UserInterface extends AbstractOption {
     this.fridge.addGrocery(grocery6);
 
     //tester å legge til og trekke fra fra varer i kjøleskapet
-    grocery3.removeAmount(500, g, fridge);
+    grocery3.removeAmount(500, g);
+    if (grocery3.getQuantity() <= 0) {
+      fridge.removeGrocery(grocery3);
+      System.out.println("Fjernet vare med vareID " + grocery3.getGroceryID());
+    }
     grocery2.addAmount(6, stk);
 
     final Recipe recipe1 = new Recipe("Banankake", "En saftig og smakfull "
@@ -226,6 +232,7 @@ public class UserInterface extends AbstractOption {
     super.menuOption(this, userInput);
   }
 
+
   /**
    * <strong>Description:</strong><br>
    * A method for fetching user input and ultimatly adding a new {@link Grocery}
@@ -299,6 +306,25 @@ public class UserInterface extends AbstractOption {
       addToFridge();
     }
   }
+
+  /**
+   * <strong>Description:</strong><br>
+   * A method for fetching user input and ultimatly adding a new {@link Grocery}
+   * based on the user inputs.<br>
+   */
+  public void addToGrocery(final Grocery g) {
+    try {
+      clearScreen();
+      GroceryManager gm = new GroceryManager(g);
+      System.out.println(AbstractTable.createMenuTable("LEGG TIL " + g.getName().toUpperCase(),
+          "Fyll ut deltaljer om varen du skal legge til:"));
+      String[] amountAndUnit = getAmountAndUnit(getInput());
+      gm.addAmountGrocery(amountAndUnit);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
 
   /**
    * <strong>Description</strong><br>
@@ -434,13 +460,36 @@ public class UserInterface extends AbstractOption {
 
   /**
    * <strong>Description:</strong>
-   * A method for displaying a list of available groceries and handling
+   * A method for displaying a list of removable groceries and handling
    * commands from the user, as well as handeling Exceptions.
    */
   public void removeFromFridge() {
     try {
       displayRemoveList();
       removeHandler();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
+   * <strong>Description:</strong>
+   * A method for removing a groceries and handling
+   * commands from the user, as well as handeling Exceptions.
+   */
+  public void removeFromGrocery(final Grocery g) {
+    try {
+      clearScreen();
+      final GroceryManager gm = new GroceryManager(g);
+      str = new StringBuilder();
+      System.out.println(AbstractTable.createMenuTable("FJERN FRA " + g.getName().toUpperCase(),
+          "Fyll ut deltaljer om varen du skal fjerne fra:"));
+      String[] amountAndUnit = getAmountAndUnit(getInput());
+      gm.removeAmountGrocery(amountAndUnit);
+      if (g.getQuantity() <= 0) {
+        fridge.removeGrocery(g);
+        System.out.println("Fjernet vare med vareID " + g.getGroceryID());
+      }
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -558,7 +607,11 @@ public class UserInterface extends AbstractOption {
             + "/ desiliter / stykker): ");
         String staticInput = getInputStatic();
 
-        gm.removeAmountGrocery(GroceryManager.getAmountAndUnit(staticInput), fridge);
+        gm.removeAmountGrocery(GroceryManager.getAmountAndUnit(staticInput));
+        if (g.getQuantity() <= 0) {
+          fridge.removeGrocery(g);
+          System.out.println("Fjernet vare med vareID " + g.getGroceryID());
+        }
         retry = false;
       } catch (Exception e) {
         System.out.println(e.getMessage());
@@ -868,11 +921,9 @@ public class UserInterface extends AbstractOption {
    * A method for creating option dialogues for the "expired-check" in {@link #changeOptions}.<br>
    *
    * @param g   An object of type {@link Grocery} being the grocery being checked.
-   * @param f   An object of type {@link Fridge} being the fridge
-   *            the Grocery is stored in.
    * @param str An object of type {@link String}.
    */
-  public void getExpiredOption(Grocery g, Fridge f, String str) {
+  public void getExpiredOption(Grocery g, String str) {
     System.out.println(str);
     System.out.println("Varen har gått ut på dato.");
     char yesNoErr;
@@ -881,7 +932,7 @@ public class UserInterface extends AbstractOption {
     } while (yesNoErr == 'e');
 
     if (yesNoErr == 'y') {
-      f.removeGrocery(g);
+      fridge.removeGrocery(g);
     }
   }
 

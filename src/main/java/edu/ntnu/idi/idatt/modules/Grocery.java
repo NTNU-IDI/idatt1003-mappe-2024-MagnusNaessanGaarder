@@ -315,7 +315,7 @@ public class Grocery {
    * @param amountUnit An object of the type {@link SI} representing the unit of the amount that
    *                   will be added to the Grocery.
    */
-  public void removeAmount(final double amount, final SI amountUnit, final Fridge fridge) {
+  public void removeAmount(final double amount, final SI amountUnit) {
     /*
      * Important!
      * The only conditions of the method is that the amount must be positive.
@@ -344,14 +344,8 @@ public class Grocery {
             (double) Math.round((currentQuantity * grocery_cf - amount * amount_cf) * 100) / 100
         );
         System.out.println("Fjernet " + amount + " " + amountUnitAbrev + " fra varen " + this.name);
-        currentQuantity = this.quantity;
       }
       convertUnit();
-
-      if (currentQuantity <= 0) {
-        fridge.removeGrocery(this);
-        System.out.println("Fjernet vare med vareID " + this.groceryID);
-      }
     } else if (!SI_Manager.hasValidUnit(amountUnit)) {
       throw new IllegalArgumentException(
           "Illegal argument error: Cannot remove an amount with invalid unit.");

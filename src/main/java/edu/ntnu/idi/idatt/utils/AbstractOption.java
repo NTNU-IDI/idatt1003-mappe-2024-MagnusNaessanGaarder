@@ -6,6 +6,7 @@ import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.GroceryManager;
 import edu.ntnu.idi.idatt.views.UserInterface;
+import java.util.Arrays;
 
 /**
  * <strong>Heritage</strong><br>
@@ -101,17 +102,11 @@ public abstract class AbstractOption extends AbstractTerminalAction {
                                final Fridge f,
                                final String str,
                                final UserInterface ui) {
-    final GroceryManager gm = new GroceryManager(g);
     switch (Integer.parseInt(str)) {
       //legg til mengde til varen
       case 1 -> {
         try {
-          clearScreen();
-          System.out.println(AbstractTable.createMenuTable("LEGG TIL " + g.getName().toUpperCase(),
-              "Fyll ut deltaljer om varen du skal legge til:"));
-          String[] amountAndUnit = getAmountAndUnit(getInput());
-
-          gm.addAmountGrocery(amountAndUnit);
+          ui.addToGrocery(g);
         } catch (Exception e) {
           System.out.println(e.getMessage());
         }
@@ -120,11 +115,7 @@ public abstract class AbstractOption extends AbstractTerminalAction {
       //fjern mengde fra varen
       case 2 -> {
         try {
-          clearScreen();
-          System.out.println(AbstractTable.createMenuTable("FJERN FRA " + g.getName().toUpperCase(),
-              "Fyll ut deltaljer om varen du skal fjerne fra:"));
-          String[] amountAndUnit = getAmountAndUnit(getInput());
-          gm.removeAmountGrocery(amountAndUnit, f);
+          ui.removeFromGrocery(g);
         } catch (Exception e) {
           System.out.println(e.getMessage());
         }
@@ -133,7 +124,7 @@ public abstract class AbstractOption extends AbstractTerminalAction {
       //sjekk om en vare er gått ut på dato
       case 3 -> {
         if (g.hasExpired()) {
-          ui.getExpiredOption(g, f, str);
+          ui.getExpiredOption(g, str);
         } else {
           System.out.println("Varen har ikke gått ut på dato");
         }

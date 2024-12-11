@@ -99,19 +99,19 @@ public class GroceryManager extends AbstractTerminalAction {
   /**
    * <strong>Description</strong><br>
    * A method parsing an amount and a unit name to use the
-   * {@link Grocery#removeAmount(double, SI, Fridge) removeAmount()} method
+   * {@link Grocery#removeAmount(double, SI) removeAmount()} method
    * to remove an amount from a Grocery.<br>
    *
    * @param amountAndUnit An array of type String containing an amount and a unit
    *                      name as Strings.
    * @throws Exception Giving a reason and a message of the given Exception.
    */
-  public void removeAmountGrocery(String[] amountAndUnit, Fridge fridge) throws Exception {
+  public void removeAmountGrocery(String[] amountAndUnit) throws Exception {
     try {
       //trekk fra en mengde
       SI newUnit = SI_Manager.getUnit(amountAndUnit[1]);
       double amount = Double.parseDouble(amountAndUnit[0]);
-      grocery.removeAmount(amount, newUnit, fridge);
+      grocery.removeAmount(amount, newUnit);
     } catch (Exception e) {
       throw new Exception(
           "Could not remove amount from the grocery for the following reason: " + e.getMessage());
