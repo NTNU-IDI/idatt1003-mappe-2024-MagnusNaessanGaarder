@@ -14,13 +14,6 @@ import java.util.List;
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 public class SI {
 
-  /**
-   * <strong>Description</strong><br>
-   * Static datafield of a HashMap with values of prefixes and unit conversion factors.
-   * This will be used for unit conversion.
-   */
-  private static final HashMap<String, Double> SI_PREFIXES = new HashMap<>();
-
 
   /**
    * <strong>Description</strong><br>
@@ -41,10 +34,38 @@ public class SI {
   }
 
 
-  /*Hjelp av ChatGPT - lager et HashMap med en static block som initialiserer
-   * ulike verdier til HashMap-et. I dette tilfellet er verdiene i HashMap-et
-   * ment å brukes til konvertering mellom ulike målinger ved hjelp av prefiksen.
+  /*
+  Hjelp av ChatGPT - lager et HashMap (SI_PREFIXES) med en static block som initialiserer
+  ulike verdier til HashMap-et. I dette tilfellet er verdiene i HashMap-et
+  ment å brukes til konvertering mellom ulike målinger ved hjelp av prefiksen. Nedenfor er
+  det jeg skrev i ChatGPT for å komme frem til denne løsningen med SI_PREFIXES:
+
+  Prompt 1:
+  In my code i try to make an SI-entity class which is supposed to be stored in a class
+  called Grocery. In the grocery class i will have a measurement for the amount of the grocery is
+  stored in a Fridge (another class), and a price which is either a price per liter or price per
+  kilogram. In my grocery class i have a problem figuring out how i should change the messurement
+  type (SI) when i either add more of the product or subtract the amount of the product.
+
+  Prompt 2:
+  im trying to add compability to change the SI meassurement whenever the amount of the
+  product excedes or is beneath a certain threshold. For exemple whenever the milk reduces under
+  1 liter it should switch the messurement to deciliter and ajust the amount of the milk
+  accordingly
+
+  Prompt 3:
+  is it possible to make the SI-class and the Groceryclass more general. For instance,
+  is it possible checking if the SI string contains "Deci", "Milli" or "Centi" to convert to a
+  common entity?
+  */
+
+  /**
+   * <strong>Description</strong><br>
+   * Static datafield of a HashMap with values of prefixes and unit conversion factors.
+   * This will be used for unit conversion.
    */
+  private static final HashMap<String, Double> SI_PREFIXES = new HashMap<>();
+
   //initialisering av gyldige prefixer for konvertering mellom måleenheter
   static {
     SI_PREFIXES.put("", 1.0);         // uten prefix = 1 basisenhet
