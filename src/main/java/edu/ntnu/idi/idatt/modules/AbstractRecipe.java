@@ -1,11 +1,6 @@
 package edu.ntnu.idi.idatt.modules;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -27,12 +22,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * </ul>
  */
 public abstract class AbstractRecipe {
-  private final Fridge fridge;
+  private static int advanceID = 1;
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private final int recipeID;
   private final String name;
   private final String description;
   private final String[] directions;
   private final int portion;
-  private final HashSet<Grocery> recipes;
 
 
   /**
@@ -44,84 +40,47 @@ public abstract class AbstractRecipe {
    * @param directions  An Array of Strings containing instructions for creating the recipe.
    * @param portion     An integer represening the portions per person the ingredients
    *                    cover when you make the recipe.
-   * @param recipes     A List containing Groceries required to make the recipe.
-   * @param fridge      An object of type Fridge.
    */
   protected AbstractRecipe(final String name,
                            final String description,
                            final String[] directions,
-                           final int portion,
-                           final List<Grocery> recipes,
-                           final Fridge fridge) {
+                           final int portion) {
     this.name = name;
     this.description = description;
     this.directions = directions;
     this.portion = portion;
-    this.recipes = new HashSet<>(recipes);
-    this.fridge = fridge;
-  }
-
-
-  /**
-   * <strong>Description:</strong><br>
-   * A method checking matching groceries in the fridge and the recipe relative to the total amount
-   * of ingredients in the recipe.<br>
-   *
-   * @return a double representing the prosent factor of matching groceries relative to the total
-   amount of ingredients.
-   */
-  public double matchingGroceries() {
-    if (recipes.isEmpty()) {
-      return 0;
-    } else {
-      return (double) recipes.stream()
-          .filter(g -> fridge.getGroceryList().stream()
-              .anyMatch(gr -> gr.getName().equalsIgnoreCase(g.getName())))
-          .toList()
-          .size() / recipes.size();
-    }
+    this.recipeID = advanceID();
   }
 
   /**
    * <strong>Description:</strong><br>
-   * A method calculating the average date of the groceries in the fridge that matches the
-   * ingredients in the recipe.
-   *
-   * @return a LocalDate representing the average date of the groceries in the fridge that
-   matches the ingredients in the recipe.
+   * A method that resets the ID of the Recipe class. Used mostly for testing purposes.
    */
-  public LocalDate avrageDate() {
-    AtomicInteger avrDay = new AtomicInteger();
-    AtomicInteger avrMonth = new AtomicInteger();
-    AtomicInteger avrYear = new AtomicInteger();
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  public static void resetID() {
+    advanceID = 1;
+  }
 
-    AtomicInteger correspondingGroceries = new AtomicInteger();
-    getRecipes().forEach(g -> {
-      Grocery correspondingFridgeItem = fridge.getGroceryList().stream()
-          .filter(gr -> gr.getName().equals(g.getName()))
-          .min(Comparator.comparing(Grocery::getDate))
-          .orElse(null);
+  /**
+   * <strong>Description:</strong><br>
+   * A method that advances the ID of the Recipe class.
+   *
+   * @return An integer representing the ID of the Recipe.
+   */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  private static int advanceID() {
+    return advanceID++;
+  }
 
-      if (correspondingFridgeItem != null) {
-        correspondingGroceries.getAndIncrement();
-        int day = correspondingFridgeItem.getDate().getDayOfMonth();
-        int month = correspondingFridgeItem.getDate().getMonthValue();
-        int year = correspondingFridgeItem.getDate().getYear();
-        avrDay.addAndGet(day);
-        avrMonth.addAndGet(month);
-        avrYear.addAndGet(year);
-      }
-    });
-
-    if (correspondingGroceries.get() == 0) {
-      return LocalDate.now().plusYears(100);
-    } else {
-      avrDay.updateAndGet(v -> v / correspondingGroceries.get());
-      avrMonth.updateAndGet(v -> v / correspondingGroceries.get());
-      avrYear.updateAndGet(v -> v / correspondingGroceries.get());
-
-      return LocalDate.of(avrYear.get(), avrMonth.get(), avrDay.get());
-    }
+  /**
+   * <strong>Description:</strong><br>
+   * A get-method used to get the ID of the Recipe.
+   *
+   * @return An integer representing the ID of the Recipe.
+   */
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
+  public int getRecipeID() {
+    return recipeID;
   }
 
   /**
@@ -165,25 +124,5 @@ public abstract class AbstractRecipe {
    */
   public int getPortion() {
     return portion;
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method for the groceries required to make the recipe.<br>
-   *
-   * @return a List containing Groceries required to make the recipe.
-   */
-  public List<Grocery> getRecipes() {
-    return new ArrayList<>(recipes).stream().toList();
-  }
-
-  /**
-   * <strong>Description:</strong><br>
-   * A get-method for the fridge.<br>
-   *
-   * @return an object of type Fridge.
-   */
-  public Fridge getFridge() {
-    return fridge;
   }
 }

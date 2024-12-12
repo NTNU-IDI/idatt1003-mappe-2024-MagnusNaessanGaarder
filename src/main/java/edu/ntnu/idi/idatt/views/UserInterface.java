@@ -122,8 +122,7 @@ public class UserInterface extends AbstractOption {
               new Grocery("Egg", stk, 2, null, 1),
               new Grocery("Vaniljesukker", ts, 4, null, 1),
               new Grocery("Sukker", g, 200, null, 1)
-            )),
-        fridge);
+            )));
     final Recipe recipe2 = new Recipe("Brød", "En klassisk oppskrift på hjemmebakt "
         + "brød med myk kjerne og sprø skorpe. Perfekt til smørbrød eller som tilbehør til supper "
         + "og gryter.",
@@ -139,7 +138,7 @@ public class UserInterface extends AbstractOption {
             new Grocery("Salt", ts, 1, null, 1),
             new Grocery("Melk", dl, 2, null, 1),
             new Grocery("Egg", stk, 3, null, 1),
-            new Grocery("Gjær", ss, 1, null, 1))), fridge);
+            new Grocery("Gjær", ss, 1, null, 1))));
     final Recipe recipe3 = new Recipe("Penne Al Arabiata", "En krydret italiensk "
         + "pastarett med en syrlig tomat- og chilisaus. En enkel og smakfull middag for "
         + "pastaelskere.",
@@ -156,7 +155,7 @@ public class UserInterface extends AbstractOption {
             new Grocery("Hvitløksfedd", stk, 2, null, 1),
             new Grocery("Hakkede tomater, Boks", stk, 2, null, 1),
             new Grocery("Persille", ss, 2, null, 1),
-            new Grocery("Salt", ts, 2, null, 1))), fridge);
+            new Grocery("Salt", ts, 2, null, 1))));
     final Recipe recipe4 = new Recipe("Naan Brød", "Mykt og luftig indisk flatbrød,"
         + " perfekt som tilbehør til gryteretter eller alene. Lett å lage og stekes i en "
         + "varm stekepanne.",
@@ -172,7 +171,7 @@ public class UserInterface extends AbstractOption {
             new Grocery("Mel", dl, 2, null, 1),
             new Grocery("Yoghurt", dl, 1, null, 1),
             new Grocery("Koreander", ts, 1, null, 1),
-            new Grocery("Salt", ts, 1, null, 1))), fridge);
+            new Grocery("Salt", ts, 1, null, 1))));
 
     cookBook.addRecipe(recipe1);
     cookBook.addRecipe(recipe2);
@@ -1309,7 +1308,7 @@ public class UserInterface extends AbstractOption {
       List<Grocery> recipes = fetchRecipes();
 
       //legg til oppskrift
-      cookBook.addRecipe(new Recipe(name, desc, dir, portion, recipes, fridge));
+      cookBook.addRecipe(new Recipe(name, desc, dir, portion, recipes));
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

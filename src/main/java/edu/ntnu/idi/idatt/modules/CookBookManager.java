@@ -1,7 +1,9 @@
 package edu.ntnu.idi.idatt.modules;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <strong>Description:</strong><br>
@@ -63,10 +65,23 @@ public class CookBookManager {
    * @return An object of type {@link List} containing objects of type {@link Recipe}.
    */
   private List<Recipe> sortRecipes(List<Recipe> list) {
+    ArrayList<RecipeManager> rmWrapper = new ArrayList<>();
+    rmWrapper.add(new RecipeManager(null, null));
+    AtomicInteger i = new AtomicInteger();
+    AtomicInteger j = new AtomicInteger();
+
     return list.stream()
         .sorted(
-            Comparator.comparing(Recipe::matchingGroceries)
-            .thenComparing(Recipe::avrageDate))
+            Comparator.comparing((re) -> {
+              final Recipe r = cookBook.getRecipeList().get(i.getAndIncrement());
+              rmWrapper.set(0, new RecipeManager(r, fridge));
+              return rmWrapper.getFirst().matchingGroceries();
+            })
+            .thenComparing((re) -> {
+              final Recipe r = cookBook.getRecipeList().get(j.getAndIncrement());
+              rmWrapper.set(0, new RecipeManager(r, fridge));
+              return rmWrapper.getFirst().avrageDate();
+            }))
         .toList();
   }
 
@@ -79,7 +94,10 @@ public class CookBookManager {
    */
   public List<Recipe> getAvailableRecipes() {
     return sortRecipes(cookBook.getRecipeList().stream()
-        .filter(r -> r.matchingGroceries() >= 0.5)
+        .filter(r -> {
+          final RecipeManager rm = new RecipeManager(r, fridge);
+          return rm.matchingGroceries() >= 0.5;
+        })
         .toList());
   }
 
