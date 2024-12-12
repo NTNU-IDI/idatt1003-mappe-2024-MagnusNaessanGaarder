@@ -3,7 +3,6 @@ package edu.ntnu.idi.idatt;
 import static org.junit.jupiter.api.Assertions.*;
 
 import edu.ntnu.idi.idatt.modules.CookBook;
-import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.Recipe;
 import edu.ntnu.idi.idatt.modules.SI;
@@ -28,21 +27,18 @@ class CookBookTest {
   private Recipe recipe2;
   private Recipe recipe3;
   private Recipe recipe4;
-  private Fridge fridge;
   private CookBook cb;
 
   public Grocery fetchGrocery(String n, SI si, double q, LocalDate d, double p) {
     return new Grocery(n, si, q, d, p);
   }
 
-  public Recipe setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list,
-                          Fridge f) {
-    return new Recipe(name, desc, dir, portion, list, f);
+  public Recipe setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list) {
+    return new Recipe(name, desc, dir, portion, list);
   }
 
   @BeforeEach
   public void testInit() {
-    fridge = new Fridge();
     cb = new CookBook();
 
     recipe1 = setRecipe("Banankake", "God!!", new String[] {"ins1:", "ins2:"}, 4,
@@ -50,13 +46,13 @@ class CookBookTest {
             fetchGrocery("Banan", stk, 2, null, 1),
             fetchGrocery("Mel", kg, 0.5, null, 1),
             fetchGrocery("Egg", stk, 2, null, 1),
-            fetchGrocery("Vaniljesukker", ts, 4, null, 1))), fridge);
+            fetchGrocery("Vaniljesukker", ts, 4, null, 1))));
     recipe2 = setRecipe("Brød", "Luftig!!", new String[] {"ins1:", "ins2:", "ins3:"}, 6,
             new ArrayList<>(Arrays.asList(
                 fetchGrocery("Mel", g, 500, null, 1),
                 fetchGrocery("Melk", dl, 2, null, 1),
                 fetchGrocery("Egg", stk, 3, null, 1),
-                fetchGrocery("Gjær", ss, 1, null, 1))), fridge);
+                fetchGrocery("Gjær", ss, 1, null, 1))));
     recipe3 = setRecipe("Penne Al Arabiata", "Spicy og digg!!", new String[] {"ins1:", "ins2:"}, 4,
             new ArrayList<>(Arrays.asList(
                 fetchGrocery("Chilly", stk, 1, null, 1),
@@ -64,13 +60,13 @@ class CookBookTest {
                 fetchGrocery("Hvitløksfedd", stk, 2, null, 1),
                 fetchGrocery("Hakkede tomater, Boks", stk, 2, null, 1),
                 fetchGrocery("Persille", ss, 2, null, 1),
-                fetchGrocery("Salt", ts, 2, null, 1))), fridge);
+                fetchGrocery("Salt", ts, 2, null, 1))));
     recipe4 = setRecipe("Naan Brød", "Deilig!!", new String[]{"ajsd", "askhd"}, 2,
         new ArrayList<>(Arrays.asList(
             fetchGrocery("Egg", stk, 2, null, 1),
             fetchGrocery("Mel", dl, 2, null, 1),
             fetchGrocery("Koreander", ts, 1, null, 1),
-            fetchGrocery("Salt", ts, 1, null, 1))), fridge);
+            fetchGrocery("Salt", ts, 1, null, 1))));
 
     cb.addRecipe(recipe1);
     cb.addRecipe(recipe2);
@@ -79,7 +75,6 @@ class CookBookTest {
 
   @AfterEach
   public void closeTest() {
-    fridge = null;
     Grocery.resetID();
     Recipe.resetID();
   }

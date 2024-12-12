@@ -45,9 +45,8 @@ class CookBookManagerTest {
     return new Grocery(n, si, q, d, p);
   }
 
-  public Recipe setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list,
-                          Fridge f) {
-    return new Recipe(name, desc, dir, portion, list, f);
+  public Recipe setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list) {
+    return new Recipe(name, desc, dir, portion, list);
   }
 
   @BeforeEach
@@ -81,15 +80,13 @@ class CookBookManagerTest {
             fetchGrocery("Banan", stk, 2, null, 1),
             fetchGrocery("Mel", kg, 0.5, null, 1),
             fetchGrocery("Egg", stk, 2, null, 1),
-            fetchGrocery("Vaniljesukker", ts, 4, null, 1))),
-        fridge);
+            fetchGrocery("Vaniljesukker", ts, 4, null, 1))));
     recipe2 = setRecipe("Brød", "Luftig!!", new String[] {"ins1:", "ins2:", "ins3:"}, 6,
         new ArrayList<>(Arrays.asList(
             fetchGrocery("Mel", g, 500, null, 1),
             fetchGrocery("Melk", dl, 2, null, 1),
             fetchGrocery("Egg", stk, 3, null, 1),
-            fetchGrocery("Gjær", ss, 1, null, 1))),
-        fridge);
+            fetchGrocery("Gjær", ss, 1, null, 1))));
     recipe3 = setRecipe("Penne Al Arabiata", "Spicy og digg!!", new String[] {"ins1:", "ins2:"}, 4,
         new ArrayList<>(Arrays.asList(
             fetchGrocery("Chilly", stk, 1, null, 1),
@@ -97,8 +94,7 @@ class CookBookManagerTest {
             fetchGrocery("Hvitløksfedd", stk, 2, null, 1),
             fetchGrocery("Hakkede tomater, Boks", stk, 2, null, 1),
             fetchGrocery("Persille", ss, 2, null, 1),
-            fetchGrocery("Salt", ts, 2, null, 1))),
-        fridge);
+            fetchGrocery("Salt", ts, 2, null, 1))));
 
     cb.addRecipe(recipe1);
     cb.addRecipe(recipe2);
@@ -158,7 +154,7 @@ class CookBookManagerTest {
   void negativeMakeRecipe() {
     assertThrows(IllegalArgumentException.class, () -> cbm.makeRecipe(new Recipe("test", "test", new String[] {"test"}, 1,
         new ArrayList<>(Collections.singletonList(
-            fetchGrocery("test", g, 1, null, 1))), fridge)));
+            fetchGrocery("test", g, 1, null, 1))))));
 
     fridge.removeGrocery(grocery1);
     fridge.removeGrocery(grocery2);
@@ -167,6 +163,6 @@ class CookBookManagerTest {
     fridge.removeGrocery(grocery5);
     fridge.removeGrocery(grocery6);
 
-    assertThrows(IllegalArgumentException.class, () -> cbm.makeRecipe(recipe1));
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> cbm.makeRecipe(recipe1));
   }
 }

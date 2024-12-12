@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import edu.ntnu.idi.idatt.modules.Fridge;
 import edu.ntnu.idi.idatt.modules.Grocery;
 import edu.ntnu.idi.idatt.modules.Recipe;
+import edu.ntnu.idi.idatt.modules.RecipeManager;
 import edu.ntnu.idi.idatt.modules.SI;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,9 +30,8 @@ class RecipeTest {
     return new Grocery(n, si, q, d, p);
   }
 
-  public void setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list,
-                        Fridge f) {
-    recipe = new Recipe(name, desc, dir, portion, list, f);
+  public void setRecipe(String name, String desc, String[] dir, int portion, List<Grocery> list) {
+    recipe = new Recipe(name, desc, dir, portion, list);
   }
 
   @BeforeEach
@@ -56,8 +56,7 @@ class RecipeTest {
             grocery1,
             grocery2,
             fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50)
-        })),
-        fridge
+        }))
     );
   }
 
@@ -72,7 +71,8 @@ class RecipeTest {
 
   @Test
   void matchingGroceries() {
-    assertEquals((double) 2 / 3, recipe.matchingGroceries());
+    final RecipeManager rm = new RecipeManager(recipe, fridge);
+    assertEquals((double) 2 / 3, rm.matchingGroceries());
   }
 
   @Test
@@ -87,8 +87,7 @@ class RecipeTest {
             grocery1,
             grocery2,
             fetchGrocery("Sjokolade", g, 500, LocalDate.now(), 149.50)
-        })),
-        fridge
+        }))
     );
     assertEquals(2, recipe.getRecipeID());
   }
@@ -130,7 +129,7 @@ class RecipeTest {
     list.add(grocery2);
     list.add(grocery3);
 
-    //has equal content, but for some reason assertion fails
+    //has equal content, but for some reason assertion fails'
     assertEquals(list.stream().toList(), recipe.getRecipes());
   }
 }

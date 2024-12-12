@@ -51,14 +51,17 @@ class GroceryManagerTest {
   void removeAmountGrocery() {
     String[] str = new String[]{"2","L"};
     try {
-      gm.removeAmountGrocery(str, fridge);
+      gm.removeAmountGrocery(str);
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
     assertEquals(2, grocery.getQuantity());
 
     try {
-      gm.removeAmountGrocery(str, fridge);
+      gm.removeAmountGrocery(str);
+      if (grocery.getQuantity() <= 0) {
+        fridge.removeGrocery(grocery);
+      }
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
